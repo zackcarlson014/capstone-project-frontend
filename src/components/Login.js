@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { loginSuccess } from '../actions/auth'
+// import NavBar from './NavBar.js'
+import { Button, Form, Grid, Header, Segment } from 'semantic-ui-react'
 
 export class Login extends Component {
 
@@ -39,24 +41,44 @@ export class Login extends Component {
                 this.props.history.push('/profile')
             }
         })
-
-        // send form data to backend so user is authenticated
-        // once successful:
-        //  -reset form
-        //  -redirect to the profile
-        //  -update the redux store with user
     }
 
     render() {
         return (
             <div>
-                {this.state.error ? <h4 style={{color: 'red'}}>{this.state.error}</h4> : null}
-                <h3>Sign In</h3>
+                {/* <NavBar /> */}
+                {this.state.error ? <div><br/><br/><h4 style={{color: 'red'}}>{this.state.error}</h4></div> : null}
+                <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
+                    <Grid.Column style={{ maxWidth: 450 }}>
+                        <Header as='h2' color='blue' textAlign='center'>
+                            Log-in to your account
+                        </Header>
+                        <Form size='large' onSubmit={this.handleSubmit}>
+                            <Segment stacked>
+                            <Form.Input onChange={this.handleInputChange} icon='user' name='username' value={this.state.username} iconPosition='left' placeholder='Username' />
+                            <Form.Input
+                                onChange={this.handleInputChange}
+                                icon='lock'
+                                iconPosition='left'
+                                placeholder='Password'
+                                name='password'
+                                value={this.state.password}
+                                type='password'
+                            />
+
+                            <Button color='blue' fluid size='large'>
+                                Login
+                            </Button>
+                            </Segment>
+                        </Form>
+                    </Grid.Column>
+                </Grid>
+                {/* <br/><br/><h3>Sign In</h3>
                 <form onSubmit={this.handleSubmit}>
                     <input name={'username'} onChange={this.handleInputChange} value={this.state.username} placeholder='Enter username...'/>
                     <input type='password' name={'password'} onChange={this.handleInputChange} value={this.state.password} placeholder='Enter password...'/>
                     <input type='submit' value='login'/>
-                </form>
+                </form> */}
             </div>
         )
     }

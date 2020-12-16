@@ -1,4 +1,7 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { Card, Image, Icon, Button } from 'semantic-ui-react'
+import { addLibBook } from '../actions/index'
 
 export class BookCard extends Component {
 
@@ -19,7 +22,7 @@ export class BookCard extends Component {
             title: this.props.title,
             author: this.props.author,
             image: this.props.image,
-            published: this.props.published
+            published_date: this.props.published
         }
 
         const reqObj = {
@@ -30,23 +33,38 @@ export class BookCard extends Component {
             },
             body: JSON.stringify(newLibraryBook)
         }
-        fetch('http://localhost:3000/books', reqObj)
+        fetch('http://localhost:3000/api/v1/books', reqObj)
             .then(resp => resp.json())
-            // .then(newLibBook => {
-            // })
+            .then(newLibBook => {
+                this.props.addLibBook(newLibBook)
+            })
     }
 
     render() {
         return (
-            <div>
-            <img src={this.props.image} alt=''></img>
-            <h4>{this.props.title}</h4>
-            <h5>{this.props.author}</h5>
-            <h5>{this.props.published.split("-")[0]}</h5>
-            <button type='submit'>Add to Library</button><br/><br/><br/>
-            </div>
+            <Card color='blue'>
+                <Image src={this.props.image} wrapped ui={false} width='300px' height='300px'/>
+                <Card.Content>
+                    <Card.Header>{this.props.title}</Card.Header>
+                    <Card.Meta>
+                        <span className='date'>Published in {this.props.published.split("-")[0]}</span>
+                    </Card.Meta>
+                    <Card.Description>
+                        By: {this.props.author}
+                    </Card.Description>
+                </Card.Content>
+                <Card.Content extra>
+                        <Icon name='user' />
+                        22 Wishes
+                        <Button color='blue' onClick={this.handleAddLibraryBook}>Add Book To Library</Button>
+                </Card.Content>
+            </Card>
         )
     }
 }
 
-export default BookCard
+const mapDispatchToProps = {
+    addLibBook
+}
+
+export default connect(null, mapDispatchToProps)(BookCard)
