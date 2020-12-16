@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import BookSearch from '../components/BookSearch.js'
-import BookList from '../components/BookList.js'
+import BookSearch from './BookSearch.js'
+import BookList from './BookList.js'
 import request from 'superagent';
 
 export class BooksContainer extends Component {

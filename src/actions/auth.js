@@ -1,7 +1,9 @@
-export const loginSuccess = (user) => {
+export const loginSuccess = ({user, library_books, wished_books}) => {
     return {
       type: 'LOGIN_SUCCESS',
-      user
+      user,
+      library_books,
+      wished_books
     }
   }
   

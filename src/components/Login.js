@@ -36,6 +36,7 @@ export class Login extends Component {
                 })
             } else {
                 this.props.loginSuccess(data)
+                this.props.history.push('/profile')
             }
         })
 
