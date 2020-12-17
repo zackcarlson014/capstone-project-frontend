@@ -1,11 +1,17 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { NavLink } from 'react-router-dom';
+import { logoutUser } from '../actions/auth'
 import { Menu } from 'semantic-ui-react'
 
 export class NavBar extends Component {
   state = { 
     activeItem: ''
+  }
+
+  handleLogout = () => {
+    localStorage.removeItem('my_app_token')
+    this.props.logoutUser()
   }
 
   handleItemClick = (e, { name }) => {
@@ -36,11 +42,12 @@ export class NavBar extends Component {
         {
             this.props.auth ? 
             <Menu.Item
+            position='right'
             as={NavLink}
             to='/login'
             name='logout'
             active={activeItem === 'logout'}
-            onClick={this.handleItemClick}
+            onClick={this.handleLogout}
             >
             Logout
             </Menu.Item>
@@ -82,4 +89,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, null)(NavBar)
+export default connect(mapStateToProps, { logoutUser })(NavBar)

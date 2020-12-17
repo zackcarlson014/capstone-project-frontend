@@ -32,6 +32,7 @@ export class Login extends Component {
         fetch('http://localhost:3000/api/v1/auth', reqObj)
         .then(resp => resp.json())
         .then(data => {
+            console.log(data)
             if (data.error) {
                 this.setState({
                     error: data.error
@@ -39,6 +40,7 @@ export class Login extends Component {
             } else {
                 this.props.loginSuccess(data)
                 this.props.history.push('/profile')
+                localStorage.setItem('my_app_token', data.token)
             }
         })
     }

@@ -7,14 +7,14 @@ export class UserCard extends Component {
         return (
             <div>
                 <br/><br/><Card color='blue'>
-                    <Image src={this.props.auth.picture} wrapped ui={false} />
+                    <Image src={this.props.auth ? this.props.auth.picture : null} wrapped ui={false} />
                     <Card.Content>
-                        <Card.Header>{this.props.auth.username}</Card.Header>
+                        <Card.Header>{this.props.auth ? this.props.auth.username : null}</Card.Header>
                         <Card.Meta>
                             <span className='date'>Joined in 2020</span>
                         </Card.Meta>
                         <Card.Description>
-                            {this.props.auth.bio}
+                            {this.props.auth ? this.props.auth.bio : null}
                         </Card.Description>
                     </Card.Content>
                     <Card.Content extra>

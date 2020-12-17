@@ -1,13 +1,15 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 // import { currentUser } from '../actions/auth'
-import { Redirect } from 'react-router'
+// import { Redirect } from 'react-router'
 import BookSearch from './BookSearch.js'
-import BookList from './BookList.js'
+import AddLibraryBookList from './AddLibraryBookList.js'
+import AddWishedBookList from './AddWishedBookList.js'
 import LibraryBooks from './LibraryBooks.js'
 import WishedBooks from './WishedBooks.js'
 import NavBar from './NavBar.js'
 import UserCard from './UserCard.js'
+import { Button } from 'semantic-ui-react'
 import request from 'superagent';
 
 export class Profile extends Component {
@@ -16,7 +18,8 @@ export class Profile extends Component {
         super();
         this.state = {
             books: [],
-            searchField: ''
+            searchField: '',
+            profView: 'default'
         }
     }
 
@@ -36,22 +39,58 @@ export class Profile extends Component {
         })
     }
 
+    handleAddLibraryView = () => {
+        this.setState({
+            profView: 'addLibrary'
+        })
+    }
+
+    handleAddWishedView = () => {
+        this.setState({
+            profView: 'addWished'
+        })
+    }
+
     render() {
-        if (!this.props.auth) {
-            return(
-                <Redirect to='/login'/>
+
+        if (this.state.profView === 'default') {
+            return (
+                <div>
+                    <NavBar/>
+                    <UserCard /><br/><br/><br/>
+                    <h3>Your Library Books</h3>
+                    <Button color='blue' onClick={this.handleAddLibraryView}>Add Books To Library</Button><br/><br/>
+                    <LibraryBooks /><br/><br/><br/>
+                    <h3>Your Wish List</h3>
+                    <Button color='blue' onClick={this.handleAddWishedView}>Add Books To Wish List</Button><br/><br/>
+                    <WishedBooks />
+                    {/* <BookSearch searchBook={this.searchBook} handleSearch={this.handleSearch}/>
+                    <BookList books={this.state.books} /> */}
+                </div>
+            )
+        } else if (this.state.profView === 'addLibrary') {
+            return (
+                <div>
+                    <NavBar/>
+                    <br/><br/><h1>Your Library Books</h1>
+                    <LibraryBooks /><br/>
+                    <h1>Search for Library Books</h1>
+                    <BookSearch searchBook={this.searchBook} handleSearch={this.handleSearch}/>
+                    <AddLibraryBookList books={this.state.books} />
+                </div>
+            )
+        } else if (this.state.profView === 'addWished') {
+            return (
+                <div>
+                    <NavBar/>
+                    <br/><br/><h1>Your Wish List</h1>
+                    <WishedBooks /><br/>
+                    <h1>Search for Wish List Books</h1>
+                    <BookSearch searchBook={this.searchBook} handleSearch={this.handleSearch}/>
+                    <AddWishedBookList books={this.state.books} />
+                </div>
             )
         }
-        return (
-            <div>
-                <NavBar/>
-                <UserCard /><br/><br/><br/>
-                <LibraryBooks /><br/><br/><br/>
-                <WishedBooks />
-                <BookSearch searchBook={this.searchBook} handleSearch={this.handleSearch}/>
-                <BookList books={this.state.books} />
-            </div>
-        )
     }
 }
 

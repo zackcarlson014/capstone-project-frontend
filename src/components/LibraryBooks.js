@@ -6,7 +6,7 @@ export class LibraryBooks extends Component {
     render() {
         return (
             <div>
-                <div className='ui five cards'>
+                <div className='ui eight cards'>
                     {this.props.libraryBooks.map(libBook => {
                         return <LibraryBookCard key={libBook.id} {...libBook}/>
                     })}

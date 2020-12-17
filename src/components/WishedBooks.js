@@ -6,7 +6,7 @@ export class WishedBooks extends Component {
     render() {
         return (
             <div>
-                <div className='ui five cards'>
+                <div className='ui eight cards'>
                     {this.props.wishedBooks.map(wishBook => {
                         return <WishedBookCard key={wishBook.id} {...wishBook}/>
                     })}

@@ -1,19 +1,37 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-// import { Button } from '@material-ui/core';
-// import NavBar from './components/NavBar.js'
-// import BooksContainer from './components/BooksContainer.js'
+import { currentUser } from './actions/auth'
 import Profile from './components/Profile.js'
 import Login from './components/Login.js'
 import './App.css';
 
 export class App extends Component {
+
+  componentDidMount() {
+    const token = localStorage.getItem('my_app_token')
+    if (!token) {
+        this.props.history.push('/login')
+    } else {
+        const reqObj = {
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }
+
+        fetch('http://localhost:3000/api/v1/current_user', reqObj)
+        .then(resp => resp.json())
+        .then(data => {
+            this.props.currentUser(data)
+        })
+    }
+  }
+  
   render() {
     return (
       <Router>
           <Switch>
-              {/* <NavBar/><br/><br/> */}
               <Route path='/profile' component={Profile} />
               <Route path='/login' component={Login} />
           </Switch>
@@ -23,5 +41,5 @@ export class App extends Component {
   }
 }
 
-export default connect()(App)
+export default connect(null, { currentUser })(App)
 
