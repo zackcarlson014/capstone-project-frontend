@@ -41,9 +41,9 @@ export class NavBar extends Component {
         </Menu.Item>
         <Menu.Item
           as={NavLink}
-          to='/dashboard'
-          name='dashboard'
-          active={activeItem === 'dashboard'}
+          to='/books'
+          name='books'
+          active={activeItem === 'books'}
           onClick={this.handleItemClick}
         >
           All Books

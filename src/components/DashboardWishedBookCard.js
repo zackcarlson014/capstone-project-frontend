@@ -17,7 +17,7 @@ export class DashboardWishedBookCard extends Component {
                 </Card.Content>
                 <Card.Content extra>
                         <Icon name='user' />
-                        22 Wishes
+                        {this.props.user.username}'s Wish
                 </Card.Content>
             </Card>
         )

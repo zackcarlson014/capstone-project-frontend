@@ -49,7 +49,7 @@ export class App extends Component {
           <Switch>
               <Route path='/login' component={Login} />
               <Route path='/profile' component={Profile} />
-              <Route path='/dashboard' component={BooksDashboard} />
+              <Route path='/books' component={BooksDashboard} />
           </Switch>
       </div>
 

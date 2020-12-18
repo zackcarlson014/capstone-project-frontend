@@ -3,11 +3,16 @@ import { connect } from 'react-redux'
 import DashboardWishedBookCard from './DashboardWishedBookCard'
 
 export class DashboardWishedBooks extends Component {
+
+    wishedBooks = () => {
+        return this.props.allWishedBooks.filter(book => book[1].id !== this.props.auth.id)
+    }
+
     render() {
         return (
             <div>
                 <div className='ui ten cards'>
-                    {this.props.allWishedBooks.map((book, i) => {
+                    {this.wishedBooks().map((book, i) => {
                         return <DashboardWishedBookCard key={i} book={book[0]} user={book[1]}/>
                     })}
                 </div>
@@ -18,7 +23,8 @@ export class DashboardWishedBooks extends Component {
 
 const mapStateToProps = state => {
     return {
-        allWishedBooks: state.allWishedBooks
+        allWishedBooks: state.allWishedBooks,
+        auth: state.auth
     }
 }
 
