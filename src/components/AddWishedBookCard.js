@@ -63,10 +63,10 @@ export class AddWishedBookCard extends Component {
                 <Card.Content>
                     <Card.Header>{this.props.title}</Card.Header>
                     <Card.Meta>
-                        <span className='date'>Published in {this.props.published.split("-")[0]}</span>
+                        <span className='date'>Published in {this.props.published ? this.props.published : '???'}</span>
                     </Card.Meta>
                     <Card.Description>
-                        By: {this.props.author[0]}
+                        By: {this.props.author ? this.props.author[0] : 'unknown'}
                     </Card.Description>
                 </Card.Content>
                 <Card.Content extra>

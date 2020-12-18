@@ -28,7 +28,9 @@ export class Profile extends Component {
         request
             .get(`https://www.googleapis.com/books/v1/volumes`)
             .query({ q: this.state.searchField})
+            .query({ maxResults: '16' })
             .then(data => {
+                console.log(data)
                 this.setState({ books: [...data.body.items]})
             })
     }
@@ -51,16 +53,24 @@ export class Profile extends Component {
         })
     }
 
+    handleDefaultProfView = () => {
+        this.setState({
+            books: [],
+            searchField: '',
+            profView: 'default'
+        })
+    }
+
     render() {
 
         if (this.state.profView === 'default') {
             return (
                 <div>
                     <NavBar/>
-                    <UserCard /><br/><br/><br/>
+                    <UserCard /><br/><br/>
                     <h3>Your Library Books</h3>
                     <Button color='blue' onClick={this.handleAddLibraryView}>Add Books To Library</Button><br/><br/>
-                    <LibraryBooks /><br/><br/><br/>
+                    <LibraryBooks /><br/><br/>
                     <h3>Your Wish List</h3>
                     <Button color='blue' onClick={this.handleAddWishedView}>Add Books To Wish List</Button><br/><br/>
                     <WishedBooks />
@@ -72,10 +82,11 @@ export class Profile extends Component {
             return (
                 <div>
                     <NavBar/>
-                    <br/><br/><h1>Your Library Books</h1>
+                    <br/><br/><br/><Button color='blue' onClick={this.handleDefaultProfView}>Back to Profile</Button>
+                    <h1>Your Library Books</h1>
                     <LibraryBooks /><br/>
                     <h1>Search for Library Books</h1>
-                    <BookSearch searchBook={this.searchBook} handleSearch={this.handleSearch}/>
+                    <BookSearch searchBook={this.searchBook} handleSearch={this.handleSearch}/><br/><br/>
                     <AddLibraryBookList books={this.state.books} />
                 </div>
             )
@@ -83,6 +94,7 @@ export class Profile extends Component {
             return (
                 <div>
                     <NavBar/>
+                    <br/><br/><Button color='blue' onClick={this.handleDefaultProfView}>Back to Profile</Button>
                     <br/><br/><h1>Your Wish List</h1>
                     <WishedBooks /><br/>
                     <h1>Search for Wish List Books</h1>

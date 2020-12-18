@@ -39,6 +39,15 @@ export class NavBar extends Component {
         >
           Home
         </Menu.Item>
+        <Menu.Item
+          as={NavLink}
+          to='/dashboard'
+          name='dashboard'
+          active={activeItem === 'dashboard'}
+          onClick={this.handleItemClick}
+        >
+          All Books
+        </Menu.Item>
         {
             this.props.auth ? 
             <Menu.Item

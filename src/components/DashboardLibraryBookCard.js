@@ -1,22 +1,7 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { deleteLibBook } from '../actions/index.js'
-import { Card, Image, Button } from 'semantic-ui-react'
+import { Card, Image, Icon } from 'semantic-ui-react'
 
-
-export class LibraryBookCard extends Component {
-
-    
-    handleRemoveBook = (e) => {
-        e.preventDefault()
-
-        fetch(`http://localhost:3000/api/v1/user_lib_books/${this.props.userBookId}`, {method: 'DELETE'})
-            .then(resp => resp.json())
-            .then(data => {
-                this.props.deleteLibBook(data.id)
-            })
-    }
-
+export class DashboardLibraryBookCard extends Component {
     render() {
         return (
             <Card color='blue'>
@@ -31,11 +16,12 @@ export class LibraryBookCard extends Component {
                     </Card.Description>
                 </Card.Content>
                 <Card.Content extra>
-                    <Button color='blue' onClick={this.handleRemoveBook}>Remove from Library</Button>
+                        <Icon name='user' />
+                        {this.props.user.username}'s Book
                 </Card.Content>
             </Card>
         )
     }
 }
 
-export default connect(null, { deleteLibBook })(LibraryBookCard)
+export default DashboardLibraryBookCard

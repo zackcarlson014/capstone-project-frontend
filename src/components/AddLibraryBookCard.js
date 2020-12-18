@@ -22,13 +22,12 @@ export class AddLibraryBookCard extends Component {
         fetch('http://localhost:3000/api/v1/user_lib_books', reqObj)
         .then(resp => resp.json())
         .then(data => {
-            console.log(data)
+            this.props.addLibBook(book, this.props.auth, data.id)
         })
     }
 
     handleAddBook = (e) => {
         e.preventDefault()
-
         const newBook = {
             title: this.props.title,
             author: this.props.author[0],
@@ -47,7 +46,6 @@ export class AddLibraryBookCard extends Component {
         fetch('http://localhost:3000/api/v1/books', reqObj)
             .then(resp => resp.json())
             .then(newLibBook => {
-                this.props.addLibBook(newLibBook)
                 this.handleAddLibraryBook(newLibBook)
             })
     }
@@ -62,7 +60,7 @@ export class AddLibraryBookCard extends Component {
                         <span className='date'>Published in {this.props.published ? this.props.published.split("-")[0] : '???'}</span>
                     </Card.Meta>
                     <Card.Description>
-                        By: {this.props.author[0]}
+                        By: {this.props.author ? this.props.author[0] : 'unknown'}
                     </Card.Description>
                 </Card.Content>
                 <Card.Content extra>
