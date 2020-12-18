@@ -8,7 +8,7 @@ export class DashboardWishedBooks extends Component {
             <div>
                 <div className='ui ten cards'>
                     {this.props.allWishedBooks.map((book, i) => {
-                        return <DashboardWishedBookCard key={i} {...book}/>
+                        return <DashboardWishedBookCard key={i} book={book[0]} user={book[1]}/>
                     })}
                 </div>
             </div>

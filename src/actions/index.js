@@ -1,5 +1,4 @@
 export const addLibBook = (newLibBook, auth, userBookId) => {
-    console.log(newLibBook, auth, userBookId)
     return {
       type: 'ADD_LIBRARY_BOOK',
       newLibBook,
@@ -15,10 +14,19 @@ export const deleteLibBook = (id) => {
     }
 }
 
-export const addWishBook = (newWishBook) => {
+export const addWishBook = (newWishBook, auth, userBookId) => {
     return {
       type: 'ADD_WISHED_BOOK',
-      newWishBook
+      newWishBook,
+      auth,
+      userBookId
+    }
+}
+
+export const deleteWishBook = (id) => {
+    return {
+        type: 'DELETE_WISHED_BOOK',
+        id
     }
 }
 

@@ -3,12 +3,17 @@ import { connect } from 'react-redux'
 import WishedBookCard from './WishedBookCard.js'
 
 export class WishedBooks extends Component {
+
+    wishedBooks = () => {
+        return this.props.allWishedBooks.filter(book => book[1].id === this.props.auth.id)
+    }
+
     render() {
         return (
             <div>
                 <div className='ui ten cards'>
-                    {this.props.wishedBooks.map(wishBook => {
-                        return <WishedBookCard key={wishBook.id} {...wishBook}/>
+                    {this.wishedBooks().map((wishBook, i) => {
+                        return <WishedBookCard key={i} book={wishBook[0]} userBookId={wishBook[2]}/>
                     })}
                 </div>
             </div>
@@ -18,7 +23,8 @@ export class WishedBooks extends Component {
 
 const mapStateToProps = state => {
     return {
-        wishedBooks: state.wishedBooks
+        allWishedBooks: state.allWishedBooks,
+        auth: state.auth
     }
 }
 

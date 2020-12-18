@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { loginSuccess } from '../actions/auth'
 // import NavBar from './NavBar.js'
-import { Button, Form, Grid, Header, Segment } from 'semantic-ui-react'
+import { Button, Form, Grid, Header, Segment, Message } from 'semantic-ui-react'
 
 export class Login extends Component {
 
@@ -73,6 +73,9 @@ export class Login extends Component {
                             </Button>
                             </Segment>
                         </Form>
+                        <Message>
+                            New to us? <a href='#'>Sign Up</a>
+                        </Message>
                     </Grid.Column>
                 </Grid>
                 {/* <br/><br/><h3>Sign In</h3>

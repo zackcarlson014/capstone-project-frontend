@@ -21,8 +21,8 @@ export class AddWishedBookCard extends Component {
         }
         fetch('http://localhost:3000/api/v1/user_wish_books', reqObj)
         .then(resp => resp.json())
-        .then(data => {
-            console.log(data)
+        .then(newWishBook => {
+            this.props.addWishBook(book, this.props.auth, newWishBook.id)
         })
     }
 
@@ -47,10 +47,7 @@ export class AddWishedBookCard extends Component {
         fetch('http://localhost:3000/api/v1/books', reqObj)
             .then(resp => resp.json())
             .then(newWishBook => {
-                console.log(newWishBook)
                 this.handleAddWishedBook(newWishBook)
-                this.props.addWishBook(newWishBook)
-
             })
     }
 
