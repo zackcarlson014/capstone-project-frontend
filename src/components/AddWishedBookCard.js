@@ -33,7 +33,8 @@ export class AddWishedBookCard extends Component {
             title: this.props.title,
             author: this.props.author[0],
             image: this.props.image,
-            published_date: this.props.published
+            published_date: this.props.published,
+            description: this.props.description
         }
 
         const reqObj = {

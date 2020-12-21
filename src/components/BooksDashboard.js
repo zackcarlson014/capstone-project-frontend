@@ -8,7 +8,7 @@ export class BooksDashboard extends Component {
 
     render() {
         return (
-            <div>
+            <div className='App'>
                 <NavBar />
                 <br/><br/><h1>Let's Get Bookin'!!</h1>
                 <br/><h3>All Library Books</h3>

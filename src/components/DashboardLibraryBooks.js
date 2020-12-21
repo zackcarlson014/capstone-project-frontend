@@ -11,7 +11,7 @@ export class DashboardLibraryBooks extends Component {
     render() {
         return (
             <div>
-                <div className='ui ten cards'>
+                <div className='ui six cards'>
                     {this.libraryBooks().map((book, i) => {
                         return <DashboardLibraryBookCard key={i} book={book[0]} user={book[1]}/>
                     })}

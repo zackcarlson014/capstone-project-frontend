@@ -65,7 +65,7 @@ export class Profile extends Component {
 
         if (this.state.profView === 'default') {
             return (
-                <div>
+                <div className='App'>
                     <NavBar/>
                     <UserCard /><br/><br/>
                     <h3>Your Library Books</h3>
@@ -80,7 +80,7 @@ export class Profile extends Component {
             )
         } else if (this.state.profView === 'addLibrary') {
             return (
-                <div>
+                <div className='App'>
                     <NavBar/>
                     <br/><br/><br/><Button color='blue' onClick={this.handleDefaultProfView}>Back to Profile</Button>
                     <h1>Your Library Books</h1>
@@ -92,14 +92,17 @@ export class Profile extends Component {
             )
         } else if (this.state.profView === 'addWished') {
             return (
-                <div>
+                <div className='App'>
                     <NavBar/>
-                    <br/><br/><Button color='blue' onClick={this.handleDefaultProfView}>Back to Profile</Button>
-                    <br/><br/><h1>Your Wish List</h1>
-                    <WishedBooks /><br/>
+                    <br/><br/><br/><Button color='blue' onClick={this.handleDefaultProfView}>Back to Profile</Button><br/><br/>
                     <h1>Search for Wish List Books</h1>
                     <BookSearch searchBook={this.searchBook} handleSearch={this.handleSearch}/>
                     <AddWishedBookList books={this.state.books} />
+                    <br/><br/><h1>Your Wish List</h1>
+                    <WishedBooks /><br/>
+                    
+                    {/* <BookSearch searchBook={this.searchBook} handleSearch={this.handleSearch}/>
+                    <AddWishedBookList books={this.state.books} /> */}
                 </div>
             )
         }

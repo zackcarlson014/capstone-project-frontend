@@ -43,3 +43,18 @@ export const allWishedBooks = (wishBooks) => {
         wishBooks
     }
 }
+
+export const showBook = (book, user) => {
+    return {
+        type: 'SHOW_BOOK',
+        book,
+        user
+    }
+}
+
+export const showUser = (user) => {
+    return {
+        type: 'SHOW_USER',
+        user
+    }
+}

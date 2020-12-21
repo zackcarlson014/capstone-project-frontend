@@ -47,12 +47,12 @@ export class Login extends Component {
 
     render() {
         return (
-            <div>
+            <div class='App'>
                 {/* <NavBar /> */}
                 {this.state.error ? <div><br/><br/><h4 style={{color: 'red'}}>{this.state.error}</h4></div> : null}
                 <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
                     <Grid.Column style={{ maxWidth: 450 }}>
-                        <Header as='h2' color='blue' textAlign='center'>
+                        <Header as='h2' color='blue' style={{backgroundColor: 'white'}} textAlign='center'>
                             Log-in to your account
                         </Header>
                         <Form size='large' onSubmit={this.handleSubmit}>

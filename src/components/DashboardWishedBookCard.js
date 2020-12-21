@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Card, Image, Icon } from 'semantic-ui-react'
+import { Card, Image, Button, Icon } from 'semantic-ui-react'
 
 export class DashboardWishedBookCard extends Component {
     render() {
@@ -12,12 +12,17 @@ export class DashboardWishedBookCard extends Component {
                         <span className='date'>Published in {this.props.book.published_date ? this.props.book.published_date : 2020}</span>
                     </Card.Meta>
                     <Card.Description>
-                        By: {this.props.book.author}
+                        {this.props.book.author}
                     </Card.Description>
                 </Card.Content>
                 <Card.Content extra>
+                    <Button fluid color='green'>
                         <Icon name='user' />
                         {this.props.user.username}'s Wish
+                    </Button>
+                    <Button fluid color='blue'>
+                        View Book
+                    </Button>
                 </Card.Content>
             </Card>
         )
