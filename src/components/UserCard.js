@@ -7,7 +7,7 @@ export class UserCard extends Component {
         return (
             <div>
                 <br/><br/><Card color='blue'>
-                    <Image src={this.props.auth ? this.props.auth.picture : null} wrapped ui={false} />
+                    <Image src={this.props.auth ? this.props.auth.prof_pic_url : null} wrapped ui={false} />
                     <Card.Content>
                         <Card.Header>{this.props.auth ? this.props.auth.username : null}</Card.Header>
                         <Card.Meta>

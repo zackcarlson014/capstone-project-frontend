@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { loginSuccess } from '../actions/auth'
-// import NavBar from './NavBar.js'
 import { Button, Form, Grid, Header, Segment, Message } from 'semantic-ui-react'
 
 export class Login extends Component {
@@ -32,7 +32,6 @@ export class Login extends Component {
         fetch('http://localhost:3000/api/v1/auth', reqObj)
         .then(resp => resp.json())
         .then(data => {
-            console.log(data)
             if (data.error) {
                 this.setState({
                     error: data.error
@@ -48,7 +47,6 @@ export class Login extends Component {
     render() {
         return (
             <div class='App'>
-                {/* <NavBar /> */}
                 {this.state.error ? <div><br/><br/><h4 style={{color: 'red'}}>{this.state.error}</h4></div> : null}
                 <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
                     <Grid.Column style={{ maxWidth: 450 }}>
@@ -74,7 +72,7 @@ export class Login extends Component {
                             </Segment>
                         </Form>
                         <Message>
-                            New to us? <a href='#'>Sign Up</a>
+                            New to us? <Link exact to={`/users/new`}><Button basic color='blue'>Sign Up</Button></Link>
                         </Message>
                     </Grid.Column>
                 </Grid>

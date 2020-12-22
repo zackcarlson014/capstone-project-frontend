@@ -9,7 +9,7 @@ import LibraryBooks from './LibraryBooks.js'
 import WishedBooks from './WishedBooks.js'
 import NavBar from './NavBar.js'
 import UserCard from './UserCard.js'
-import { Button } from 'semantic-ui-react'
+import { Button, Header } from 'semantic-ui-react'
 import request from 'superagent';
 
 export class Profile extends Component {
@@ -68,10 +68,10 @@ export class Profile extends Component {
                 <div className='App'>
                     <NavBar/>
                     <UserCard /><br/><br/>
-                    <h3>Your Library Books</h3>
+                    <Header as='h3'>Your Library Books</Header>
                     <Button color='blue' onClick={this.handleAddLibraryView}>Add Books To Library</Button><br/><br/>
                     <LibraryBooks /><br/><br/>
-                    <h3>Your Wish List</h3>
+                    <Header as='h3'>Your Wish List</Header>
                     <Button color='blue' onClick={this.handleAddWishedView}>Add Books To Wish List</Button><br/><br/>
                     <WishedBooks />
                     {/* <BookSearch searchBook={this.searchBook} handleSearch={this.handleSearch}/>
@@ -82,12 +82,13 @@ export class Profile extends Component {
             return (
                 <div className='App'>
                     <NavBar/>
-                    <br/><br/><br/><Button color='blue' onClick={this.handleDefaultProfView}>Back to Profile</Button>
-                    <h1>Your Library Books</h1>
-                    <LibraryBooks /><br/>
-                    <h1>Search for Library Books</h1>
-                    <BookSearch searchBook={this.searchBook} handleSearch={this.handleSearch}/><br/><br/>
+                    <br/><br/><br/><Button color='blue' onClick={this.handleDefaultProfView}>Back to Profile</Button><br/><br/>
+                    <Header as='h1'>Search for Library Books</Header>
+                    <BookSearch searchBook={this.searchBook} handleSearch={this.handleSearch}/>
                     <AddLibraryBookList books={this.state.books} />
+                    <br/><br/><Header as='h1'>Your Library Books</Header>
+                    <LibraryBooks /><br/>
+                    <br/><br/><br/><Button color='blue' onClick={this.handleDefaultProfView}>Back to Profile</Button><br/><br/>
                 </div>
             )
         } else if (this.state.profView === 'addWished') {
@@ -95,10 +96,10 @@ export class Profile extends Component {
                 <div className='App'>
                     <NavBar/>
                     <br/><br/><br/><Button color='blue' onClick={this.handleDefaultProfView}>Back to Profile</Button><br/><br/>
-                    <h1>Search for Wish List Books</h1>
+                    <Header  as='h1'>Search for Wish List Books</Header>
                     <BookSearch searchBook={this.searchBook} handleSearch={this.handleSearch}/>
                     <AddWishedBookList books={this.state.books} />
-                    <br/><br/><h1>Your Wish List</h1>
+                    <br/><br/><Header  as='h1'>Your Wish List</Header>
                     <WishedBooks /><br/>
                     
                     {/* <BookSearch searchBook={this.searchBook} handleSearch={this.handleSearch}/>

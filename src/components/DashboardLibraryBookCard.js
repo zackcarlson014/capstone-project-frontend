@@ -1,13 +1,17 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { showBook } from '../actions/index.js'
+import { showBook, showUser } from '../actions/index.js'
 import { Card, Image, Button, Icon } from 'semantic-ui-react'
 
 export class DashboardLibraryBookCard extends Component {
 
-    handleCardClick = () => {
+    handleBookView = () => {
         this.props.showBook(this.props.book, this.props.user)
+    }
+
+    handleUserView = () => {
+        this.props.showUser(this.props.user)
     }
 
     render() {
@@ -24,19 +28,21 @@ export class DashboardLibraryBookCard extends Component {
                     </Card.Description>
                 </Card.Content>
                 <Card.Content extra>
-                    <Button fluid color='green'>
-                        <Icon name='user' />
-                        {this.props.user.username}'s Book
-                    </Button>
-                        <Link exact to={`/books/${this.props.book.id}`}>
-                            <Button fluid color='blue' onClick={this.handleCardClick}>
-                                View Book
-                            </Button>
-                        </Link>
+                    <Link exact to={`/users/${this.props.user.id}`}>
+                        <Button fluid color='green' onClick={this.handleUserView}>
+                            <Icon name='user' />
+                            {this.props.user.username}'s Book
+                        </Button>
+                    </Link>
+                    <Link exact to={`/books/${this.props.book.id}`}>
+                        <Button fluid color='blue' onClick={this.handleBookView}>
+                            View Book
+                        </Button>
+                    </Link>
                 </Card.Content>
             </Card>
         )
     }
 }
 
-export default connect(null, { showBook })(DashboardLibraryBookCard)
+export default connect(null, { showBook, showUser })(DashboardLibraryBookCard)

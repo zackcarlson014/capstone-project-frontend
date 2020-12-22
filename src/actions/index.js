@@ -30,6 +30,14 @@ export const deleteWishBook = (id) => {
     }
 }
 
+export const addComment = (comment, user) => {
+    return {
+        type: 'ADD_COMMENT',
+        comment,
+        user
+    }
+}
+
 export const allLibraryBooks = (libBooks) => {
     return {
         type: 'ALL_LIBRARY_BOOKS',
@@ -41,6 +49,13 @@ export const allWishedBooks = (wishBooks) => {
     return {
         type: 'ALL_WISHED_BOOKS',
         wishBooks
+    }
+}
+
+export const allComments = (comments) => {
+    return {
+        type: 'SHOW_COMMENTS',
+        comments
     }
 }
 
@@ -58,3 +73,4 @@ export const showUser = (user) => {
         user
     }
 }
+

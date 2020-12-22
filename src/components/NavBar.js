@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { NavLink } from 'react-router-dom';
 import { logoutUser } from '../actions/auth'
-import { Menu } from 'semantic-ui-react'
+import { Dropdown, Icon, Segment, Menu } from 'semantic-ui-react'
 
 export class NavBar extends Component {
   state = { 
@@ -30,6 +30,25 @@ export class NavBar extends Component {
 
     return (
       <Menu inverted color='black' style={style}>
+          <Dropdown item icon='home' simple>
+            <Dropdown.Menu>
+            <Dropdown.Item>
+                <Icon name='book' />
+                <span className='text'>New</span>
+
+                <Dropdown.Menu>
+                <Dropdown.Item>Library Books</Dropdown.Item>
+                <Dropdown.Item>WishList Books</Dropdown.Item>
+                </Dropdown.Menu>
+            </Dropdown.Item>
+            <Dropdown.Item>All Books</Dropdown.Item>
+            <Dropdown.Item>Save...</Dropdown.Item>
+            <Dropdown.Item>Edit Permissions</Dropdown.Item>
+            <Dropdown.Divider />
+            <Dropdown.Header>Export</Dropdown.Header>
+            <Dropdown.Item>Share</Dropdown.Item>
+            </Dropdown.Menu>
+        </Dropdown>
         <Menu.Item
           as={NavLink}
           to='/profile'
@@ -37,7 +56,7 @@ export class NavBar extends Component {
           active={activeItem === 'home'}
           onClick={this.handleItemClick}
         >
-          Home
+          Profile
         </Menu.Item>
         <Menu.Item
           as={NavLink}

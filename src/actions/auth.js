@@ -1,22 +1,20 @@
-export const loginSuccess = ({user, library_books, wished_books, all_lib_books, all_wish_books}) => {
+export const loginSuccess = ({user, all_lib_books, all_wish_books, comments}) => {
     return {
       type: 'LOGIN_SUCCESS',
       user,
-      library_books,
-      wished_books,
       all_lib_books,
-      all_wish_books
+      all_wish_books,
+      comments
     }
   }
 
-  export const currentUser= ({user, library_books, wished_books, all_lib_books, all_wish_books}) => {
+  export const currentUser= ({user, all_lib_books, all_wish_books, comments}) => {
     return {
       type: 'CURRENT_USER',
       user,
-      library_books,
-      wished_books,
       all_lib_books,
-      all_wish_books
+      all_wish_books,
+      comments
     }
   }
   

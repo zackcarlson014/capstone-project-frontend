@@ -7,6 +7,7 @@ import { allWishedBooks } from './actions/index'
 import Profile from './components/Profile.js'
 import Login from './components/Login.js'
 import PublicProfile from './components/PublicProfile.js'
+import NewUserForm from './components/NewUserForm.js'
 import BooksDashboard from './components/BooksDashboard.js'
 import BookShowPage from './components/BookShowPage.js'
 import './App.css';
@@ -31,17 +32,7 @@ export class App extends Component {
             this.props.currentUser(data)
         })
 
-        // fetch('http://localhost:3000/api/v1/user_lib_books')
-        // .then(resp => resp.json())
-        // .then(data => {
-        //     this.props.allLibraryBooks(data)
-        // })
-
-        // fetch('http://localhost:3000/api/v1/user_wish_books')
-        // .then(resp => resp.json())
-        // .then(data => {
-        //     this.props.allWishedBooks(data)
-        // })
+        
     }
   }
   
@@ -51,7 +42,8 @@ export class App extends Component {
           <Switch>
               <Route path='/login' component={Login} />
               <Route path='/profile' component={Profile} />
-              <Route path='/users/:id' component={PublicProfile} />
+              <Route exact path='/users/new' component={NewUserForm} />
+              <Route exact path='/users/:id' component={PublicProfile} />
               <Route path='/books/:id' component={BookShowPage} />
               <Route exact path='/books' component={BooksDashboard} />
           </Switch>
