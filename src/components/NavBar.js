@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { NavLink } from 'react-router-dom';
 import { logoutUser } from '../actions/auth'
-import { Dropdown, Icon, Segment, Menu } from 'semantic-ui-react'
+import { Dropdown, Icon, Menu } from 'semantic-ui-react'
 
 export class NavBar extends Component {
   state = { 

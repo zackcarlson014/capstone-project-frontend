@@ -22,6 +22,7 @@ export class AddLibraryBookCard extends Component {
         fetch('http://localhost:3000/api/v1/user_lib_books', reqObj)
         .then(resp => resp.json())
         .then(data => {
+            console.log(data)
             this.props.addLibBook(book, this.props.auth, data.id)
         })
     }

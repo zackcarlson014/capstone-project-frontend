@@ -9,7 +9,7 @@ import LibraryBooks from './LibraryBooks.js'
 import WishedBooks from './WishedBooks.js'
 import NavBar from './NavBar.js'
 import UserCard from './UserCard.js'
-import { Button, Header } from 'semantic-ui-react'
+import { Button, Header, Icon } from 'semantic-ui-react'
 import request from 'superagent';
 
 export class Profile extends Component {
@@ -68,14 +68,18 @@ export class Profile extends Component {
                 <div className='App'>
                     <NavBar/>
                     <UserCard /><br/><br/>
-                    <Header as='h3'>Your Library Books</Header>
+                    <Header as='h3' icon style={{color: 'white'}}>
+                        <Icon name='book' circular />
+                        <Header.Content>Your Library Books</Header.Content>
+                    </Header><br/>
                     <Button color='blue' onClick={this.handleAddLibraryView}>Add Books To Library</Button><br/><br/>
                     <LibraryBooks /><br/><br/>
-                    <Header as='h3'>Your Wish List</Header>
+                    <Header as='h3' icon style={{color: 'white'}}>
+                        <Icon name='book' circular />
+                        <Header.Content>Your WishList Books</Header.Content>
+                    </Header><br/>
                     <Button color='blue' onClick={this.handleAddWishedView}>Add Books To Wish List</Button><br/><br/>
-                    <WishedBooks />
-                    {/* <BookSearch searchBook={this.searchBook} handleSearch={this.handleSearch}/>
-                    <BookList books={this.state.books} /> */}
+                    <WishedBooks /> 
                 </div>
             )
         } else if (this.state.profView === 'addLibrary') {
@@ -101,9 +105,6 @@ export class Profile extends Component {
                     <AddWishedBookList books={this.state.books} />
                     <br/><br/><Header  as='h1'>Your Wish List</Header>
                     <WishedBooks /><br/>
-                    
-                    {/* <BookSearch searchBook={this.searchBook} handleSearch={this.handleSearch}/>
-                    <AddWishedBookList books={this.state.books} /> */}
                 </div>
             )
         }

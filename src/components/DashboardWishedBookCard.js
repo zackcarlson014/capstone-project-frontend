@@ -1,7 +1,19 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
+import { showBook, showUser } from '../actions/index.js'
 import { Card, Image, Button, Icon } from 'semantic-ui-react'
 
 export class DashboardWishedBookCard extends Component {
+
+    handleBookView = () => {
+        this.props.showBook(this.props.book, this.props.user)
+    }
+
+    handleUserView = () => {
+        this.props.showUser(this.props.user)
+    }
+
     render() {
         return (
             <Card color='blue'>
@@ -16,17 +28,20 @@ export class DashboardWishedBookCard extends Component {
                     </Card.Description>
                 </Card.Content>
                 <Card.Content extra>
-                    <Button fluid color='green'>
-                        <Icon name='user' />
-                        {this.props.user.username}'s Wish
-                    </Button>
-                    <Button fluid color='blue'>
-                        View Book
-                    </Button>
+                    <Button.Group widths='2'>
+                        <Button as={ Link } exact to={`/users/${this.props.user.id}`} animated='fade' icon='user' color='green' onClick={this.handleUserView}>
+                            <Button.Content visible><Icon name='user'/></Button.Content>
+                            <Button.Content hidden>{this.props.user.username}</Button.Content>
+                        </Button>
+                        <Button as={ Link } exact to={`/books/${this.props.book.id}`} animated='fade' icon='eye' color='blue' onClick={this.handleBookView}>
+                            <Button.Content visible><Icon name='eye'/></Button.Content>
+                            <Button.Content hidden>View</Button.Content>
+                        </Button>
+                    </Button.Group>
                 </Card.Content>
             </Card>
         )
     }
 }
 
-export default DashboardWishedBookCard
+export default connect(null, { showBook, showUser })(DashboardWishedBookCard)

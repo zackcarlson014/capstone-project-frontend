@@ -13,7 +13,7 @@ export class WishedBooks extends Component {
             <div>
                 <div className='ui eight cards'>
                     {this.wishedBooks().map((wishBook, i) => {
-                        return <WishedBookCard key={i} book={wishBook[0]} userBookId={wishBook[2]}/>
+                        return <WishedBookCard key={i} book={wishBook[0]} user={wishBook[1]} userBookId={wishBook[2]}/>
                     })}
                 </div>
             </div>

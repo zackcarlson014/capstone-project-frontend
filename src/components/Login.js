@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { loginSuccess } from '../actions/auth'
-import { Button, Form, Grid, Header, Segment, Message } from 'semantic-ui-react'
+import { Button, Form, Grid, Header, Segment, Message, Icon } from 'semantic-ui-react'
 
 export class Login extends Component {
 
@@ -46,12 +46,13 @@ export class Login extends Component {
 
     render() {
         return (
-            <div class='App'>
+            <div className='App'>
                 {this.state.error ? <div><br/><br/><h4 style={{color: 'red'}}>{this.state.error}</h4></div> : null}
-                <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
+                <Grid textAlign='center' style={{ height: '110vh' }} verticalAlign='middle'>
                     <Grid.Column style={{ maxWidth: 450 }}>
-                        <Header as='h2' color='blue' style={{backgroundColor: 'white'}} textAlign='center'>
-                            Log-in to your account
+                        <Header as='h2' icon style={{color: 'white'}} textAlign='center'>
+                            <Icon name='book' circular />
+                            <Header.Content>Welcome to MyBrary</Header.Content>
                         </Header>
                         <Form size='large' onSubmit={this.handleSubmit}>
                             <Segment stacked>
@@ -65,23 +66,16 @@ export class Login extends Component {
                                 value={this.state.password}
                                 type='password'
                             />
-
                             <Button color='blue' fluid size='large'>
                                 Login
                             </Button>
                             </Segment>
                         </Form>
                         <Message>
-                            New to us? <Link exact to={`/users/new`}><Button basic color='blue'>Sign Up</Button></Link>
+                            New to us? <Button as={ Link } exact to={`/users/new`} color='green' size='mini'>Sign Up</Button>
                         </Message>
                     </Grid.Column>
                 </Grid>
-                {/* <br/><br/><h3>Sign In</h3>
-                <form onSubmit={this.handleSubmit}>
-                    <input name={'username'} onChange={this.handleInputChange} value={this.state.username} placeholder='Enter username...'/>
-                    <input type='password' name={'password'} onChange={this.handleInputChange} value={this.state.password} placeholder='Enter password...'/>
-                    <input type='submit' value='login'/>
-                </form> */}
             </div>
         )
     }

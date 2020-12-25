@@ -28,17 +28,27 @@ export class DashboardLibraryBookCard extends Component {
                     </Card.Description>
                 </Card.Content>
                 <Card.Content extra>
-                    <Link exact to={`/users/${this.props.user.id}`}>
+                    <Button.Group widths='2'>
+                        <Button as={ Link } exact to={`/users/${this.props.user.id}`} animated='fade' icon='user' color='green' onClick={this.handleUserView}>
+                            <Button.Content visible><Icon name='user'/></Button.Content>
+                            <Button.Content hidden>{this.props.user.username}</Button.Content>
+                        </Button>
+                        <Button as={ Link } exact to={`/books/${this.props.book.id}`} animated='fade' icon='eye' color='blue' onClick={this.handleBookView}>
+                            <Button.Content visible><Icon name='eye'/></Button.Content>
+                            <Button.Content hidden>View</Button.Content>
+                        </Button>
+                    </Button.Group>
+                    {/* <Link exact to={`/users/${this.props.user.id}`}>
                         <Button fluid color='green' onClick={this.handleUserView}>
                             <Icon name='user' />
-                            {this.props.user.username}'s Book
+                            {this.props.user.username}
                         </Button>
                     </Link>
                     <Link exact to={`/books/${this.props.book.id}`}>
                         <Button fluid color='blue' onClick={this.handleBookView}>
                             View Book
                         </Button>
-                    </Link>
+                    </Link> */}
                 </Card.Content>
             </Card>
         )

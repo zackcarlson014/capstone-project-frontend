@@ -30,11 +30,28 @@ export const deleteWishBook = (id) => {
     }
 }
 
-export const addComment = (comment, user) => {
+export const addComment = (comment, user, likes) => {
     return {
         type: 'ADD_COMMENT',
         comment,
-        user
+        user,
+        likes
+    }
+}
+
+export const addLike = (comment, user, likes) => {
+    return {
+        type: 'ADD_LIKE',
+        comment,
+        user,
+        likes
+    }
+}
+
+export const deleteComment = (id) => {
+    return {
+        type: 'DELETE_COMMENT',
+        id
     }
 }
 

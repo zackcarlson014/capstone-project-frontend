@@ -48,7 +48,7 @@ export class Comments extends Component {
         fetch('http://localhost:3000/api/v1/comments', reqObj)
         .then(resp => resp.json())
         .then(data => {
-            this.props.addComment(data, this.props.auth)
+            this.props.addComment(data, this.props.auth, 0)
             this.setState({
                 content: ''
             })
@@ -58,13 +58,13 @@ export class Comments extends Component {
     render() {
         return (
             <div>
-                <Comment.Group>
+                <Comment.Group size='large'>
                     <Header as='h3' dividing>
                     Comments
                     </Header>
                     <div>
                         {this.props.comments.map((comment, i) => {
-                            return <CommentItem comment={comment[0]} user={comment[1]}/>
+                            return <CommentItem key={i} comment={comment[0]} user={comment[1]} likes={comment[2]}/>
                         })}
                     </div>
                     <Form reply onSubmit={this.handleSubmit}>

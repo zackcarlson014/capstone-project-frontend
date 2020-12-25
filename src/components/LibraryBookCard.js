@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { deleteLibBook, showBook } from '../actions/index.js'
-import { Card, Image, Button } from 'semantic-ui-react'
+import { Card, Image, Button, Icon } from 'semantic-ui-react'
 
 
 export class LibraryBookCard extends Component {
@@ -25,9 +25,7 @@ export class LibraryBookCard extends Component {
     render() {
         return (
             <Card color='blue'>
-                {/* <Link onClick={this.handleCardClick} exact to={`/books/${this.props.book.id}`}> */}
-                    <Image src={this.props.book.image ? this.props.book.image : 'https://www.pngfind.com/pngs/m/216-2160526_jpg-royalty-free-library-3-books-clipart-book.png'} wrapped ui={false} width='300px' height='300px'/>
-                {/* </Link> */}
+                <Image as={ Link } exact to={`/books/${this.props.book.id}`} onClick={this.handleCardClick} src={this.props.book.image ? this.props.book.image : 'https://www.pngfind.com/pngs/m/216-2160526_jpg-royalty-free-library-3-books-clipart-book.png'} wrapped ui={false} width='300px' height='300px'/>
                 <Card.Content>
                     <Card.Header>{this.props.book.title}</Card.Header>
                     <Card.Meta>
@@ -38,18 +36,20 @@ export class LibraryBookCard extends Component {
                     </Card.Description>
                 </Card.Content>
                 <Card.Content extra>
-                    <div className='ui two buttons'>
-                        <Link exact to={`/books/${this.props.book.id}`}>
-                            <Button color='blue' onClick={this.handleCardClick}>
-                                View
-                            </Button>
-                        </Link>
-                        <Button color='red' onClick={this.handleRemoveBook}>
-                            Remove
+                    <Button.Group widths='2'>
+                        <Button as={ Link } exact to={`/books/${this.props.book.id}`} animated='fade' icon='eye' color='blue' onClick={this.handleCardClick}>
+                            <Button.Content visible><Icon name='eye'/></Button.Content>
+                            <Button.Content hidden>View</Button.Content>
                         </Button>
-                    </div>
-                    {/* <Button color='blue' onClick={this.handleRemoveBook}>Remove</Button>
-                    <Link exact to={`/books/${this.props.book.id}`}><Button onClick={this.handleCardClick} color='blue'>View</Button></Link> */}
+                        <Button animated='fade' icon='trash alternate outline' color='red' onClick={this.handleRemoveBook}>
+                            <Button.Content visible><Icon name='trash alternate outline'/></Button.Content>
+                            <Button.Content hidden>Delete</Button.Content>
+                        </Button>
+                    </Button.Group>
+                    {/* <Button.Group widths='2'>
+                        <Button as={ Link } exact to={`/books/${this.props.book.id}`} icon='eye' color='blue' onClick={this.handleCardClick} />
+                        <Button icon='trash alternate outline' color='red' onClick={this.handleRemoveBook}/>
+                    </Button.Group> */}
                 </Card.Content>
             </Card>
         )

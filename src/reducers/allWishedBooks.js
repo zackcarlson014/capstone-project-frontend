@@ -6,7 +6,11 @@ export const allWishedBooks = (state=[], action) => {
         case 'CURRENT_USER':
             return action.all_wish_books
         case 'ADD_WISHED_BOOK':
-            return [...state, [action.newWishBook, action.auth, action.userBookId]]
+            if (state.find(b => b[2] === action.userBookId)) {
+                return state
+            } else {
+                return [...state, [action.newWishBook, action.auth, action.userBookId]]
+            }
         case 'DELETE_WISHED_BOOK':
             updatedBooks = state.filter(b => b[2] !== action.id)
             return updatedBooks

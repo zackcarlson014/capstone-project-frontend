@@ -6,7 +6,11 @@ export const allLibraryBooks = (state=[], action) => {
         case 'CURRENT_USER':
             return action.all_lib_books
         case 'ADD_LIBRARY_BOOK':
-            return [...state, [action.newLibBook, action.auth, action.userBookId]]
+            if (state.find(b => b[2] === action.userBookId)) {
+                return state
+            } else {
+                return [...state, [action.newLibBook, action.auth, action.userBookId]]
+            }
         case 'DELETE_LIBRARY_BOOK':
             updatedBooks = state.filter(b => b[2] !== action.id)
             return updatedBooks

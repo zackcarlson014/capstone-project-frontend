@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Button, Form, Grid, Header, Segment } from 'semantic-ui-react'
+import { Link } from 'react-router-dom'
+import { Button, Form, Grid, Header, Segment, Message, Icon } from 'semantic-ui-react'
 
 
 export class NewUserForm extends Component {
@@ -47,13 +48,13 @@ export class NewUserForm extends Component {
 
     render() {
         return (
-            // <div className='App'>
-            <div class='App'>
+            <div className='App'>
                 {this.state.error ? <div><br/><br/><h4 style={{color: 'red'}}>{this.state.error}</h4></div> : null}
-                <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
+                <Grid textAlign='center' style={{ height: '110vh' }} verticalAlign='middle'>
                     <Grid.Column style={{ maxWidth: 600 }}>
-                        <Header as='h2' color='green' style={{backgroundColor: 'white'}} textAlign='center'>
-                            Create a New Account!!
+                        <Header as='h2' icon style={{color: 'white'}} textAlign='center'>
+                            <Icon name='book' circular />
+                            <Header.Content>Create an Account!!</Header.Content>
                         </Header>
                         <Form size='large' onSubmit={this.handleSubmit}>
                             <Segment stacked>
@@ -80,7 +81,7 @@ export class NewUserForm extends Component {
                                 placeholder='About Me...'
                                 name='bio'
                                 label='User Bio'
-                                labelPosition='left'
+                                labelposition='left'
                                 value={this.state.bio}
                                 type='password'
                             />
@@ -89,6 +90,9 @@ export class NewUserForm extends Component {
                             </Button>
                             </Segment>
                         </Form>
+                        <Message>
+                            Already have an account? <Button as={ Link } exact to={`/login`} color='blue' size='mini'>Login</Button>
+                        </Message>
                     </Grid.Column>
                 </Grid>
           </div>

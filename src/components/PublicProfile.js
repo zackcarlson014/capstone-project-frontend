@@ -35,7 +35,7 @@ export class PublicProfile extends Component {
                         })}
                     </div>
                 </div>
-                <br/><br/><Header as='h2'>{this.props.user.username}'s Wished Books</Header>
+                <br/><br/><Header as='h2'>{this.props.user.username}'s WishList Books</Header>
                 <div>
                     <div className='ui eight cards'>
                         {this.wishedBooks().map((book, i) => {

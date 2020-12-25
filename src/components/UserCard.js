@@ -3,11 +3,18 @@ import { connect } from 'react-redux'
 import { Card, Image, Icon } from 'semantic-ui-react'
 
 export class UserCard extends Component {
+
+    bookCount = () => {
+        let books = []
+        books = this.props.allLibraryBooks.filter(book => book[1].id === this.props.auth.id)
+        return books.length
+    }
+
     render() {
         return (
             <div>
                 <br/><br/><Card color='blue'>
-                    <Image src={this.props.auth ? this.props.auth.prof_pic_url : null} wrapped ui={false} />
+                    <Image src={this.props.auth && this.props.auth.prof_pic_url ? this.props.auth.prof_pic_url : 'https://icon-library.com/images/default-user-icon/default-user-icon-4.jpg'} wrapped ui={false} />
                     <Card.Content>
                         <Card.Header>{this.props.auth ? this.props.auth.username : null}</Card.Header>
                         <Card.Meta>
@@ -17,9 +24,9 @@ export class UserCard extends Component {
                             {this.props.auth ? this.props.auth.bio : null}
                         </Card.Description>
                     </Card.Content>
-                    <Card.Content extra>
-                            <Icon name='user' />
-                            22 Friends
+                    <Card.Content extra >
+                            <Icon name='book' />
+                            {this.bookCount()} Library Books
                     </Card.Content>
                 </Card>
             </div>
@@ -29,7 +36,8 @@ export class UserCard extends Component {
 
 const mapStateToProps = state => {
     return {
-        auth: state.auth
+        auth: state.auth,
+        allLibraryBooks: state.allLibraryBooks
     }
 }
 
