@@ -26,6 +26,7 @@ export class DashboardLibraryBookCard extends Component {
                     <Card.Description>
                         {this.props.book.author}
                     </Card.Description>
+                    {this.props.match ? <Card.Content textAlign="center"><br/><Icon name='check' circular size='big' color='green'/></Card.Content> : null}
                 </Card.Content>
                 <Card.Content extra>
                     <Button.Group widths='2'>
@@ -38,17 +39,6 @@ export class DashboardLibraryBookCard extends Component {
                             <Button.Content hidden>View</Button.Content>
                         </Button>
                     </Button.Group>
-                    {/* <Link exact to={`/users/${this.props.user.id}`}>
-                        <Button fluid color='green' onClick={this.handleUserView}>
-                            <Icon name='user' />
-                            {this.props.user.username}
-                        </Button>
-                    </Link>
-                    <Link exact to={`/books/${this.props.book.id}`}>
-                        <Button fluid color='blue' onClick={this.handleBookView}>
-                            View Book
-                        </Button>
-                    </Link> */}
                 </Card.Content>
             </Card>
         )

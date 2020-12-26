@@ -4,6 +4,10 @@ import DashboardLibraryBookCard from './DashboardLibraryBookCard'
 
 export class DashboardLibraryBooks extends Component {
 
+    wishedBooks = () => {
+        return this.props.allWishedBooks.filter(book => book[1].id === this.props.auth.id)
+    }
+
     libraryBooks = () => {
         return this.props.allLibraryBooks.filter(book => book[1].id !== this.props.auth.id)
     }
@@ -11,9 +15,13 @@ export class DashboardLibraryBooks extends Component {
     render() {
         return (
             <div>
-                <div className='ui eight cards'>
+                <br/><div className='ui eight centered cards'>
                     {this.libraryBooks().map((book, i) => {
-                        return <DashboardLibraryBookCard key={i} book={book[0]} user={book[1]}/>
+                        if (this.wishedBooks().find(b => b[0].id === book[0].id)) {
+                            return <DashboardLibraryBookCard key={i} book={book[0]} user={book[1]} match={true}/>
+                        } else {
+                            return <DashboardLibraryBookCard key={i} book={book[0]} user={book[1]}/>
+                        }
                     })}
                 </div>
             </div>
@@ -24,6 +32,7 @@ export class DashboardLibraryBooks extends Component {
 const mapStateToProps = state => {
     return {
         allLibraryBooks: state.allLibraryBooks,
+        allWishedBooks: state.allWishedBooks,
         auth: state.auth
     }
 }

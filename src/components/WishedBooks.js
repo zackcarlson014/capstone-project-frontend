@@ -8,12 +8,21 @@ export class WishedBooks extends Component {
         return this.props.allWishedBooks.filter(book => book[1].id === this.props.auth.id)
     }
 
+    libraryBooks = () => {
+        return this.props.allLibraryBooks.filter(book => book[1].id !== this.props.auth.id)
+    }
+
+
     render() {
         return (
             <div>
-                <div className='ui eight cards'>
+                <div className='ui seven centered cards'>
                     {this.wishedBooks().map((wishBook, i) => {
-                        return <WishedBookCard key={i} book={wishBook[0]} user={wishBook[1]} userBookId={wishBook[2]}/>
+                        if (this.libraryBooks().find(b => b[0].id === wishBook[0].id)) {
+                            return <WishedBookCard key={i} book={wishBook[0]} user={wishBook[1]} userBookId={wishBook[2]} match={true}/>
+                        } else {
+                            return <WishedBookCard key={i} book={wishBook[0]} user={wishBook[1]} userBookId={wishBook[2]}/>
+                        }
                     })}
                 </div>
             </div>
@@ -24,6 +33,7 @@ export class WishedBooks extends Component {
 const mapStateToProps = state => {
     return {
         allWishedBooks: state.allWishedBooks,
+        allLibraryBooks: state.allLibraryBooks,
         auth: state.auth
     }
 }

@@ -6,7 +6,7 @@ import { Dropdown, Icon, Menu } from 'semantic-ui-react'
 
 export class NavBar extends Component {
   state = { 
-    activeItem: ''
+    activeItem: 'green'
   }
 
   handleLogout = () => {
@@ -14,11 +14,11 @@ export class NavBar extends Component {
     this.props.logoutUser()
   }
 
-  handleItemClick = (e, { name }) => {
-    this.setState({
-      activeItem: name
-    })
-  }
+  // handleItemClick = (e, { name }) => {
+  //   this.setState({
+  //     activeItem: name
+  //   })
+  // }
 
   render() {
     const { activeItem } = this.state
@@ -30,35 +30,34 @@ export class NavBar extends Component {
 
     return (
       <Menu inverted color='black' style={style}>
-          <Dropdown item icon='home' simple>
-            <Dropdown.Menu>
-            <Dropdown.Item>
-                <Icon name='book' />
-                <span className='text'>New</span>
-
-                <Dropdown.Menu>
-                <Dropdown.Item>Library Books</Dropdown.Item>
-                <Dropdown.Item>WishList Books</Dropdown.Item>
-                </Dropdown.Menu>
-            </Dropdown.Item>
-            <Dropdown.Item>All Books</Dropdown.Item>
-            <Dropdown.Item>Save...</Dropdown.Item>
-            <Dropdown.Item>Edit Permissions</Dropdown.Item>
-            <Dropdown.Divider />
-            <Dropdown.Header>Export</Dropdown.Header>
-            <Dropdown.Item>Share</Dropdown.Item>
-            </Dropdown.Menu>
-        </Dropdown>
         <Menu.Item
           as={NavLink}
           to='/profile'
-          name='home'
-          active={activeItem === 'home'}
-          onClick={this.handleItemClick}
+          // name='home'
+          // active={activeItem === 'home'}
+          // onClick={this.handleItemClick}
         >
-          Profile
+          <Icon name='home' />
         </Menu.Item>
-        <Menu.Item
+        <Dropdown item icon='book' simple>
+          <Dropdown.Menu>
+          <Dropdown.Item as={ NavLink } to='/books'>All Books</Dropdown.Item>
+          <Dropdown.Item>
+              <Icon name='book' />
+              <span className='text'>Add</span>
+              <Dropdown.Menu>
+                <Dropdown.Item as={ NavLink } to='/user_lib_books/new'>Library Books</Dropdown.Item>
+                <Dropdown.Item as={ NavLink } to='/user_wish_books/new'>WishList Books</Dropdown.Item>
+              </Dropdown.Menu>
+          </Dropdown.Item>
+          {/* <Dropdown.Item>Save...</Dropdown.Item>
+          <Dropdown.Item>Edit Permissions</Dropdown.Item>
+          <Dropdown.Divider />
+          <Dropdown.Header>Export</Dropdown.Header>
+          <Dropdown.Item>Share</Dropdown.Item> */}
+          </Dropdown.Menu>
+        </Dropdown>
+        {/* <Menu.Item
           as={NavLink}
           to='/books'
           name='books'
@@ -66,7 +65,7 @@ export class NavBar extends Component {
           onClick={this.handleItemClick}
         >
           All Books
-        </Menu.Item>
+        </Menu.Item> */}
         {
             this.props.auth ? 
             <Menu.Item

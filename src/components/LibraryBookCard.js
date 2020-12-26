@@ -34,6 +34,7 @@ export class LibraryBookCard extends Component {
                     <Card.Description>
                         {this.props.book.author}
                     </Card.Description>
+                    {this.props.match ? <Card.Content textAlign="center"><br/><Icon name='check' circular size='big' color='green'/></Card.Content> : null}
                 </Card.Content>
                 <Card.Content extra>
                     <Button.Group widths='2'>

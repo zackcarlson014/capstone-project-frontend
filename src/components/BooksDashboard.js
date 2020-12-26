@@ -11,13 +11,13 @@ export class BooksDashboard extends Component {
         return (
             <div className='App'>
                 <NavBar />
-                <br/><br/><Header as='h1' style={{color: 'white'}}>Let's Get Bookin'!!</Header>
-                <br/><Header as='h3' icon style={{color: 'white'}}>
+                {/* <br/><br/><Header as='h1' style={{color: 'white'}}>Let's Get Bookin'!!</Header> */}
+                <br/><br/><Header as='h2' icon style={{color: 'white'}} textAlign="center">
                     <Icon name='book' circular />
                     <Header.Content>All Library Books</Header.Content>
                 </Header>
                 <DashboardLibraryBooks />
-                <br/><br/><br/><Header as='h3' icon style={{color: 'white'}}>
+                <br/><br/><br/><Header as='h2' icon style={{color: 'white'}} textAlign="center">
                     <Icon name='book' circular />
                     <Header.Content>All WishList Books</Header.Content>
                 </Header>

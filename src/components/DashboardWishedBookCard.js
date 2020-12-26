@@ -27,6 +27,7 @@ export class DashboardWishedBookCard extends Component {
                         {this.props.book.author}
                     </Card.Description>
                 </Card.Content>
+                {this.props.match ? <Card.Content textAlign="center"><br/><Icon name='check' circular size='big' color='green'/></Card.Content> : null}
                 <Card.Content extra>
                     <Button.Group widths='2'>
                         <Button as={ Link } exact to={`/users/${this.props.user.id}`} animated='fade' icon='user' color='green' onClick={this.handleUserView}>

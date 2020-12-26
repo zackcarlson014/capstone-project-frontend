@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Container, Header } from 'semantic-ui-react'
+import { Container, Header, Icon, Segment } from 'semantic-ui-react'
 import NavBar from './NavBar.js'
 import DashboardLibraryBookCard from './DashboardLibraryBookCard'
 import DashboardWishedBookCard from './DashboardWishedBookCard'
@@ -23,11 +23,13 @@ export class PublicProfile extends Component {
                 <Container>
                     <br/><br/><h1>{this.props.user.username}</h1><br/>
                     <img src={this.props.user.prof_pic_url} alt=''style={{maxWidth: 400, maxHeight: 400}}/><br/><br/>
-                    <p>{this.props.user.bio}</p><br/><br/><br/>
-                    {/* <Button color='red' onClick={this.handleDelete}>Delete Note</Button>
-                    <Link key={this.props.book.id} exact to={`/notes/edit/${this.props.boo.id}`} ><Button color='blue' onClick={this.handleEdit}>Edit Note</Button></Link> */}
+                    <Segment textAlign="center">{this.props.user.bio}</Segment>
+                    
                 </Container>
-                <Header as='h2'>{this.props.user.username}'s Library Books</Header>
+                <Header as='h3' icon style={{color: 'white'}} textAlign="center">
+                        <Icon name='book' circular />
+                        <Header.Content>{this.props.user.username}'s Library Books</Header.Content>
+                    </Header><br/><br/>
                 <div>
                     <div className='ui eight cards'>
                         {this.libraryBooks().map((book, i) => {
