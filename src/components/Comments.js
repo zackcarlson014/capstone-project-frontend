@@ -62,11 +62,17 @@ export class Comments extends Component {
                     <Header as='h3' dividing>
                     Comments
                     </Header>
-                    <div>
-                        {this.props.comments.map((comment, i) => {
-                            return <CommentItem key={i} comment={comment[0]} user={comment[1]} likes={comment[2]}/>
-                        })}
-                    </div>
+                    {this.props.comments.length === 0 ?
+                        <Header as='h4' style={{color: 'red'}}>
+                        Be the first to leave a comment on this book!
+                        </Header>
+                        :
+                        <div>
+                            {this.props.comments.map((comment, i) => {
+                                return <CommentItem key={i} comment={comment[0]} user={comment[1]} likes={comment[2]}/>
+                            })}
+                        </div>
+                    }
                     <Form reply onSubmit={this.handleSubmit}>
                         <Form.TextArea onChange={this.handleInputChange} name='content' value={this.state.content}/>
                         <Button type='submit' content='Add Reply' labelPosition='left' icon='edit' primary />

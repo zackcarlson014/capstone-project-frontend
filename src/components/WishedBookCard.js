@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom';
 import { deleteWishBook, showBook } from '../actions/index.js'
-import { Card, Image, Button, Icon } from 'semantic-ui-react'
+import { Card, Image, Button, Icon, Header } from 'semantic-ui-react'
 
 export class WishedBookCard extends Component {
 
@@ -32,7 +32,16 @@ export class WishedBookCard extends Component {
                     <Card.Description>
                         {this.props.book.author}
                     </Card.Description>
-                    {this.props.match ? <Card.Content textAlign="center"><br/><Icon name='check' circular size='big' color='green'/></Card.Content> : null}
+                    {this.props.match ? 
+                        <Card.Content textAlign="center"><br/>
+                            <Header as='h5' icon color='green' textAlign="center">
+                                <Icon name='check' circular/>
+                                <Header.Content>Match</Header.Content>
+                            </Header>
+                        </Card.Content> 
+                        : 
+                        null
+                    }
                 </Card.Content>
                 <Card.Content extra>
                     <Button.Group widths='2'>

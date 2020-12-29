@@ -9,6 +9,10 @@ p {
   white-space: normal;
 }
 
+.nav > input:focus {
+  color: white !important;
+}
+
 .ui.container {
   overflow: auto;
   white-space: nowrap;

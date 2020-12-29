@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { Card, Image, Icon, Button } from 'semantic-ui-react'
 
 export class UserCard extends Component {
@@ -26,7 +27,7 @@ export class UserCard extends Component {
                         </Card.Description>
                     </Card.Content>
                     <Card.Content extra >
-                        <Button color='red' fluid>Edit Profile</Button>
+                        <Button as={ Link } exact to={this.props.auth ? `/users/${this.props.auth.id}/edit` : null} color='red' fluid>Edit Profile</Button>
                     </Card.Content>
                 </Card>
             </div>

@@ -30,6 +30,13 @@ export const deleteWishBook = (id) => {
     }
 }
 
+export const addReservedBook = (newReservedBook) => {
+    return {
+        type: 'RESERVE_BOOK',
+        newReservedBook
+    }
+}
+
 export const addComment = (comment, user, likes) => {
     return {
         type: 'ADD_COMMENT',

@@ -18,9 +18,9 @@ export class DashboardLibraryBooks extends Component {
                 <br/><div className='ui eight centered cards'>
                     {this.libraryBooks().map((book, i) => {
                         if (this.wishedBooks().find(b => b[0].id === book[0].id)) {
-                            return <DashboardLibraryBookCard key={i} book={book[0]} user={book[1]} match={true}/>
+                            return <DashboardLibraryBookCard key={i} book={book[0]} user={book[1]} userBookId={book[2]} match={true}/>
                         } else {
-                            return <DashboardLibraryBookCard key={i} book={book[0]} user={book[1]}/>
+                            return <DashboardLibraryBookCard key={i} book={book[0]} user={book[1]} userBookId={book[2]}/>
                         }
                     })}
                 </div>

@@ -1,12 +1,17 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
-import { showUser } from '../actions/index.js'
-import { Container, Button, Icon, Segment } from 'semantic-ui-react'
+import { showUser, addReservedBook } from '../actions/index.js'
 import NavBar from './NavBar.js'
 import Comments from './Comments.js'
+import UserCarousel from './UserCarousel.js'
+import { Grid, Segment, Header, Image, Button, Icon } from 'semantic-ui-react'
+
 
 export class BookShowPage extends Component {
+
+    componentDidMount() {
+        window.scrollTo(0, 0)
+    }
 
     bookComments = () => {
         return this.props.allComments.filter(comment => comment[0].book_id === this.props.book[0].id)
@@ -16,43 +21,111 @@ export class BookShowPage extends Component {
         this.props.showUser(this.props.book[1])
     }
 
+    handleAddReservedBook = (libBookId) => {
+
+        const newReservedBook = {
+            user_id: this.props.auth.id,
+            user_lib_book_id: libBookId,
+            delivered: false,
+        }
+
+        const reqObj = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(newReservedBook)
+        }
+        fetch('http://localhost:3000/api/v1/reserved_books', reqObj)
+            .then(resp => resp.json())
+            .then(newReservedBook => {
+                this.props.addReservedBook(newReservedBook)
+            })
+    }
+
+    libraryUsers = () => {
+        return this.props.allLibraryBooks.filter(b => b[0].id === this.props.book[0].id && b[1].id !== this.props.auth.id)
+    }
+
+    myBook = () => {
+        return this.props.allLibraryBooks.find(b => b[0].id === this.props.book[0].id && b[1].id === this.props.auth.id) ? true : false
+    }
+
     render() {
+        
         if (!this.props.book) {
             
         } else {
             return (
                 <div className='App'>
                     <NavBar/>
-                    <Container>
-                        <br/><br/><h1>{this.props.book[0].title}</h1><br/>
-                        <img src={this.props.book[0].image} alt='' width='210px' height='300px'/><br/><br/>
-                        <h3><strong>{this.props.book[0].author}</strong></h3><br/>
-                        {this.props.auth.id !== this.props.book[1].id ?
-                        <div>
-                        <Button as={ Link } exact to={`/users/${this.props.book[1].id}`} animated='fade' icon='user' color='green' onClick={this.handleShowUser}>
-                            <Button.Content visible><Icon name='user'/></Button.Content>
-                            <Button.Content hidden>{this.props.book[1].username}</Button.Content>
-                        </Button><br/><br/>
-                        </div>
-                        // <Link exact to={`/users/${this.props.book[1].id}`}>
-                        //     <Button color='green' onClick={this.handleShowUser}>View {this.props.book[1].username}'s Profile</Button><br/><br/>
-                        // </Link> 
-                        :
+                    <br/><Grid>
+                        <Grid.Row>
+                            <Grid.Column width='2'></Grid.Column>
+                            <Grid.Column width='8'><br/><Header as='h1' style={{color: 'white'}}>{this.props.book[0].title}</Header></Grid.Column>
+                        </Grid.Row>
+                        <Grid.Row>
+                            <Grid.Column width='2'></Grid.Column>
+                            <Grid.Column width='6'><Segment compact><Image src={this.props.book[0].image} alt='' width='245px' height='350px'/></Segment><br/></Grid.Column>
+                            {this.libraryUsers().length !== 0 ?
+                            <UserCarousel users={this.libraryUsers()}/>
+                            :
+                            null
+                            }  
+                        </Grid.Row>
+                        <Grid.Row>
+                            <Grid.Column width='2'></Grid.Column>
+                            <Grid.Column width='5'><Header as='h3' style={{color: 'white'}}><strong>{this.props.book[0].author}</strong></Header></Grid.Column>
+                        </Grid.Row>
+                        {this.myBook() ?
                         null
+                        :
+                        <Grid.Row>
+                        <Grid.Column width='2'></Grid.Column>
+                            {this.libraryUsers().length !== 0 ?
+                            this.libraryUsers().map(l => {
+                                return (
+                                    <Grid.Column width='2'>
+                                        <Button fluid onClick={() => {this.handleAddReservedBook(l[2])}} animated='fade' icon='user' color='green' >
+                                            <Button.Content visible><Icon name='tag'/></Button.Content>
+                                            <Button.Content hidden>Reserve from {l[1].username}</Button.Content>
+                                        </Button>
+                                    </Grid.Column>
+                                )
+                            })
+                            :
+                            null
+                            } 
+                        </Grid.Row>
                         }
-                        {this.props.book[0].description ? 
-                        <Segment>
-                            <Container>  
-                                <p>{this.props.book[0].description}</p>
-                            </Container>
-                        </Segment>
-                        :
-                        null
-                        }               
-                    </Container><br/><br/>
-                    <Segment>
-                        <Comments book={this.props.book[0]} user={this.props.book[1]} comments={this.bookComments()}/>
-                    </Segment>
+
+                        <Grid.Row>
+                        <Grid.Column width='2'></Grid.Column>
+                            {this.props.book[0].description ? 
+                            <Grid.Column width='12'>
+                                <Segment compact>
+                                        <p>{this.props.book[0].description}</p>
+                                </Segment>
+                            </Grid.Column>
+                            :
+                            null
+                            }               
+                        </Grid.Row>
+                        <Grid.Row>
+                        <Grid.Column width='2'></Grid.Column>
+                            <Grid.Column width='12'>
+                                <Segment>
+                                    <Comments book={this.props.book[0]} user={this.props.book[1]} comments={this.bookComments()}/>
+                                </Segment><br/>
+                            </Grid.Column>
+                        </Grid.Row>
+                    </Grid>
+                    <div class="ui inverted vertical footer segment form-page">
+                        <div class="ui container">
+                            MyBrary
+                        </div>
+                    </div>
                 </div>
             )
         }
@@ -63,9 +136,10 @@ export class BookShowPage extends Component {
 const mapStateToProps = state => {
     return {
         book: state.showBook,
+        allLibraryBooks: state.allLibraryBooks,
         allComments: state.allComments,
         auth: state.auth
     }
 }
 
-export default connect(mapStateToProps, { showUser })(BookShowPage)
+export default connect(mapStateToProps, { showUser, addReservedBook })(BookShowPage)

@@ -17,6 +17,10 @@ export class AddLibraryBookContainer extends Component {
         }
     }
 
+    componentDidMount() {
+        window.scrollTo(0, 0)
+      }
+
     searchBook = (e) => {
         e.preventDefault();
         request
@@ -55,7 +59,7 @@ export class AddLibraryBookContainer extends Component {
                     <Header.Content>Your Library Books</Header.Content>
                 </Header>
                 <LibraryBooks /><br/>
-                <br/><br/><br/><Button as={ Link } to='/profile' color='blue'>Back to Profile</Button><br/><br/>
+                <br/><br/><br/><Button as={ Link } to='/profile' color='blue'>Back to Profile</Button><br/><br/><br/>
             </div>
         )
     }

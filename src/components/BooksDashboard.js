@@ -7,6 +7,11 @@ import DashboardWishedBooks from './DashboardWishedBooks.js'
 
 
 export class BooksDashboard extends Component {
+
+    componentDidMount() {
+        window.scrollTo(0, 0)
+    }
+
     render() {
         return (
             <div className='App'>
@@ -21,7 +26,12 @@ export class BooksDashboard extends Component {
                     <Icon name='book' circular />
                     <Header.Content>All WishList Books</Header.Content>
                 </Header>
-                <DashboardWishedBooks />
+                <DashboardWishedBooks /><br/><br/><br/><br/><br/><br/>
+                <div class="ui inverted vertical footer segment form-page">
+                    <div class="ui container">
+                        Travel Match 2015. All Rights Reserved
+                    </div>
+                </div>
             </div>
         )
     }

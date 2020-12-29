@@ -17,6 +17,10 @@ export class AddWishedBookContainer extends Component {
         }
     }
 
+    componentDidMount() {
+        window.scrollTo(0, 0)
+    }
+
     searchBook = (e) => {
         e.preventDefault();
         request

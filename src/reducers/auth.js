@@ -4,6 +4,8 @@ const auth = (state=null, action) => {
             return action.user
         case 'CURRENT_USER':
             return action.user
+        case 'UPDATE_USER':
+            return action.user
         case 'LOGOUT_USER':
             return null
         default: 

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { showBook, showUser } from '../actions/index.js'
-import { Card, Image, Button, Icon } from 'semantic-ui-react'
+import { Card, Image, Button, Icon, Header } from 'semantic-ui-react'
 
 export class DashboardWishedBookCard extends Component {
 
@@ -27,8 +27,23 @@ export class DashboardWishedBookCard extends Component {
                         {this.props.book.author}
                     </Card.Description>
                 </Card.Content>
-                {this.props.match ? <Card.Content textAlign="center"><br/><Icon name='check' circular size='big' color='green'/></Card.Content> : null}
+                {this.props.match ? 
+                    <Card.Content textAlign="center"><br/>
+                        <Header as='h5' icon color='green' textAlign="center">
+                            <Icon name='check' circular/>
+                            <Header.Content>Match</Header.Content>
+                        </Header>
+                    </Card.Content> 
+                    : 
+                    null
+                }
                 <Card.Content extra>
+                {this.props.pub ?
+                        <Button as={ Link } fluid exact to={`/books/${this.props.book.id}`} animated='fade' icon='eye' color='blue' onClick={this.handleBookView}>
+                            <Button.Content visible><Icon name='eye'/></Button.Content>
+                            <Button.Content hidden>View</Button.Content>
+                        </Button>
+                    :
                     <Button.Group widths='2'>
                         <Button as={ Link } exact to={`/users/${this.props.user.id}`} animated='fade' icon='user' color='green' onClick={this.handleUserView}>
                             <Button.Content visible><Icon name='user'/></Button.Content>
@@ -38,7 +53,9 @@ export class DashboardWishedBookCard extends Component {
                             <Button.Content visible><Icon name='eye'/></Button.Content>
                             <Button.Content hidden>View</Button.Content>
                         </Button>
-                    </Button.Group>
+                    </Button.Group>    
+                }
+
                 </Card.Content>
             </Card>
         )
