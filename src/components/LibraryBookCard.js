@@ -22,12 +22,19 @@ export class LibraryBookCard extends Component {
         this.props.showBook(this.props.book, this.props.user)
     }
 
+    handleMyReservedShow = () => {
+        this.props.showBook(this.props.book, this.reservedBookUser())
+    }
+
     reservedBook = () => {
         return this.props.reservedBooks.find(b => b.user_lib_book_id === this.props.userBookId)
     }
 
-    myReservedBook = () => {
-        return this.props.reservedBooks.find(b => b.user_lib_book_id === this.props.userBookId && b.user_id === this.props.auth.id) ? true : false
+    reservedBookUser = () => {
+        if (this.reservedBook()) {
+            const book = this.props.allLibraryBooks.find(b => b[1].id === this.reservedBook().user_id) 
+            return book[1]
+        }
     }
 
     render() {
@@ -63,7 +70,7 @@ export class LibraryBookCard extends Component {
                 </Card.Content>
                 {this.reservedBook() ? 
                     <Card.Content extra>
-                        <Button fluid as={ Link } exact to={this.myReservedBook() ? `/reserved_books/${this.reservedBook().id}` : `/books/${this.props.book.id}`} animated='fade' icon='eye' color='blue' onClick={this.handleCardClick}>
+                        <Button fluid as={ Link } exact to={`/reserved_books/${this.reservedBook().id}`} animated='fade' icon='eye' color='blue' onClick={this.handleMyReservedShow}>
                             <Button.Content visible><Icon name='eye'/></Button.Content>
                             <Button.Content hidden>View</Button.Content>
                         </Button>
@@ -90,6 +97,7 @@ export class LibraryBookCard extends Component {
 const mapStateToProps = state => {
     return {
         reservedBooks: state.reservedBooks,
+        allLibraryBooks: state.allLibraryBooks,
         auth: state.auth
     }
 }

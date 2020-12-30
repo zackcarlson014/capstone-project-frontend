@@ -7,19 +7,8 @@ import CommentItem from './Comment.js'
 export class Comments extends Component {
 
     state = {
-        // comments: [],
         content: ''
     }
-    
-    // componentDidMount() {
-    //     fetch('http://localhost:3000/api/v1/comments')
-    //     .then(resp => resp.json())
-    //     .then(comments => {
-    //         this.setState({
-    //             comments: comments
-    //         })
-    //     })
-    // }
 
     handleInputChange = (e) => {
         this.setState({

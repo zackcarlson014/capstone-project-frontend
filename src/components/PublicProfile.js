@@ -51,7 +51,7 @@ export class PublicProfile extends Component {
                 </Grid>
                 <Header as='h3' icon style={{color: 'white'}} textAlign="center">
                         <Icon name='book' circular />
-                        <Header.Content>{this.props.user.username}'s Library Books</Header.Content>
+                        <Header.Content>{this.props.user.username}'s Library Books ({this.userLibraryBooks().length})</Header.Content>
                 </Header><br/><br/> 
                 <div>
                     <div className='ui eight centered cards'>
@@ -66,7 +66,7 @@ export class PublicProfile extends Component {
                 </div><br/><br/><br/>
                 <Header as='h3' icon style={{color: 'white'}} textAlign="center">
                         <Icon name='book' circular />
-                        <Header.Content>{this.props.user.username}'s WishList Books</Header.Content>
+                        <Header.Content>{this.props.user.username}'s WishList Books ({this.userWishedBooks().length})</Header.Content>
                 </Header><br/><br/>
                 <div>
                     <div className='ui eight centered cards'>
@@ -79,8 +79,8 @@ export class PublicProfile extends Component {
                         })}
                     </div>
                 </div><br/><br/><br/><br/>
-                <div class="ui inverted vertical footer segment form-page">
-                    <div class="ui container">
+                <div className="ui inverted vertical footer segment form-page">
+                    <div className="ui container">
                         MyBrary
                     </div>
                 </div>

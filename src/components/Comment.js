@@ -45,7 +45,6 @@ export class CommentItem extends Component {
     }
 
     render() {
-        // debugger
         return (
             <Comment>
                 <Comment.Avatar as={ Link } exact to={`/users/${this.props.user.id}`} src={this.props.user.prof_pic_url}/>

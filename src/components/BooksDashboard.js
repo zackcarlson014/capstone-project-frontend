@@ -16,7 +16,6 @@ export class BooksDashboard extends Component {
         return (
             <div className='App'>
                 <NavBar />
-                {/* <br/><br/><Header as='h1' style={{color: 'white'}}>Let's Get Bookin'!!</Header> */}
                 <br/><br/><Header as='h2' icon style={{color: 'white'}} textAlign="center">
                     <Icon name='book' circular />
                     <Header.Content>All Library Books</Header.Content>
@@ -27,9 +26,9 @@ export class BooksDashboard extends Component {
                     <Header.Content>All WishList Books</Header.Content>
                 </Header>
                 <DashboardWishedBooks /><br/><br/><br/><br/><br/><br/>
-                <div class="ui inverted vertical footer segment form-page">
-                    <div class="ui container">
-                        Travel Match 2015. All Rights Reserved
+                <div className="ui inverted vertical footer segment form-page">
+                    <div className="ui container">
+                        MyBrary
                     </div>
                 </div>
             </div>

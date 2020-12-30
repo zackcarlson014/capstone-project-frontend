@@ -23,7 +23,6 @@ export class EditUserForm extends Component {
 
         const editUser = {
             username: this.state.username,
-            password: this.state.password,
             prof_pic_url: this.state.image,
             bio: this.state.bio
         }
@@ -73,7 +72,6 @@ export class EditUserForm extends Component {
                                 label='User Bio'
                                 labelposition='left'
                                 value={this.state.bio}
-                                type='password'
                             />
                             <Button type='submit' color='green' fluid size='large'>
                                 Update

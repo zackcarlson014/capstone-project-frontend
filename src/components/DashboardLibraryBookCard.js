@@ -18,6 +18,10 @@ export class DashboardLibraryBookCard extends Component {
         return this.props.reservedBooks.find(b => b.user_lib_book_id === this.props.userBookId) ? true : false
     }
 
+    myReservedBook = () => {
+        return this.props.reservedBooks.find(b => b.user_lib_book_id === this.props.userBookId && b.user_id === this.props.auth.id)
+    }
+
     render() {
         return (
             <Card color='blue'>
@@ -63,9 +67,8 @@ export class DashboardLibraryBookCard extends Component {
                                 <Button.Content visible><Icon name='user'/></Button.Content>
                                 <Button.Content hidden>{this.props.user.username}</Button.Content>
                             </Button>
-                    }
-
-                        <Button as={ Link } exact to={`/books/${this.props.book.id}`} animated='fade' icon='eye' color='blue' onClick={this.handleBookView}>
+                        }
+                        <Button as={ Link } exact to={this.myReservedBook() ? `/reserved_books/${this.myReservedBook().id}` : `/books/${this.props.book.id}`} animated='fade' icon='eye' color='blue' onClick={this.handleBookView}>
                             <Button.Content visible><Icon name='eye'/></Button.Content>
                             <Button.Content hidden>View</Button.Content>
                         </Button>
@@ -78,7 +81,8 @@ export class DashboardLibraryBookCard extends Component {
 
 const mapStateToProps = state => {
     return {
-        reservedBooks: state.reservedBooks
+        reservedBooks: state.reservedBooks,
+        auth: state.auth
     }
 }
 

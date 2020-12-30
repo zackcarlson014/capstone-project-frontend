@@ -85,14 +85,18 @@ export class BookShowPage extends Component {
                         <Grid.Column width='2'></Grid.Column>
                             {this.libraryUsers().length !== 0 ?
                             this.libraryUsers().map(l => {
-                                return (
-                                    <Grid.Column width='2'>
-                                        <Button fluid onClick={() => {this.handleAddReservedBook(l[2])}} animated='fade' icon='user' color='green' >
-                                            <Button.Content visible><Icon name='tag'/></Button.Content>
-                                            <Button.Content hidden>Reserve from {l[1].username}</Button.Content>
-                                        </Button>
-                                    </Grid.Column>
-                                )
+                                if (this.props.reservedBooks.find(b => b.user_lib_book_id === l[2])) {
+                                    return null
+                                } else {
+                                    return (
+                                        <Grid.Column width='2'>
+                                            <Button fluid onClick={() => {this.handleAddReservedBook(l[2])}} animated='fade' icon='user' color='green' >
+                                                <Button.Content visible><Icon name='tag'/></Button.Content>
+                                                <Button.Content hidden>Reserve from {l[1].username}</Button.Content>
+                                            </Button>
+                                        </Grid.Column>
+                                    )
+                                }
                             })
                             :
                             null
@@ -121,8 +125,8 @@ export class BookShowPage extends Component {
                             </Grid.Column>
                         </Grid.Row>
                     </Grid>
-                    <div class="ui inverted vertical footer segment form-page">
-                        <div class="ui container">
+                    <div className="ui inverted vertical footer segment form-page">
+                        <div className="ui container">
                             MyBrary
                         </div>
                     </div>
@@ -137,6 +141,7 @@ const mapStateToProps = state => {
     return {
         book: state.showBook,
         allLibraryBooks: state.allLibraryBooks,
+        reservedBooks: state.reservedBooks,
         allComments: state.allComments,
         auth: state.auth
     }

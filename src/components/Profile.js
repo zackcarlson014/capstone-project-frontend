@@ -41,9 +41,9 @@ export class Profile extends Component {
                         </Grid.Column>
                     </Grid>
                     <WishedBooks /><br/><br/><br/><br/>
-                    <div class="ui inverted vertical footer segment form-page">
-                        <div class="ui container">
-                            Travel Match 2015. All Rights Reserved
+                    <div className="ui inverted vertical footer segment form-page">
+                        <div className="ui container">
+                            MyBrary
                         </div>
                     </div>
                 </div>
