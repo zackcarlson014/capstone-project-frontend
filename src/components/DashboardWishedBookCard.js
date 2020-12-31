@@ -14,6 +14,7 @@ export class DashboardWishedBookCard extends Component {
         this.props.showUser(this.props.user)
     }
 
+
     render() {
         return (
             <Card color='blue'>
@@ -62,4 +63,10 @@ export class DashboardWishedBookCard extends Component {
     }
 }
 
-export default connect(null, { showBook, showUser })(DashboardWishedBookCard)
+const mapStateToProps = state => {
+    return {
+        reservedBooks: state.reservedBooks
+    }
+}
+
+export default connect(mapStateToProps, { showBook, showUser })(DashboardWishedBookCard)

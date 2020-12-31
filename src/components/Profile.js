@@ -30,7 +30,7 @@ export class Profile extends Component {
                             <Button as={ Link } to='/user_lib_books/new' color='blue'>Add Books To Library</Button><br/><br/>
                         </Grid.Column>
                     </Grid>
-                    <LibraryBooks /><br/><br/>
+                    <LibraryBooks /><br/><br/><br/><br/>
                     <Header as='h3' icon style={{color: 'white'}} textAlign="center">
                         <Icon name='book' circular />
                         <Header.Content>Your WishList Books</Header.Content>

@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { Card, Image, Button } from 'semantic-ui-react'
-import { addLibBook } from '../actions/index'
+import { addLibBook, showBook } from '../actions/index'
 
 export class AddLibraryBookCard extends Component {
 
@@ -52,6 +53,10 @@ export class AddLibraryBookCard extends Component {
             })
     }
 
+    handleViewBook = () => {
+        this.props.showBook(this.props.match[0], this.props.match[1])
+    }
+
     render() {
         return (
             <Card color='blue'>
@@ -65,11 +70,15 @@ export class AddLibraryBookCard extends Component {
                         By: {this.props.author ? this.props.author[0] : 'unknown'}
                     </Card.Description>
                 </Card.Content>
+                {this.props.match ? 
                 <Card.Content extra>
-                        {/* <Icon name='user' />
-                        22 Wishes */}
-                        <Button color='blue' onClick={this.handleAddBook}>Add Book To Library</Button>
+                    <Button as={ Link } exact to={`/books/${this.props.match[0].id}`} fluid color='green' onClick={this.handleViewBook}>View Book</Button>
                 </Card.Content>
+                :
+                <Card.Content extra>
+                    <Button fluid color='blue' onClick={this.handleAddBook}>Add Book to Library</Button>
+                </Card.Content>
+                }
             </Card>
         )
     }
@@ -81,8 +90,5 @@ const mapStateToProps = state => {
     }
 }
 
-const mapDispatchToProps = {
-    addLibBook
-}
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddLibraryBookCard)
+export default connect(mapStateToProps, { addLibBook, showBook })(AddLibraryBookCard)

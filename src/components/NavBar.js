@@ -31,13 +31,14 @@ export class NavBar extends Component {
     return (
       <Menu inverted color='black' style={style}>
         <Menu.Item
+          header
           as={NavLink}
           to='/profile'
           // name='home'
           // active={activeItem === 'home'}
           // onClick={this.handleItemClick}
         >
-          <Icon name='home' />
+          <Icon name='home' />MyBrary
         </Menu.Item>
         <Dropdown item icon='book' simple>
           <Dropdown.Menu>

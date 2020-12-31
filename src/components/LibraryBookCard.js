@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { deleteLibBook, showBook } from '../actions/index.js'
+import { showBook, showReservedBook, deleteLibBook } from '../actions/index.js'
 import { Card, Image, Button, Icon, Header } from 'semantic-ui-react'
 
 
@@ -23,7 +23,7 @@ export class LibraryBookCard extends Component {
     }
 
     handleMyReservedShow = () => {
-        this.props.showBook(this.props.book, this.reservedBookUser())
+        this.props.showReservedBook(this.props.book, this.reservedBookUser(), this.props.userBookId)
     }
 
     reservedBook = () => {
@@ -102,4 +102,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, { deleteLibBook, showBook })(LibraryBookCard)
+export default connect(mapStateToProps, { showBook, showReservedBook, deleteLibBook })(LibraryBookCard)

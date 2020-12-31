@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import WishedBookCard from './WishedBookCard.js'
-import { Header } from 'semantic-ui-react'
+import { Grid, Header } from 'semantic-ui-react'
 
 export class WishedBooks extends Component {
 
@@ -18,15 +18,20 @@ export class WishedBooks extends Component {
         return (
             <div>
                 {this.wishedBooks().length !== 0 ?
-                    <div className='ui seven centered cards'>
-                        {this.wishedBooks().map((wishBook, i) => {
-                            if (this.libraryBooks().find(b => b[0].id === wishBook[0].id)) {
-                                return <WishedBookCard key={i} book={wishBook[0]} user={wishBook[1]} userBookId={wishBook[2]} match={true}/>
-                            } else {
-                                return <WishedBookCard key={i} book={wishBook[0]} user={wishBook[1]} userBookId={wishBook[2]}/>
-                            }
-                        })}
-                    </div>
+                    <Grid>
+                        <Grid.Column width='1'></Grid.Column>
+                        <Grid.Column width='14'>
+                            <div className='ui seven centered cards'>
+                                {this.wishedBooks().map((wishBook, i) => {
+                                    if (this.libraryBooks().find(b => b[0].id === wishBook[0].id)) {
+                                        return <WishedBookCard key={i} book={wishBook[0]} user={wishBook[1]} userBookId={wishBook[2]} match={true}/>
+                                    } else {
+                                        return <WishedBookCard key={i} book={wishBook[0]} user={wishBook[1]} userBookId={wishBook[2]}/>
+                                    }
+                                })}
+                            </div>
+                        </Grid.Column>
+                    </Grid>
                     :
                     <div>
                         <br/><br/><Header as='h3' style={{color: 'white'}} textAlign="center">

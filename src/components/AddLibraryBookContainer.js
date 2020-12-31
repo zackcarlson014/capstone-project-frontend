@@ -57,7 +57,7 @@ export class AddLibraryBookContainer extends Component {
                 <br/><br/><Header as='h3' icon style={{color: 'white'}} textAlign="center">
                     <Icon name='book' circular />
                     <Header.Content>Your Library Books</Header.Content>
-                </Header>
+                </Header><br/><br/>
                 <LibraryBooks /><br/>
                 <br/><br/><br/><Button as={ Link } to='/profile' color='blue'>Back to Profile</Button><br/><br/><br/>
             </div>

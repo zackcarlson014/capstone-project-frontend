@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import DashboardWishedBookCard from './DashboardWishedBookCard'
+import { Grid } from 'semantic-ui-react'
 
 export class DashboardWishedBooks extends Component {
 
@@ -15,15 +16,20 @@ export class DashboardWishedBooks extends Component {
     render() {
         return (
             <div>
-                <br/><div className='ui eight centered cards'>
-                    {this.wishedBooks().map((book, i) => {
-                        if (this.libraryBooks().find(b => b[0].id === book[0].id)) {
-                            return <DashboardWishedBookCard key={i} book={book[0]} user={book[1]} match={true}/>
-                        } else {
-                            return <DashboardWishedBookCard key={i} book={book[0]} user={book[1]}/>
-                        }
-                    })}
-                </div>
+                <Grid>
+                    <Grid.Column width='1'></Grid.Column>
+                    <Grid.Column width='14'>
+                        <br/><div className='ui eight centered cards'>
+                            {this.wishedBooks().map((book, i) => {
+                                if (this.libraryBooks().find(b => b[0].id === book[0].id)) {
+                                    return <DashboardWishedBookCard key={i} book={book[0]} user={book[1]} userBookId={book[2]} match={true}/>
+                                } else {
+                                    return <DashboardWishedBookCard key={i} book={book[0]} user={book[1]} userBookId={book[2]}/>
+                                }
+                            })}
+                        </div>
+                    </Grid.Column>
+                </Grid>
             </div>
         )
     }

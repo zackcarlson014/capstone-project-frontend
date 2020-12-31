@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { showUser, addReservedBook } from '../actions/index.js'
+import { Redirect } from 'react-router'
+import { showUser, addReservedBook, deleteWishBook } from '../actions/index.js'
 import NavBar from './NavBar.js'
 import Comments from './Comments.js'
 import UserCarousel from './UserCarousel.js'
@@ -21,7 +22,8 @@ export class BookShowPage extends Component {
         this.props.showUser(this.props.book[1])
     }
 
-    handleAddReservedBook = (libBookId) => {
+
+    handleAddReservedBook = (book, libBookId) => {
 
         const newReservedBook = {
             user_id: this.props.auth.id,
@@ -42,6 +44,15 @@ export class BookShowPage extends Component {
             .then(newReservedBook => {
                 this.props.addReservedBook(newReservedBook)
             })
+        
+        if (this.props.allWishedBooks.find(b => b[0].id === book.id && b[1].id === this.props.auth.id)) {
+            const wishBook = this.props.allWishedBooks.find(b => b[0].id === book.id && b[1].id === this.props.auth.id)
+            return fetch(`http://localhost:3000/api/v1/user_wish_books/${wishBook[2]}`, {method: 'DELETE'})
+            .then(resp => resp.json)
+            .then(book => {
+                this.props.deleteWishBook(wishBook[2])
+            })
+        }
     }
 
     libraryUsers = () => {
@@ -53,9 +64,8 @@ export class BookShowPage extends Component {
     }
 
     render() {
-        
         if (!this.props.book) {
-            
+            return <Redirect to='/books'/>
         } else {
             return (
                 <div className='App'>
@@ -90,7 +100,7 @@ export class BookShowPage extends Component {
                                 } else {
                                     return (
                                         <Grid.Column width='2'>
-                                            <Button fluid onClick={() => {this.handleAddReservedBook(l[2])}} animated='fade' icon='user' color='green' >
+                                            <Button fluid onClick={() => {this.handleAddReservedBook(l[0], l[2])}} animated='fade' icon='user' color='green' >
                                                 <Button.Content visible><Icon name='tag'/></Button.Content>
                                                 <Button.Content hidden>Reserve from {l[1].username}</Button.Content>
                                             </Button>
@@ -120,7 +130,7 @@ export class BookShowPage extends Component {
                         <Grid.Column width='2'></Grid.Column>
                             <Grid.Column width='12'>
                                 <Segment>
-                                    <Comments book={this.props.book[0]} user={this.props.book[1]} comments={this.bookComments()}/>
+                                    <Comments book={this.props.book[0]} comments={this.bookComments()}/>
                                 </Segment><br/>
                             </Grid.Column>
                         </Grid.Row>
@@ -141,10 +151,11 @@ const mapStateToProps = state => {
     return {
         book: state.showBook,
         allLibraryBooks: state.allLibraryBooks,
+        allWishedBooks: state.allWishedBooks,
         reservedBooks: state.reservedBooks,
         allComments: state.allComments,
         auth: state.auth
     }
 }
 
-export default connect(mapStateToProps, { showUser, addReservedBook })(BookShowPage)
+export default connect(mapStateToProps, { showUser, addReservedBook, deleteWishBook })(BookShowPage)

@@ -46,6 +46,13 @@ export const addComment = (comment, user, likes) => {
     }
 }
 
+export const deleteComment = (id) => {
+    return {
+        type: 'DELETE_COMMENT',
+        id
+    }
+}
+
 export const addLike = (comment, user, likes) => {
     return {
         type: 'ADD_LIKE',
@@ -55,9 +62,17 @@ export const addLike = (comment, user, likes) => {
     }
 }
 
-export const deleteComment = (id) => {
+export const addMessage = (message, user) => {
     return {
-        type: 'DELETE_COMMENT',
+        type: 'ADD_MESSAGE',
+        message,
+        user
+    }
+}
+
+export const deleteMessage = (id) => {
+    return {
+        type: 'DELETE_MESSAGE',
         id
     }
 }
@@ -88,6 +103,15 @@ export const showBook = (book, user) => {
         type: 'SHOW_BOOK',
         book,
         user
+    }
+}
+
+export const showReservedBook = (book, user, libBookId) => {
+    return {
+        type: 'SHOW_RESERVED_BOOK',
+        book,
+        user,
+        libBookId
     }
 }
 
