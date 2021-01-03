@@ -21,7 +21,7 @@ export class LibraryBooks extends Component {
                     <Grid>
                         <Grid.Column width='1'></Grid.Column>
                         <Grid.Column width='14'>
-                            <div className='ui seven centered cards'>
+                            <div className='ui eight centered cards'>
                                 {this.libraryBooks().map((libBook, i) => {
                                     if (this.wishedBooks().find(b => b[0].id === libBook[0].id)) {
                                         return <LibraryBookCard key={i} book={libBook[0]} user={libBook[1]} userBookId={libBook[2]} match={true}/>
@@ -39,7 +39,7 @@ export class LibraryBooks extends Component {
                         </Header>
                         <Header as='h4' style={{color: 'white'}} textAlign="center">
                             Search for Books and Start Adding to Your Collection
-                        </Header><br/>
+                        </Header><br/><br/><br/><br/><br/>
                     </div>
                 }
             </div>

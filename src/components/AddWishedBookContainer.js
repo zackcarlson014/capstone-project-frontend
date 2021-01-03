@@ -59,7 +59,12 @@ export class AddWishedBookContainer extends Component {
                         <Header.Content>Your WishList Books</Header.Content>
                     </Header><br/><br/>
                     <WishedBooks /><br/>
-                    <br/><br/><br/><Button as={ Link } to='/profile' color='blue'>Back to Profile</Button><br/><br/>
+                    <br/><br/><br/><Button as={ Link } to='/profile' color='blue'>Back to Profile</Button><br/><br/><br/>
+                    <div className="ui inverted vertical footer segment form-page">
+                        <div className="ui container">
+                            MyBrary
+                        </div>
+                    </div>
             </div>
         )
     }

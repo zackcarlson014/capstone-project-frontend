@@ -52,7 +52,7 @@ export class LibraryBookCard extends Component {
                     {this.reservedBook() ? 
                     <Header as='h5' icon style={{color: 'red'}} textAlign="center">
                         <Icon name='registered' circular />
-                        <Header.Content>Reserved</Header.Content>
+                        <Header.Content>Reserved by {this.reservedBookUser().username}</Header.Content>
                     </Header>
                     :
                     null

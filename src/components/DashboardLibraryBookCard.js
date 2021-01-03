@@ -85,7 +85,7 @@ export class DashboardLibraryBookCard extends Component {
                         <Card.Content textAlign="center"><br/> 
                             <Header as='h5' icon color={this.myReservedBook() ? 'green' : 'red'} textAlign="center">
                                 <Icon name='registered' circular/>
-                                <Header.Content>Reserved</Header.Content>
+                                <Header.Content>Reserved by {this.myReservedBook() ? 'Me' : this.reservedBookUser().username}</Header.Content>
                             </Header>
                         </Card.Content> 
                         :

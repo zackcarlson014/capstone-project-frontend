@@ -14,6 +14,9 @@ export class DashboardWishedBookCard extends Component {
         this.props.showUser(this.props.user)
     }
 
+    reservedBook = () => {
+        return this.props.reservedBooks.find(b => b.user_lib_book_id === this.props.match[2])
+    }
 
     render() {
         return (
@@ -28,7 +31,7 @@ export class DashboardWishedBookCard extends Component {
                         {this.props.book.author}
                     </Card.Description>
                 </Card.Content>
-                {this.props.match ? 
+                {this.props.match && !this.reservedBook() ? 
                     <Card.Content textAlign="center"><br/>
                         <Header as='h5' icon color='green' textAlign="center">
                             <Icon name='check' circular/>

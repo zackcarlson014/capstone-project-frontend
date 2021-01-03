@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { Button, Form, Grid, Header, Segment, Message, Icon } from 'semantic-ui-react'
+import { Button, Form, Grid, Header, Segment, Message, Icon, Image } from 'semantic-ui-react'
 
 
 export class NewUserForm extends Component {
@@ -67,7 +67,8 @@ export class NewUserForm extends Component {
                                 value={this.state.password}
                                 type='password'
                             />
-                           <Form.Input
+                            <Image src={this.state.image} alt='' width='100px'/>
+                            <Form.Input
                                 onChange={this.handleInputChange}
                                 icon='camera'
                                 iconPosition='left'

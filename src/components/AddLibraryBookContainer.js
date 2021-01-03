@@ -60,6 +60,11 @@ export class AddLibraryBookContainer extends Component {
                 </Header><br/><br/>
                 <LibraryBooks /><br/>
                 <br/><br/><br/><Button as={ Link } to='/profile' color='blue'>Back to Profile</Button><br/><br/><br/>
+                <div className="ui inverted vertical footer segment form-page">
+                    <div className="ui container">
+                        MyBrary
+                    </div>
+                </div>
             </div>
         )
     }

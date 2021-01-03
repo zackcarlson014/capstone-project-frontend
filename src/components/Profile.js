@@ -20,7 +20,10 @@ export class Profile extends Component {
             return (
                 <div className='App'>
                     <NavBar/>
-                    <UserCard /><br/><br/>
+                    <br/><br/><Grid>
+                        <Grid.Column width='1'></Grid.Column>
+                        <Grid.Column width='4'><UserCard /><br/><br/></Grid.Column>
+                    </Grid>
                     <Header as='h3' icon style={{color: 'white'}} textAlign="center">
                         <Icon name='book' circular />
                         <Header.Content>Your Library Books</Header.Content>

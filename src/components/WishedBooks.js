@@ -21,7 +21,7 @@ export class WishedBooks extends Component {
                     <Grid>
                         <Grid.Column width='1'></Grid.Column>
                         <Grid.Column width='14'>
-                            <div className='ui seven centered cards'>
+                            <div className='ui eight centered cards'>
                                 {this.wishedBooks().map((wishBook, i) => {
                                     if (this.libraryBooks().find(b => b[0].id === wishBook[0].id)) {
                                         return <WishedBookCard key={i} book={wishBook[0]} user={wishBook[1]} userBookId={wishBook[2]} match={true}/>
