@@ -59,8 +59,8 @@ export class ReservedBookShowPage extends Component {
             this.handleRemoveLibBook()
             this.props.addLibBook(this.props.book[0], this.props.auth, data.id)
             this.handleDelivered(data.id)
-            this.props.history.push('/profile')
         })
+        .then(this.props.history.push('/profile'))
     }
 
     handleDelivered = (newLibBookId) => {
@@ -83,7 +83,7 @@ export class ReservedBookShowPage extends Component {
         .then(resBook => {
             console.log(resBook)
             this.props.updateReservedBook(resBook)
-        })   
+        })  
     }
 
 

@@ -54,16 +54,19 @@ export class PublicProfile extends Component {
                             <Grid.Column width='1'></Grid.Column>
                             <Grid.Column width='10'><Segment textAlign="center" compact><Image src={this.props.user.prof_pic_url} alt='' size='large'/></Segment></Grid.Column>
                             {this.currentlyReading().length !== 0 ?
-                            <CurrentlyReadingCarousel books={this.currentlyReading()} pub={true}/>
+                            <Grid>
+                            <Grid.Row></Grid.Row>
+                            <Grid.Row><CurrentlyReadingCarousel books={this.currentlyReading()} pub={true}/></Grid.Row>
+                            </Grid>
                             :
                             null
                             }
                         </Grid.Row>
                         <Grid.Row>
                             <Grid.Column width='1'></Grid.Column>
-                            <Segment textAlign="center" compact>{this.props.user.bio}</Segment><br/><br/>
+                            <Segment textAlign="center" compact>{this.props.user.bio}</Segment>
                         </Grid.Row>
-                    </Grid>
+                    </Grid><br/><br/><br/>
                     <Header as='h3' icon style={{color: 'white'}} textAlign="center">
                             <Icon name='book' circular />
                             <Header.Content>{this.props.user.username}'s Library Books ({this.userLibraryBooks().length})</Header.Content>

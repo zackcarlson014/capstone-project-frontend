@@ -32,7 +32,7 @@ export class DashboardWishedBookCard extends Component {
                     </Card.Description>
                 </Card.Content>
                 {this.props.match && !this.reservedBook() ? 
-                    <Card.Content textAlign="center"><br/>
+                    <Card.Content extra textAlign="center">
                         <Header as='h5' icon color='green' textAlign="center">
                             <Icon name='check' circular/>
                             <Header.Content>Match</Header.Content>

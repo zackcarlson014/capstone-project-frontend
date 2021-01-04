@@ -32,7 +32,7 @@ export class LibraryBookCard extends Component {
         fetch(`http://localhost:3000/api/v1/reserved_books/${this.myReservedBook().id}`, {method: 'DELETE'})
             .then(resp => resp.json())
             .then(data => {
-                this.props.deleteReservedBook(data.id)
+                this.props.deleteLibBook(data.id)
             })
     }
 
@@ -63,35 +63,37 @@ export class LibraryBookCard extends Component {
                     <Card.Description>
                         {this.props.book.author}
                     </Card.Description>
-                    {this.reservedBook() ? 
-                    <Header as='h5' icon style={{color: 'red'}} textAlign="center">
-                        <Icon name='registered' circular />
-                        <Header.Content>Reserved by {this.reservedBookUser().username}</Header.Content>
-                    </Header>
+                </Card.Content>
+                {this.reservedBook() ?
+                    <Card.Content extra textAlign="center">
+                        <Header as='h5' icon style={{color: 'red'}} textAlign="center">
+                            <Icon name='registered' circular />
+                            <Header.Content>Reserved by {this.reservedBookUser().username}</Header.Content>
+                        </Header>
+                    </Card.Content> 
                     :
                     null
-                    }
-                    {this.props.match && !this.myReservedBook() ? 
-                        <Card.Content textAlign="center"><br/>
-                            <Header as='h5' icon color='green' textAlign="center">
-                                <Icon name='check' circular/>
-                                <Header.Content>Match</Header.Content>
-                            </Header>
-                        </Card.Content> 
-                        : 
-                        null
-                    }
-                    {this.myReservedBook() ?
-                        <Card.Content textAlign="center"><br/>
-                            <Header as='h5' icon color='green' textAlign="center">
-                                <Icon name='book' circular/>
-                                <Header.Content>Currently Reading</Header.Content>
-                            </Header>
-                        </Card.Content> 
-                        : 
-                        null
-                    }
-                </Card.Content>
+                }
+                {this.props.match && !this.myReservedBook() && !this.reservedBook() ? 
+                    <Card.Content extra textAlign="center">
+                        <Header as='h5' icon color='green' textAlign="center">
+                            <Icon name='check' circular/>
+                            <Header.Content>Match</Header.Content>
+                        </Header>
+                    </Card.Content> 
+                    : 
+                    null
+                }
+                {this.myReservedBook() ?
+                    <Card.Content extra textAlign="center">
+                        <Header as='h5' icon color='green' textAlign="center">
+                            <Icon name='book' circular/>
+                            <Header.Content>Currently Reading</Header.Content>
+                        </Header>
+                    </Card.Content> 
+                    : 
+                    null
+                }
                 {this.reservedBook() ? 
                     <Card.Content extra>
                         <Button fluid as={ Link } exact to={`/reserved_books/${this.reservedBook().id}`} animated='fade' icon='eye' color='blue' onClick={this.handleMyReservedShow}>
@@ -102,27 +104,27 @@ export class LibraryBookCard extends Component {
                     :
                     <Card.Content extra>
                         { this.myReservedBook() ?
-                        <Button.Group widths='2'>
-                            <Button as={ Link } exact to={`/books/${this.props.book.id}`} animated='fade' icon='eye' color='blue' onClick={this.handleCardClick}>
-                                <Button.Content visible><Icon name='eye'/></Button.Content>
-                                <Button.Content hidden>View</Button.Content>
-                            </Button>
-                            <Button animated='fade' icon='trash alternate outline' color='green' onClick={this.handleAddToLibrary}>
-                                <Button.Content visible><Icon name='book'/></Button.Content>
-                                <Button.Content hidden>Add</Button.Content>
-                            </Button>
-                        </Button.Group>
-                        :
-                        <Button.Group widths='2'>
-                            <Button as={ Link } exact to={`/books/${this.props.book.id}`} animated='fade' icon='eye' color='blue' onClick={this.handleCardClick}>
-                                <Button.Content visible><Icon name='eye'/></Button.Content>
-                                <Button.Content hidden>View</Button.Content>
-                            </Button>
-                            <Button animated='fade' icon='trash alternate outline' color='red' onClick={this.handleRemoveBook}>
-                                <Button.Content visible><Icon name='trash alternate outline'/></Button.Content>
-                                <Button.Content hidden>Delete</Button.Content>
-                            </Button>
-                        </Button.Group>
+                            <Button.Group widths='2'>
+                                <Button as={ Link } exact to={`/books/${this.props.book.id}`} animated='fade' icon='eye' color='blue' onClick={this.handleCardClick}>
+                                    <Button.Content visible><Icon name='eye'/></Button.Content>
+                                    <Button.Content hidden>View</Button.Content>
+                                </Button>
+                                <Button animated='fade' icon='trash alternate outline' color='green' onClick={this.handleAddToLibrary}>
+                                    <Button.Content visible><Icon name='book'/></Button.Content>
+                                    <Button.Content hidden>Add</Button.Content>
+                                </Button>
+                            </Button.Group>
+                            :
+                            <Button.Group widths='2'>
+                                <Button as={ Link } exact to={`/books/${this.props.book.id}`} animated='fade' icon='eye' color='blue' onClick={this.handleCardClick}>
+                                    <Button.Content visible><Icon name='eye'/></Button.Content>
+                                    <Button.Content hidden>View</Button.Content>
+                                </Button>
+                                <Button animated='fade' icon='trash alternate outline' color='red' onClick={this.handleRemoveBook}>
+                                    <Button.Content visible><Icon name='trash alternate outline'/></Button.Content>
+                                    <Button.Content hidden>Delete</Button.Content>
+                                </Button>
+                            </Button.Group>
                          }
                     </Card.Content>    
                 }

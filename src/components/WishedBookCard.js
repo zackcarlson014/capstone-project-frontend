@@ -36,17 +36,18 @@ export class WishedBookCard extends Component {
                     <Card.Description>
                         {this.props.book.author}
                     </Card.Description>
-                    {this.props.match && !this.reservedBook() ? 
-                        <Card.Content textAlign="center"><br/>
-                            <Header as='h5' icon color='green' textAlign="center">
-                                <Icon name='check' circular/>
-                                <Header.Content>Match</Header.Content>
-                            </Header>
-                        </Card.Content> 
-                        : 
-                        null
-                    }
+
                 </Card.Content>
+                {this.props.match && !this.reservedBook() ? 
+                    <Card.Content extra textAlign="center">
+                        <Header as='h5' icon color='green' textAlign="center">
+                            <Icon name='check' circular/>
+                            <Header.Content>Match</Header.Content>
+                        </Header>
+                    </Card.Content> 
+                    : 
+                    null
+                }
                 <Card.Content extra>
                     <Button.Group widths='2'>
                         <Button as={ Link } exact to={`/books/${this.props.book.id}`} animated='fade' icon='eye' color='blue' onClick={this.handleCardClick}>

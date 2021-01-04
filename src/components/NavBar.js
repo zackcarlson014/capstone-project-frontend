@@ -63,25 +63,13 @@ export class NavBar extends Component {
         >
           All Books
         </Menu.Item> */}
-        <Menu.Menu position='right'>
+        {/* <Menu.Menu position='right'>
             <Input className='nav' transparent placeholder='Search...' icon='search' style={{color: 'white'}} />
-        
-        {/* <div className='ui right aligned category search item'>
-          <div className='ui transparent icon input'>
-            <input
-              className='prompt'
-              textColor='white'
-              type='text'
-              placeholder='Search Books...'
-            />
-            <i className='search link icon' style={{color: "white"}}/>
-          </div>
-          <div className='results' />
-        </div> */}
-      </Menu.Menu>
+        </Menu.Menu> */}
         {
             this.props.auth ? 
             <Menu.Item
+            position='right'
             as={NavLink}
             to='/login'
             name='logout'
@@ -92,6 +80,7 @@ export class NavBar extends Component {
             </Menu.Item>
             :
             <Menu.Item
+            position='right'
             as={NavLink}
             to='/login'
             name='login'
