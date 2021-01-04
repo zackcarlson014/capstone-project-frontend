@@ -13,8 +13,10 @@ export class PublicProfile extends Component {
     }
     
     userLibraryBooks = () => {
-        return this.props.allLibBooks.filter(book => book[1].id === this.props.user.id)
+        const resBooks = this.props.reservedBooks.filter(b => b.user_id === this.props.user.id && b.delivered === true)
+        return this.props.allLibBooks.filter(book => book[1].id === this.props.user.id && !resBooks.find(b => b.user_lib_book_id === book[0].id))
     }
+
 
     userWishedBooks = () => {
         return this.props.allWishBooks.filter(book => book[1].id === this.props.user.id)
@@ -29,6 +31,7 @@ export class PublicProfile extends Component {
     }
 
     render() {
+        debugger
         if (!this.props.user) {
             return <Redirect to='/books'/>
         } else {
@@ -104,6 +107,7 @@ const mapStateToProps = state => {
     return {
         user: state.showUser,
         auth: state.auth,
+        reservedBooks: state.reservedBooks,
         allLibBooks: state.allLibraryBooks,
         allWishBooks: state.allWishedBooks
     }

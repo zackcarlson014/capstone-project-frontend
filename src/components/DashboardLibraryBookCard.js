@@ -55,7 +55,7 @@ export class DashboardLibraryBookCard extends Component {
     }
 
     reservedBook = () => {
-        return this.props.reservedBooks.find(b => b.user_lib_book_id === this.props.userBookId)
+        return this.props.reservedBooks.find(b => b.user_lib_book_id === this.props.userBookId && b.user_id !== this.props.user.id)
     }
 
     reservedBookUser = () => {
@@ -68,6 +68,8 @@ export class DashboardLibraryBookCard extends Component {
     myReservedBook = () => {
         return this.props.reservedBooks.find(b => b.user_lib_book_id === this.props.userBookId && b.user_id === this.props.auth.id)
     }
+
+    
 
     render() {
         return (

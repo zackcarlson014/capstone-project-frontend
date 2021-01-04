@@ -37,6 +37,13 @@ export const addReservedBook = (newReservedBook) => {
     }
 }
 
+export const updateReservedBook = (book) => {
+    return {
+        type: 'UPDATE_RESERVED_BOOK',
+        book
+    }
+}
+
 export const addComment = (comment, user, likes) => {
     return {
         type: 'ADD_COMMENT',

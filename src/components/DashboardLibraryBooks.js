@@ -39,6 +39,7 @@ const mapStateToProps = state => {
     return {
         allLibraryBooks: state.allLibraryBooks,
         allWishedBooks: state.allWishedBooks,
+        reservedBooks: state.reservedBooks,
         auth: state.auth
     }
 }

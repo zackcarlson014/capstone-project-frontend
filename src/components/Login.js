@@ -49,7 +49,7 @@ export class Login extends Component {
             <div className='App'>
                 <Grid textAlign='center' style={{ height: '110vh' }} verticalAlign='middle'>
                     <Grid.Column style={{ maxWidth: 450 }}>
-                        {this.state.error ? <Header as='h4' block style={{color: 'red'}} textAlign='center'>{this.state.error}</Header> : null}
+                        {this.state.error ? <Header as='h4' block style={{color: 'red'}} textAlign='center'><Icon name='user'/>{this.state.error}</Header> : null}
                         <Header as='h2' icon style={{color: 'white'}} textAlign='center'>
                             <Icon name='book' circular />
                             <Header.Content>Welcome to MyBrary</Header.Content>

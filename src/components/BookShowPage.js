@@ -77,6 +77,10 @@ export class BookShowPage extends Component {
                         </Grid.Row>
                         <Grid.Row>
                             <Grid.Column width='2'></Grid.Column>
+                            <Grid.Column width='5'><Header as='h3' style={{color: 'white'}}><strong>{this.props.book[0].author}</strong></Header></Grid.Column>
+                        </Grid.Row>
+                        <Grid.Row>
+                            <Grid.Column width='2'></Grid.Column>
                             <Grid.Column width='6'><Segment compact><Image src={this.props.book[0].image} alt='' width='245px' height='350px'/></Segment><br/></Grid.Column>
                             {this.libraryUsers().length !== 0 ?
                             <UserCarousel users={this.libraryUsers()}/>
@@ -84,10 +88,7 @@ export class BookShowPage extends Component {
                             null
                             }  
                         </Grid.Row>
-                        <Grid.Row>
-                            <Grid.Column width='2'></Grid.Column>
-                            <Grid.Column width='5'><Header as='h3' style={{color: 'white'}}><strong>{this.props.book[0].author}</strong></Header></Grid.Column>
-                        </Grid.Row>
+
                         {this.myBook() ?
                         null
                         :

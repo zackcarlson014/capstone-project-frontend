@@ -13,12 +13,16 @@ export class ReservedBooks extends Component {
         window.scrollTo(0, 0)
     }
 
+    deliveredBooks = () => {
+        return this.props.reservedBooks.filter(b => b.user_id === this.props.auth.id && b.delivered === true)
+    }
+
     reservedBooks = () => {
-        return this.props.reservedBooks.filter(b => b.user_id === this.props.auth.id)
+        return this.props.reservedBooks.filter(b => b.user_id === this.props.auth.id && b.delivered === false)
     }
 
     reservedFromMyLibrary = () => {
-        return this.props.allLibraryBooks.filter(book => book[1].id === this.props.auth.id && this.props.reservedBooks.find(b => b.user_lib_book_id === book[2]))
+        return this.props.allLibraryBooks.filter(book => book[1].id === this.props.auth.id && this.props.reservedBooks.find(b => b.user_lib_book_id === book[2] && b.delivered === false))
     }
 
     render() {

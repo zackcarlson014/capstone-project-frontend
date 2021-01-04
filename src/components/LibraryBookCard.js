@@ -27,7 +27,11 @@ export class LibraryBookCard extends Component {
     }
 
     reservedBook = () => {
-        return this.props.reservedBooks.find(b => b.user_lib_book_id === this.props.userBookId)
+        return this.props.reservedBooks.find(b => b.user_lib_book_id === this.props.userBookId && b.user_id !== this.props.auth.id)
+    }
+
+    myReservedBook = () => {
+        return this.props.reservedBooks.find(b => b.user_lib_book_id === this.props.userBookId && b.user_id === this.props.auth.id)
     }
 
     reservedBookUser = () => {
@@ -57,11 +61,21 @@ export class LibraryBookCard extends Component {
                     :
                     null
                     }
-                    {this.props.match && !this.reservedBook() ? 
+                    {this.props.match && !this.myReservedBook() ? 
                         <Card.Content textAlign="center"><br/>
                             <Header as='h5' icon color='green' textAlign="center">
                                 <Icon name='check' circular/>
                                 <Header.Content>Match</Header.Content>
+                            </Header>
+                        </Card.Content> 
+                        : 
+                        null
+                    }
+                    {this.myReservedBook() ?
+                        <Card.Content textAlign="center"><br/>
+                            <Header as='h5' icon color='green' textAlign="center">
+                                <Icon name='book' circular/>
+                                <Header.Content>Currently Reading</Header.Content>
                             </Header>
                         </Card.Content> 
                         : 
@@ -77,6 +91,18 @@ export class LibraryBookCard extends Component {
                     </Card.Content>
                     :
                     <Card.Content extra>
+                        { this.myReservedBook() ?
+                        <Button.Group widths='2'>
+                            <Button as={ Link } exact to={`/books/${this.props.book.id}`} animated='fade' icon='eye' color='blue' onClick={this.handleCardClick}>
+                                <Button.Content visible><Icon name='eye'/></Button.Content>
+                                <Button.Content hidden>View</Button.Content>
+                            </Button>
+                            <Button animated='fade' icon='trash alternate outline' color='green' onClick={this.handleRemoveBook}>
+                                <Button.Content visible><Icon name='book'/></Button.Content>
+                                <Button.Content hidden>Add</Button.Content>
+                            </Button>
+                        </Button.Group>
+                        :
                         <Button.Group widths='2'>
                             <Button as={ Link } exact to={`/books/${this.props.book.id}`} animated='fade' icon='eye' color='blue' onClick={this.handleCardClick}>
                                 <Button.Content visible><Icon name='eye'/></Button.Content>
@@ -87,6 +113,7 @@ export class LibraryBookCard extends Component {
                                 <Button.Content hidden>Delete</Button.Content>
                             </Button>
                         </Button.Group>
+                         }
                     </Card.Content>    
                 }
             </Card>

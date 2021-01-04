@@ -5,6 +5,7 @@ import LibraryBooks from './LibraryBooks.js'
 import WishedBooks from './WishedBooks.js'
 import NavBar from './NavBar.js'
 import UserCard from './UserCard.js'
+import CurrentlyReadingCarousel from './CurrentlyReadingCarousel.js'
 import { Grid, Button, Header, Icon } from 'semantic-ui-react'
 
 
@@ -16,13 +17,28 @@ export class Profile extends Component {
 
     }
 
+    deliveredBooks = () => {
+        const books = this.props.reservedBooks.filter(b => b.user_id === this.props.auth.id && b.delivered === true)
+        const libBooks = books.map(b => {
+            return this.props.allLibraryBooks.find(book => book[2] === b.user_lib_book_id )
+        })
+        return libBooks.map(b => b[0])
+    }
+
     render() {
             return (
                 <div className='App'>
                     <NavBar/>
                     <br/><br/><Grid>
+                    <Grid.Row>
                         <Grid.Column width='1'></Grid.Column>
-                        <Grid.Column width='4'><UserCard /><br/><br/></Grid.Column>
+                        <Grid.Column width='10'><UserCard /><br/><br/></Grid.Column>
+                        {this.deliveredBooks().length !== 0 ?
+                            <div><br/><br/><br/><CurrentlyReadingCarousel books={this.deliveredBooks()}/></div>
+                            :
+                            null
+                        }  
+                        </Grid.Row>
                     </Grid>
                     <Header as='h3' icon style={{color: 'white'}} textAlign="center">
                         <Icon name='book' circular />
@@ -57,7 +73,8 @@ export class Profile extends Component {
 const mapStateToProps = state => {
     return {
         auth: state.auth,
-        reservedBooks: state.reservedBooks
+        reservedBooks: state.reservedBooks,
+        allLibraryBooks: state.allLibraryBooks
     }
 }
 

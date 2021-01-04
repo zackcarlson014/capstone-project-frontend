@@ -7,6 +7,7 @@ export class AddWishedBookList extends Component {
     render() {
         return (
             <div>
+            {this.props.books.length !== 0 ? <div><br/><Header as='h3' style={{color: 'white'}} textAlign="center"><Icon name='book'/>Add WishList Books Below...</Header><br/></div> : null}
                 <br/><Grid>
                     <Grid.Column width='1'></Grid.Column>
                     <Grid.Column width='14'>
