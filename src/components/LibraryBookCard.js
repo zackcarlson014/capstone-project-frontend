@@ -32,7 +32,7 @@ export class LibraryBookCard extends Component {
         fetch(`http://localhost:3000/api/v1/reserved_books/${this.myReservedBook().id}`, {method: 'DELETE'})
             .then(resp => resp.json())
             .then(data => {
-                this.props.deleteLibBook(data.id)
+                this.props.deleteReservedBook(data.id)
             })
     }
 

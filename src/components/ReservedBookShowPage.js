@@ -60,7 +60,6 @@ export class ReservedBookShowPage extends Component {
             this.props.addLibBook(this.props.book[0], this.props.auth, data.id)
             this.handleDelivered(data.id)
         })
-        .then(this.props.history.push('/profile'))
     }
 
     handleDelivered = (newLibBookId) => {
@@ -122,7 +121,7 @@ export class ReservedBookShowPage extends Component {
                         {this.reservedBook().user_id === this.props.auth.id ?
                             <Grid.Row>
                                 <Grid.Column width='2'></Grid.Column>
-                                <Grid.Column width='2'><Button color='green' onClick={this.handleAddLibBook}>Delivered</Button></Grid.Column>
+                                <Grid.Column as={ Link } exact to={`/profile`} width='2'><Button color='green' onClick={this.handleAddLibBook}>Delivered</Button></Grid.Column>
                             </Grid.Row>
                             :
                             null

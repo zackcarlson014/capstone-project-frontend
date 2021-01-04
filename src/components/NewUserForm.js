@@ -95,6 +95,11 @@ export class NewUserForm extends Component {
                         </Message>
                     </Grid.Column>
                 </Grid>
+                <div className="ui inverted vertical footer segment form-page">
+                    <div className="ui container">
+                        MyBrary
+                    </div>
+                </div>
           </div>
         )
     }

@@ -65,11 +65,42 @@ export class CurrentlyReadingCarousel extends Component {
         }
     })}
 
+    findElements = () => {
+        return this.props.books.map(b => {
+            return {render: () => {
+                return (
+                    <Grid.Column width='2'>
+                        <Header textAlign='center'><Icon name='book'/>Currently Reading</Header>
+                        <Image src={b.image} alt='' fluid/><br/><br/>
+                        <Button.Group widths='2'>
+                        <Button as={ Link } exact to={`/books/${b.id}`} fluid animated='fade' icon='eye' color='blue' onClick={() => this.handleShowBook(b)}>
+                                <Button.Content visible><Icon name='eye'/></Button.Content>
+                                <Button.Content hidden>View</Button.Content>
+                        </Button>
+                        {this.props.pub && !this.isWishedBook(b) ?
+                        <Button fluid animated='fade' icon='book' color='green' onClick={() => this.handleAddWishedBook(b)}>
+                                <Button.Content visible><Icon name='book'/></Button.Content>
+                                <Button.Content hidden>+WishList</Button.Content>
+                        </Button>
+                        : 
+                        null
+                        }
+                        {/*  */}
+                        </Button.Group>
+                        {this.props.books.length !== 1 ? <br/> : null}
+                    </Grid.Column>
+                );
+            }
+            }
+        })
+    }
+
     render() {
+        console.log(this.props.books)
         return (
             <div style={{textAlign: 'center'}}>
                 <Carousel
-                    elements  =  {  this.state.elements  }
+                    elements  =  {  this.findElements()  }
                     duration  ={this.props.books.length !== 1 ? 10000 : null}
                     animation  ='slide left'
                     showNextPrev  =  {false}
