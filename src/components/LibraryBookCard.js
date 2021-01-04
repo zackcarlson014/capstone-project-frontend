@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { showBook, showReservedBook, deleteLibBook } from '../actions/index.js'
+import { showBook, showReservedBook, deleteLibBook, deleteReservedBook } from '../actions/index.js'
 import { Card, Image, Button, Icon, Header } from 'semantic-ui-react'
 
 
@@ -24,6 +24,16 @@ export class LibraryBookCard extends Component {
 
     handleMyReservedShow = () => {
         this.props.showReservedBook(this.props.book, this.reservedBookUser(), this.props.userBookId)
+    }
+
+    handleAddToLibrary = (e) => {
+        e.preventDefault()
+
+        fetch(`http://localhost:3000/api/v1/reserved_books/${this.myReservedBook().id}`, {method: 'DELETE'})
+            .then(resp => resp.json())
+            .then(data => {
+                this.props.deleteReservedBook(data.id)
+            })
     }
 
     reservedBook = () => {
@@ -97,7 +107,7 @@ export class LibraryBookCard extends Component {
                                 <Button.Content visible><Icon name='eye'/></Button.Content>
                                 <Button.Content hidden>View</Button.Content>
                             </Button>
-                            <Button animated='fade' icon='trash alternate outline' color='green' onClick={this.handleRemoveBook}>
+                            <Button animated='fade' icon='trash alternate outline' color='green' onClick={this.handleAddToLibrary}>
                                 <Button.Content visible><Icon name='book'/></Button.Content>
                                 <Button.Content hidden>Add</Button.Content>
                             </Button>
@@ -129,4 +139,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, { showBook, showReservedBook, deleteLibBook })(LibraryBookCard)
+export default connect(mapStateToProps, { showBook, showReservedBook, deleteLibBook, deleteReservedBook })(LibraryBookCard)

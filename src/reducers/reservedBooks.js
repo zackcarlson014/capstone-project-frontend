@@ -16,6 +16,9 @@ export const reservedBooks = (state=[], action) => {
             }
         })
             return updatedBooks
+        case 'DELETE_RESERVED_BOOK':
+            updatedBooks = state.filter(b => b.id !== action.id)
+            return updatedBooks
         default:
             return state
     }

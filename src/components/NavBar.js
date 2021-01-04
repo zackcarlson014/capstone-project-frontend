@@ -42,21 +42,16 @@ export class NavBar extends Component {
         </Menu.Item>
         <Dropdown item icon='book' simple>
           <Dropdown.Menu>
-          <Dropdown.Item as={ NavLink } to='/books'>All Books</Dropdown.Item>
-          <Dropdown.Item as={ NavLink } to='/reserved_books'>My Reserved Books</Dropdown.Item>
-          <Dropdown.Item>
-              <Icon name='book' />
-              <span className='text'>Add</span>
-              <Dropdown.Menu>
-                <Dropdown.Item as={ NavLink } to='/user_lib_books/new'>Library Books</Dropdown.Item>
-                <Dropdown.Item as={ NavLink } to='/user_wish_books/new'>WishList Books</Dropdown.Item>
-              </Dropdown.Menu>
-          </Dropdown.Item>
-          {/* <Dropdown.Item>Save...</Dropdown.Item>
-          <Dropdown.Item>Edit Permissions</Dropdown.Item>
-          <Dropdown.Divider />
-          <Dropdown.Header>Export</Dropdown.Header>
-          <Dropdown.Item>Share</Dropdown.Item> */}
+            <Dropdown.Item as={ NavLink } to='/books'>All Books</Dropdown.Item>
+            <Dropdown.Item as={ NavLink } to='/reserved_books'>My Reserved Books</Dropdown.Item>
+            <Dropdown.Item>
+                <Icon name='book' />
+                <span className='text'>Add</span>
+                <Dropdown.Menu>
+                  <Dropdown.Item as={ NavLink } to='/user_lib_books/new'>Library Books</Dropdown.Item>
+                  <Dropdown.Item as={ NavLink } to='/user_wish_books/new'>WishList Books</Dropdown.Item>
+                </Dropdown.Menu>
+            </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
         {/* <Menu.Item

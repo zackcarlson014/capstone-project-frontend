@@ -24,7 +24,7 @@ export class WishedBooks extends Component {
                             <div className='ui eight centered cards'>
                                 {this.wishedBooks().map((wishBook, i) => {
                                     if (this.libraryBooks().find(b => b[0].id === wishBook[0].id)) {
-                                        return <WishedBookCard key={i} book={wishBook[0]} user={wishBook[1]} userBookId={wishBook[2]} match={true}/>
+                                        return <WishedBookCard key={i} book={wishBook[0]} user={wishBook[1]} userBookId={wishBook[2]} match={this.libraryBooks().filter(b => b[0].id === wishBook[0].id)}/>
                                     } else {
                                         return <WishedBookCard key={i} book={wishBook[0]} user={wishBook[1]} userBookId={wishBook[2]}/>
                                     }

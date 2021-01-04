@@ -20,6 +20,7 @@ export class AddWishedBookCard extends Component {
             },
             body: JSON.stringify(newWishedBook)
         }
+
         fetch('http://localhost:3000/api/v1/user_wish_books', reqObj)
         .then(resp => resp.json())
         .then(newWishBook => {
@@ -46,6 +47,7 @@ export class AddWishedBookCard extends Component {
             },
             body: JSON.stringify(newBook)
         }
+        
         fetch('http://localhost:3000/api/v1/books', reqObj)
             .then(resp => resp.json())
             .then(newWishBook => {

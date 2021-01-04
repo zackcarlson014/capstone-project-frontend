@@ -4,6 +4,7 @@ import { Redirect } from 'react-router'
 import NavBar from './NavBar.js'
 import DashboardLibraryBookCard from './DashboardLibraryBookCard'
 import DashboardWishedBookCard from './DashboardWishedBookCard'
+import CurrentlyReadingCarousel from './CurrentlyReadingCarousel.js'
 import { Grid, Header, Icon, Segment, Image } from 'semantic-ui-react'
 
 export class PublicProfile extends Component {
@@ -13,8 +14,7 @@ export class PublicProfile extends Component {
     }
     
     userLibraryBooks = () => {
-        const resBooks = this.props.reservedBooks.filter(b => b.user_id === this.props.user.id && b.delivered === true)
-        return this.props.allLibBooks.filter(book => book[1].id === this.props.user.id && !resBooks.find(b => b.user_lib_book_id === book[0].id))
+        return this.props.allLibBooks.filter(book => book[1].id === this.props.user.id)
     }
 
 
@@ -30,8 +30,15 @@ export class PublicProfile extends Component {
         return this.props.allWishBooks.filter(book => book[1].id === this.props.auth.id)
     }
 
+    currentlyReading = () => {
+        const books = this.props.reservedBooks.filter(b => b.user_id === this.props.user.id && b.delivered === true)
+        const libBooks = books.map(b => {
+            return this.props.allLibBooks.find(book => book[2] === b.user_lib_book_id )
+        })
+        return libBooks.map(b => b[0])
+    }
+
     render() {
-        debugger
         if (!this.props.user) {
             return <Redirect to='/books'/>
         } else {
@@ -45,7 +52,12 @@ export class PublicProfile extends Component {
                         </Grid.Row>
                         <Grid.Row>
                             <Grid.Column width='1'></Grid.Column>
-                            <Segment textAlign="center" compact><Image src={this.props.user.prof_pic_url} alt='' size='medium'/></Segment>
+                            <Grid.Column width='10'><Segment textAlign="center" compact><Image src={this.props.user.prof_pic_url} alt='' size='large'/></Segment></Grid.Column>
+                            {this.currentlyReading().length !== 0 ?
+                            <CurrentlyReadingCarousel books={this.currentlyReading()} pub={true}/>
+                            :
+                            null
+                            }
                         </Grid.Row>
                         <Grid.Row>
                             <Grid.Column width='1'></Grid.Column>

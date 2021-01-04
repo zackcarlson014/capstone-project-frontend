@@ -44,6 +44,13 @@ export const updateReservedBook = (book) => {
     }
 }
 
+export const deleteReservedBook = (id) => {
+    return {
+        type: 'DELETE_RESERVED_BOOK',
+        id
+    }
+}
+
 export const addComment = (comment, user, likes) => {
     return {
         type: 'ADD_COMMENT',

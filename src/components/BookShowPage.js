@@ -53,6 +53,7 @@ export class BookShowPage extends Component {
                 this.props.deleteWishBook(wishBook[2])
             })
         }
+        this.props.history.push('/reserved_books')
     }
 
     libraryUsers = () => {

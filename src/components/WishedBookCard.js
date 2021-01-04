@@ -20,6 +20,10 @@ export class WishedBookCard extends Component {
         this.props.showBook(this.props.book, this.props.user)
     }
 
+    reservedBook = () => {
+        return this.props.reservedBooks.find(b => b.user_lib_book_id === this.props.match[0][2])
+    }
+
     render() {
         return (
             <Card color='blue'>
@@ -32,7 +36,7 @@ export class WishedBookCard extends Component {
                     <Card.Description>
                         {this.props.book.author}
                     </Card.Description>
-                    {this.props.match ? 
+                    {this.props.match && !this.reservedBook() ? 
                         <Card.Content textAlign="center"><br/>
                             <Header as='h5' icon color='green' textAlign="center">
                                 <Icon name='check' circular/>
@@ -60,4 +64,10 @@ export class WishedBookCard extends Component {
     }
 }
 
-export default connect(null, { deleteWishBook, showBook })(WishedBookCard)
+const mapStateToProps = state => {
+    return {
+        reservedBooks: state.reservedBooks
+    }
+}
+
+export default connect(mapStateToProps, { deleteWishBook, showBook })(WishedBookCard)
