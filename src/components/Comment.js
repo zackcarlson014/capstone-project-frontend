@@ -44,14 +44,39 @@ export class CommentItem extends Component {
         }) 
     }
 
+        dateTime = () => {
+        let period = 'am'
+        let hour = this.props.comment.created_at.slice(11, 13) 
+        if (parseInt(hour) > 12) {
+            hour = String(parseInt(hour) - 12)
+            period = 'pm'
+        }
+
+        let minutes = this.props.comment.created_at.slice(14,16)
+
+        let month = this.props.comment.created_at.slice(5, 7)
+        if (month[0] === '0') {
+            month = month[1]
+        } 
+
+        let day = this.props.comment.created_at.slice(8, 10)
+        if (day[0] === '0') {
+            day = day[1]
+        } 
+
+        let year = this.props.comment.created_at.slice(2,4)
+
+        return `${hour}:${minutes} ${period} ${month}/${day}/${year}`
+    }
+
     render() {
         return (
             <Comment>
-                <Comment.Avatar as={ Link } exact to={`/users/${this.props.user.id}`} src={this.props.user.prof_pic_url}/>
+                <Comment.Avatar as={ Link } exact to={this.props.user.id !== this.props.auth.id ? `/users/${this.props.user.id}` : '/profile'} src={this.props.user.prof_pic_url} onClick={this.handleUserView}/>
                 <Comment.Content>
                     <Comment.Author as={ Link } exact to={this.props.user.id !== this.props.auth.id ? `/users/${this.props.user.id}` : '/profile'} onClick={this.handleUserView}>{this.props.user.username}</Comment.Author>
                     <Comment.Metadata>
-                        <div>Today at 5:42PM</div>
+                        <div>{this.dateTime()}</div>
                     </Comment.Metadata>
                     <Comment.Text>{this.props.comment.content}</Comment.Text>
                     {this.props.auth.id === this.props.user.id ?
