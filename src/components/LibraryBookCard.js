@@ -86,7 +86,7 @@ export class LibraryBookCard extends Component {
                 }
                 {this.myReservedBook() ?
                     <Card.Content extra textAlign="center">
-                        <Header as='h5' icon color='green' textAlign="center">
+                        <Header as='h5' icon color='blue' textAlign="center">
                             <Icon name='book' circular/>
                             <Header.Content>Currently Reading</Header.Content>
                         </Header>

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { Redirect } from 'react-router'
 import { showUser, addReservedBook, deleteWishBook } from '../actions/index.js'
 import NavBar from './NavBar.js'
@@ -102,7 +103,7 @@ export class BookShowPage extends Component {
                                 } else {
                                     return (
                                         <Grid.Column width='2'>
-                                            <Button fluid onClick={() => {this.handleAddReservedBook(l[0], l[2])}} animated='fade' icon='user' color='green' >
+                                            <Button as={ Link } exact to={'/reserved_books'} fluid onClick={() => {this.handleAddReservedBook(l[0], l[2])}} animated='fade' icon='user' color='green' >
                                                 <Button.Content visible><Icon name='tag'/></Button.Content>
                                                 <Button.Content hidden>Reserve from {l[1].username}</Button.Content>
                                             </Button>

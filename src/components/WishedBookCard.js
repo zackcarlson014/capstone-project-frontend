@@ -27,7 +27,7 @@ export class WishedBookCard extends Component {
     render() {
         return (
             <Card color='blue'>
-                <Image src={this.props.book.image ? this.props.book.image : 'https://www.pngfind.com/pngs/m/216-2160526_jpg-royalty-free-library-3-books-clipart-book.png'} wrapped ui={false} width='300px' height='300px'/>
+                <Image as={ Link } exact to={`/books/${this.props.book.id}`} onClick={this.handleCardClick} src={this.props.book.image ? this.props.book.image : 'https://www.pngfind.com/pngs/m/216-2160526_jpg-royalty-free-library-3-books-clipart-book.png'} wrapped ui={false} width='300px' height='300px'/>
                 <Card.Content>
                     <Card.Header>{this.props.book.title}</Card.Header>
                     <Card.Meta>

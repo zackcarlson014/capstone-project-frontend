@@ -41,7 +41,7 @@ export class CurrentlyReadingCarousel extends Component {
         return {render: () => {
             return (
                 <Grid.Column width='2'>
-                    <Header textAlign='center'><Icon name='book'/>Currently Reading</Header>
+                    <Header as='h5' textAlign='center' color='green'><Icon name='book'/>Currently Reading</Header>
                     <Image src={b.image} alt='' fluid/><br/><br/>
                     <Button.Group widths='2'>
                     <Button as={ Link } exact to={`/books/${b.id}`} fluid animated='fade' icon='eye' color='blue' onClick={() => this.handleShowBook(b)}>
@@ -70,8 +70,8 @@ export class CurrentlyReadingCarousel extends Component {
             return {render: () => {
                 return (
                     <Grid.Column width='2'>
-                        <Header textAlign='center'><Icon name='book'/>Currently Reading</Header>
-                        <Image src={b.image} alt='' fluid/><br/><br/>
+                        <Header textAlign='center' color='blue'><Icon name='book'/>Currently Reading</Header>
+                        <Image as={ Link } exact to={`/books/${b.id}`} onClick={() => this.handleShowBook(b)} src={b.image} alt='' fluid/><br/><br/>
                         <Button.Group widths='2'>
                         <Button as={ Link } exact to={`/books/${b.id}`} fluid animated='fade' icon='eye' color='blue' onClick={() => this.handleShowBook(b)}>
                                 <Button.Content visible><Icon name='eye'/></Button.Content>

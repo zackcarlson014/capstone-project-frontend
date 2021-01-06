@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { showUser } from '../actions/index.js'
 import  Carousel  from  'semantic-ui-carousel-react';
-import { Image, Button, Icon } from  'semantic-ui-react'
+import { Image, Button, Icon, Header } from  'semantic-ui-react'
 
 export class UserCarousel extends Component {
     
@@ -11,6 +11,7 @@ export class UserCarousel extends Component {
         return {render: () => {
             return (
                 <div>
+                    <Header as='h4' textAlign='center' color='green'><Icon name='user'/>Library Users</Header>
                     <Image src={u[1].prof_pic_url} alt='' size='medium'/><br/><br/>
                     <Button as={ Link } exact to={`/users/${u[1].id}`} fluid animated='fade' icon='user' color='green' onClick={this.handleShowUser(u[1])}>
                             <Button.Content visible><Icon name='user'/></Button.Content>
