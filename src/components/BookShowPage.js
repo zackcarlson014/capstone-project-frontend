@@ -62,7 +62,11 @@ export class BookShowPage extends Component {
     }
 
     myBook = () => {
-        return this.props.allLibraryBooks.find(b => b[0].id === this.props.book[0].id && b[1].id === this.props.auth.id) ? true : false
+        return this.props.allLibraryBooks.find(b => b[0].id === this.props.book[0].id && b[1].id === this.props.auth.id)
+    }
+
+    myReservedBook = () => {
+       return this.props.reservedBooks.find(book => (this.libraryUsers().map(b => b[2])).find(i => i === book.user_lib_book_id) && book.user_id === this.props.auth.id)
     }
 
     render() {
@@ -90,15 +94,14 @@ export class BookShowPage extends Component {
                             null
                             }  
                         </Grid.Row>
-
                         {this.myBook() ?
                         null
                         :
                         <Grid.Row>
-                        <Grid.Column width='2'></Grid.Column>
+                            <Grid.Column width='2'></Grid.Column>
                             {this.libraryUsers().length !== 0 ?
                             this.libraryUsers().map(l => {
-                                if (this.props.reservedBooks.find(b => b.user_lib_book_id === l[2])) {
+                                if (this.props.reservedBooks.find(b => b.user_lib_book_id === l[2]) || this.myReservedBook()) {
                                     return null
                                 } else {
                                     return (
@@ -116,7 +119,6 @@ export class BookShowPage extends Component {
                             } 
                         </Grid.Row>
                         }
-
                         <Grid.Row>
                         <Grid.Column width='2'></Grid.Column>
                             {this.props.book[0].description ? 

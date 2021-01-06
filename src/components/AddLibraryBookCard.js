@@ -60,7 +60,11 @@ export class AddLibraryBookCard extends Component {
     render() {
         return (
             <Card color='blue'>
+                {this.props.match ? 
+                <Image as={ Link } exact to={`/books/${this.props.match[0].id}`} onClick={this.handleViewBook} src={this.props.image} wrapped ui={false} width='300px' height='300px'/>
+                :
                 <Image src={this.props.image} wrapped ui={false} width='300px' height='300px'/>
+                }   
                 <Card.Content>
                     <Card.Header>{this.props.title}</Card.Header>
                     <Card.Meta>
