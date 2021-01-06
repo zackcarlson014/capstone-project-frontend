@@ -38,7 +38,7 @@ export class WishedBooks extends Component {
                             Your WishList Bookshelf is Current Empty
                         </Header>
                         <Header as='h4' style={{color: 'white'}} textAlign="center">
-                            Search for Books and Start Adding to Your Collection
+                            Search for Books You'd Like to Find
                         </Header><br/><br/><br/><br/><br/><br/><br/><br/>
                     </div>
                 }

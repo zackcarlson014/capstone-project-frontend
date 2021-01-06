@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import LibraryBookCard from './LibraryBookCard.js'
-import { Grid, Header } from 'semantic-ui-react'
+import { Grid, Header, Icon } from 'semantic-ui-react'
 
 
 export class LibraryBooks extends Component {
@@ -37,9 +37,7 @@ export class LibraryBooks extends Component {
                         <br/><br/><Header as='h3' style={{color: 'white'}} textAlign="center">
                             Your Library Bookshelf is Current Empty
                         </Header>
-                        <Header as='h4' style={{color: 'white'}} textAlign="center">
-                            Search for Books and Start Adding to Your Collection
-                        </Header><br/><br/><br/><br/><br/>
+                        <Header as='h4' style={{color: 'white'}} textAlign="center"><Icon name='heart'/>Search for Books You'd Like to Donate</Header><br/><br/><br/><br/><br/>
                     </div>
                 }
             </div>
