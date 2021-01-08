@@ -89,19 +89,6 @@ export class CommentItem extends Component {
                             <Comment.Action onClick={this.handleAddLike} style={{color: 'red'}}><Icon name='heart'/>{this.props.likes !== 0 ? this.props.likes : null}</Comment.Action>
                         </Comment.Actions>
                      }
-                    
-                    {/* <Comment.Actions color='red'>
-                        {this.props.auth.id === this.props.user.id ?     
-                        <Comment.Action onClick={this.handleRemoveComment} style={{color: 'red'}}><Icon name='trash alternate outline'/></Comment.Action>
-                        :
-                        null
-                        }
-                        {this.props.auth.id !== this.props.user.id ?     
-                        <Comment.Action onClick={this.handleAddLike} style={{color: 'red'}}><Icon name='heart'/>{this.props.likes !== 0 ? this.props.likes : null}</Comment.Action>
-                        :
-                        null
-                        }
-                    </Comment.Actions> */}
                 </Comment.Content>
             </Comment>
         )
