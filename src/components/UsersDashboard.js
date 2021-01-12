@@ -40,33 +40,33 @@ export class UsersDashboard extends Component {
                     <Icon name='user' circular />
                     <Header.Content>MyBrarians</Header.Content>
                 </Header><br/><br/>
-                {currentlyReading ?
                     <Card.Group itemsPerRow={9} centered inverted>
                     {this.state.books.map(b => {
-                        const user = this.state.users.find(u => u.id === b.user_id)
-                        const libBook = currentlyReading.find(lb => lb[2] === b.user_lib_book_id)
-                        return (
-                            <Card color='blue'>
-                                <Image size='medium' src={libBook[0].image} wrapped />
-                                <Card.Content>
-                                    <Card.Header>{libBook[0].title}</Card.Header>
-                                    <Card.Meta>
-                                        {libBook[0].published}
-                                    </Card.Meta>
-                                    <Card.Description>
-                                        {libBook[0].author}
-                                    </Card.Description>
-                                </Card.Content>
-                                <Card.Content extra >
-                                    <Button color='red' fluid>{user.username}</Button>
-                                </Card.Content>
-                            </Card>
-                        )
+                        if (currentlyReading.find(lb => lb[2] === b.user_lib_book_id) && this.state.users.find(u => u.id === b.user_id)) {
+                            const user = this.state.users.find(u => u.id === b.user_id)
+                            const libBook = currentlyReading.find(lb => lb[2] === b.user_lib_book_id)
+                            return (
+                                <Card color='blue'>
+                                    <Image size='medium' src={libBook[0].image} wrapped />
+                                    <Card.Content>
+                                        <Card.Header>{libBook[0].title}</Card.Header>
+                                        <Card.Meta>
+                                            {libBook[0].published}
+                                        </Card.Meta>
+                                        <Card.Description>
+                                            {libBook[0].author}
+                                        </Card.Description>
+                                    </Card.Content>
+                                    <Card.Content extra >
+                                        <Button color='red' fluid>{user.username}</Button>
+                                    </Card.Content>
+                                </Card>
+                            )
+                        } else {
+                            return null
+                        }
                     })}
                 </Card.Group>
-                :
-                null
-                }
                 <Card.Group itemsPerRow={6} centered inverted>
                     {this.state.users ? 
                         this.state.users.map(u => <UserCard user={u}/>)

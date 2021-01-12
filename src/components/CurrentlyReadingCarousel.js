@@ -33,37 +33,23 @@ export class CurrentlyReadingCarousel extends Component {
         })
     }
 
+    handleAddToLibrary = (id) => {
+        fetch(`http://localhost:3000/api/v1/reserved_books/${id}`, {method: 'DELETE'})
+            .then(resp => resp.json())
+            .then(data => {
+                this.props.deleteReservedBook(data.id)
+            })
+    }
+
     isWishedBook = (b) => {
         return this.props.allWishedBooks.find(book => book[0].id === b.id && book[1].id === this.props.auth.id)
     }
     
-    state  = {elements: this.props.books.map(b => {
-        return {render: () => {
-            return (
-                <Grid.Column width='2'>
-                    <Header as='h5' textAlign='center' color='green'><Icon name='book'/>Currently Reading</Header>
-                    <Image src={b.image} alt='' fluid/><br/><br/>
-                    <Button.Group widths='2'>
-                    <Button as={ Link } exact to={`/books/${b.id}`} fluid animated='fade' icon='eye' color='blue' onClick={() => this.handleShowBook(b)}>
-                            <Button.Content visible><Icon name='eye'/></Button.Content>
-                            <Button.Content hidden>View</Button.Content>
-                    </Button>
-                    {this.props.pub && !this.isWishedBook(b) ?
-                    <Button fluid animated='fade' icon='book' color='green' onClick={() => this.handleAddWishedBook(b)}>
-                            <Button.Content visible><Icon name='book'/></Button.Content>
-                            <Button.Content hidden>+WishList</Button.Content>
-                    </Button>
-                    : 
-                    null
-                    }
-                    {/*  */}
-                    </Button.Group>
-                    {this.props.books.length !== 1 ? <br/> : null}
-                </Grid.Column>
-            );
-          }
-        }
-    })}
+    reservedBookId = (b) => {
+        const libBook = this.props.allLibraryBooks.find(book => book[1].id === this.props.auth.id && book[0].id === b.id)
+        const resBook = this.props.reservedBooks.find(book => book.user_id === this.props.auth.id && book.user_lib_book_id === libBook[2])
+        return resBook.id
+    }
 
     findElements = () => {
         return this.props.books.map(b => {
@@ -71,12 +57,20 @@ export class CurrentlyReadingCarousel extends Component {
                 return (
                     <Grid.Column width='2'>
                         <Header textAlign='center' color='blue'><Icon name='book'/>Currently Reading</Header>
-                        <Image as={ Link } exact to={`/books/${b.id}`} onClick={() => this.handleShowBook(b)} src={b.image} alt='' fluid/><br/><br/>
+                        <Image as={ Link } exact to={`/books/${b.id}`} onClick={() => this.handleShowBook(b)} src={b.image} alt='' fluid/><br/>
                         <Button.Group widths='2'>
                         <Button as={ Link } exact to={`/books/${b.id}`} fluid animated='fade' icon='eye' color='blue' onClick={() => this.handleShowBook(b)}>
                                 <Button.Content visible><Icon name='eye'/></Button.Content>
                                 <Button.Content hidden>View</Button.Content>
                         </Button>
+                        {!this.props.pub ? 
+                            <Button fluid animated='fade' icon='book' color='green' onClick={() => this.handleAddToLibrary(this.reservedBookId(b))}>
+                                <Button.Content visible><Icon name='book'/></Button.Content>
+                                <Button.Content hidden>+Library</Button.Content>
+                            </Button>
+                            :
+                            null
+                        }
                         {this.props.pub && !this.isWishedBook(b) ?
                         <Button fluid animated='fade' icon='book' color='green' onClick={() => this.handleAddWishedBook(b)}>
                                 <Button.Content visible><Icon name='book'/></Button.Content>
@@ -85,7 +79,6 @@ export class CurrentlyReadingCarousel extends Component {
                         : 
                         null
                         }
-                        {/*  */}
                         </Button.Group>
                         {this.props.books.length !== 1 ? <br/> : null}
                     </Grid.Column>
@@ -96,7 +89,6 @@ export class CurrentlyReadingCarousel extends Component {
     }
 
     render() {
-        console.log(this.props.books)
         return (
             <div style={{textAlign: 'center'}}>
                 <Carousel
@@ -115,7 +107,9 @@ export class CurrentlyReadingCarousel extends Component {
 const mapStateToProps = state => {
     return {
         auth: state.auth,
-        allWishedBooks: state.allWishedBooks
+        allLibraryBooks: state.allLibraryBooks,
+        allWishedBooks: state.allWishedBooks,
+        reservedBooks: state.reservedBooks
     }
 }
 

@@ -111,7 +111,7 @@ export class LibraryBookCard extends Component {
                                 </Button>
                                 <Button animated='fade' icon='trash alternate outline' color='green' onClick={this.handleAddToLibrary}>
                                     <Button.Content visible><Icon name='book'/></Button.Content>
-                                    <Button.Content hidden>Add</Button.Content>
+                                    <Button.Content hidden>+Library</Button.Content>
                                 </Button>
                             </Button.Group>
                             :
