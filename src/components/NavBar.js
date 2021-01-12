@@ -54,18 +54,16 @@ export class NavBar extends Component {
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
-        {/* <Menu.Item
+        <Menu.Item
+          header
           as={NavLink}
-          to='/books'
-          name='books'
-          active={activeItem === 'books'}
-          onClick={this.handleItemClick}
+          to='/users'
+          // name='home'
+          // active={activeItem === 'home'}
+          // onClick={this.handleItemClick}
         >
-          All Books
-        </Menu.Item> */}
-        {/* <Menu.Menu position='right'>
-            <Input className='nav' transparent placeholder='Search...' icon='search' style={{color: 'white'}} />
-        </Menu.Menu> */}
+          <Icon name='user'/>
+        </Menu.Item>
         {
             this.props.auth ? 
             <Menu.Item
@@ -89,9 +87,7 @@ export class NavBar extends Component {
             >
             Login
             </Menu.Item>
-
         }
-
         {/* <Menu.Menu position='right'>
         <div className='ui right aligned category search item'>
           <div className='ui transparent icon input'>

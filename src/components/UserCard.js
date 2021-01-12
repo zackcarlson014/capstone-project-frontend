@@ -12,26 +12,46 @@ export class UserCard extends Component {
     }
 
     render() {
-        return (
-            <div>
-                <br/><br/><Card color='blue'>
-                    <Image src={this.props.auth && this.props.auth.prof_pic_url ? this.props.auth.prof_pic_url : 'https://icon-library.com/images/default-user-icon/default-user-icon-4.jpg'} wrapped ui={false}/>
+        if (this.props.user) {
+            return (
+                <Card color='blue'>
+                    <Image size='medium' src={this.props.user.prof_pic_url ? this.props.user.prof_pic_url : 'https://icon-library.com/images/default-user-icon/default-user-icon-4.jpg'} wrapped />
                     <Card.Content>
-                        <Card.Header>{this.props.auth ? this.props.auth.username : null}</Card.Header>
+                        <Card.Header>{this.props.user.username}</Card.Header>
                         <Card.Meta>
-                            <Icon name='book' />
-                            {this.bookCount()} Library Books
+                            <Icon name='book' />Library Books
                         </Card.Meta>
                         <Card.Description>
-                            {this.props.auth ? this.props.auth.bio : null}
+                            {this.props.user.bio}
                         </Card.Description>
                     </Card.Content>
                     <Card.Content extra >
-                        <Button as={ Link } exact to={this.props.auth ? `/users/${this.props.auth.id}/edit` : null} color='red' fluid>Edit Profile</Button>
+                        <Button color='red' fluid>Friend</Button>
                     </Card.Content>
                 </Card>
-            </div>
-        )
+            )
+        } else {
+            return (
+                <div>
+                    <br/><br/><Card color='blue'>
+                        <Image src={this.props.auth && this.props.auth.prof_pic_url ? this.props.auth.prof_pic_url : 'https://icon-library.com/images/default-user-icon/default-user-icon-4.jpg'} wrapped ui={false}/>
+                        <Card.Content>
+                            <Card.Header>{this.props.auth ? this.props.auth.username : null}</Card.Header>
+                            <Card.Meta>
+                                <Icon name='book' />
+                                {this.bookCount()} Library Books
+                            </Card.Meta>
+                            <Card.Description>
+                                {this.props.auth ? this.props.auth.bio : null}
+                            </Card.Description>
+                        </Card.Content>
+                        <Card.Content extra >
+                            <Button as={ Link } exact to={this.props.auth ? `/users/${this.props.auth.id}/edit` : null} color='red' fluid>Edit Profile</Button>
+                        </Card.Content>
+                    </Card>
+                </div>
+            )
+        }
     }
 }
 

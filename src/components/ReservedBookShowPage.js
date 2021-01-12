@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import { showBook, showUser, addLibBook, deleteLibBook, updateReservedBook } from '../actions/index.js'
 import NavBar from './NavBar.js'
 import ReservedMessages from './ReservedMessages.js'
-import { Grid , Header, Segment, Image, Button, Icon} from 'semantic-ui-react'
+import { Grid , Container, Header, Segment, Image, Button, Icon} from 'semantic-ui-react'
 
 export class ReservedBookShowPage extends Component {
 
@@ -101,7 +101,7 @@ export class ReservedBookShowPage extends Component {
                         </Grid.Row>
                         <Grid.Row>
                             <Grid.Column width='2'></Grid.Column>
-                            <Grid.Column width='8'><br/><Header as='h1' style={{color: 'white'}}>{this.props.book[0].title}</Header></Grid.Column>
+                            <Grid.Column width='8'><br/><Container compact as={ Link } exact to={`/books/${this.props.book[0].id}`} onClick={this.handleShowBook}><Header as='h1' style={{color: 'white'}}>{this.props.book[0].title}</Header></Container></Grid.Column>
                         </Grid.Row>
                         <Grid.Row>
                             <Grid.Column width='2'></Grid.Column>
