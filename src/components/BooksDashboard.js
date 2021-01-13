@@ -14,7 +14,12 @@ export class BooksDashboard extends Component {
 
     libraryBooks = () => {
         if (this.props.searchField)  {
-            return this.props.allLibraryBooks.filter(b => b[0].title.toLowerCase().includes(this.props.searchField.toLowerCase()) || b[0].author.toLowerCase().includes(this.props.searchField.toLowerCase()))
+            const books = this.props.allLibraryBooks.filter(b => b[0].title.toLowerCase().includes(this.props.searchField.toLowerCase()) || b[0].author.toLowerCase().includes(this.props.searchField.toLowerCase()))
+            if (books.length !== 0) {
+                return books
+            } else {
+                return this.props.allLibraryBooks
+            } 
         } else {
             return this.props.allLibraryBooks
         }   
@@ -22,7 +27,12 @@ export class BooksDashboard extends Component {
 
     wishedBooks = () => {
         if (this.props.searchField)  {
-            return this.props.allWishedBooks.filter(b => b[0].title.toLowerCase().includes(this.props.searchField.toLowerCase()) || b[0].author.toLowerCase().includes(this.props.searchField.toLowerCase()))
+            const books = this.props.allWishedBooks.filter(b => b[0].title.toLowerCase().includes(this.props.searchField.toLowerCase()) || b[0].author.toLowerCase().includes(this.props.searchField.toLowerCase()))
+            if (books.length !== 0) {
+                return books
+            } else {
+                return this.props.allWishedBooks
+            } 
         } else {
             return this.props.allWishedBooks
         }   

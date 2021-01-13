@@ -9,13 +9,19 @@ import { Grid, Header, Icon, Segment, Image } from 'semantic-ui-react'
 
 export class PublicProfile extends Component {
 
+
     componentDidMount() {
         window.scrollTo(0, 0)
     }
 
     libraryBooks = () => {
         if (this.props.searchField)  {
-            return this.props.allLibraryBooks.filter(b => b[0].title.toLowerCase().includes(this.props.searchField.toLowerCase()) || b[0].author.toLowerCase().includes(this.props.searchField.toLowerCase()))
+            const books = this.props.allLibraryBooks.filter(b => b[0].title.toLowerCase().includes(this.props.searchField.toLowerCase()) || b[0].author.toLowerCase().includes(this.props.searchField.toLowerCase()))
+            if (books.length !== 0) {
+                return books
+            } else {
+                return this.props.allLibraryBooks
+            } 
         } else {
             return this.props.allLibraryBooks
         }   
@@ -23,7 +29,12 @@ export class PublicProfile extends Component {
 
     wishedBooks = () => {
         if (this.props.searchField)  {
-            return this.props.allWishedBooks.filter(b => b[0].title.toLowerCase().includes(this.props.searchField.toLowerCase()) || b[0].author.toLowerCase().includes(this.props.searchField.toLowerCase()))
+            const books = this.props.allWishedBooks.filter(b => b[0].title.toLowerCase().includes(this.props.searchField.toLowerCase()) || b[0].author.toLowerCase().includes(this.props.searchField.toLowerCase()))
+            if (books.length !== 0) {
+                return books
+            } else {
+                return this.props.allWishedBooks
+            } 
         } else {
             return this.props.allWishedBooks
         }   
