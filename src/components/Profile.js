@@ -11,6 +11,14 @@ import { Grid, Button, Header, Icon } from 'semantic-ui-react'
 
 export class Profile extends Component {
 
+    libraryBooks = () => {
+        if (this.props.searchField)  {
+            return this.props.allLibraryBooks.filter(b => b[0].title.toLowerCase().includes(this.props.searchField.toLowerCase()) || b[0].author.toLowerCase().includes(this.props.searchField.toLowerCase()))
+        } else {
+            return this.props.allLibraryBooks
+        }   
+    }
+
     componentDidMount() {
         window.scrollTo(0, 0)
     }
@@ -47,7 +55,7 @@ export class Profile extends Component {
                         <Button as={ Link } to='/user_lib_books/new' color='blue'>Add Books To Library</Button><br/><br/>
                     </Grid.Column>
                 </Grid>
-                <LibraryBooks /><br/><br/><br/><br/>
+                <LibraryBooks books={this.libraryBooks()}/><br/><br/><br/><br/>
                 <Header as='h3' icon style={{color: 'white'}} textAlign="center">
                     <Icon name='book' circular />
                     <Header.Content>Your WishList Books</Header.Content>
@@ -72,7 +80,8 @@ const mapStateToProps = state => {
     return {
         auth: state.auth,
         reservedBooks: state.reservedBooks,
-        allLibraryBooks: state.allLibraryBooks
+        allLibraryBooks: state.allLibraryBooks,
+        searchField: state.searchField
     }
 }
 

@@ -2,11 +2,16 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { NavLink } from 'react-router-dom';
 import { logoutUser } from '../actions/auth'
-import { Dropdown, Icon, Menu, Header } from 'semantic-ui-react'
+import { searchField } from '../actions/index'
+import { Dropdown, Icon, Menu, Input } from 'semantic-ui-react'
 
 export class NavBar extends Component {
   state = { 
     activeItem: 'green'
+  }
+
+  handleSearch = (e) => {
+    this.props.searchField(e.target.value)
   }
 
   handleLogout = () => {
@@ -29,7 +34,7 @@ export class NavBar extends Component {
     }
 
     return (
-      <Menu icon='labeled' inverted color='black' style={style}>
+      <Menu inverted color='black' style={style}>
         <Menu.Item
           header
           as={NavLink}
@@ -65,18 +70,23 @@ export class NavBar extends Component {
           <Icon name='user'/>
         </Menu.Item>
         <Menu.Menu position='right'>
-          <div className='ui right aligned category search item'>
-            <div className='ui transparent icon input'>
-              <input
-                className='prompt'
-                textColor='white'
-                type='text'
-                placeholder='Search Notes...'
-              />
-              <i className='search link icon' />
+        <Menu.Item>
+          <Input style={{color: 'white'}} onChange={this.handleSearch} className='nav' transparent icon='search' placeholder='Search...' />
+        </Menu.Item>
+          {/* <div className='nav'>
+            <div className='ui right aligned category search item'>
+              <div className='ui transparent icon input'>
+                <input
+                  className='prompt'
+                  textColor='white'
+                  type='text'
+                  placeholder='Search Notes...'
+                />
+                <i className='search link icon' />
+              </div>
+              <div className='results' />
             </div>
-            <div className='results' />
-          </div>
+          </div> */}
         </Menu.Menu>
         {
             this.props.auth ? 
@@ -111,4 +121,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, { logoutUser })(NavBar)
+export default connect(mapStateToProps, { searchField, logoutUser })(NavBar)

@@ -7,7 +7,7 @@ import { Grid, Header, Icon } from 'semantic-ui-react'
 export class LibraryBooks extends Component {
 
     libraryBooks = () => {
-        return this.props.allLibraryBooks.filter(book => book[1].id === this.props.auth.id)
+        return this.props.books.filter(book => book[1].id === this.props.auth.id)
     }
 
     wishedBooks = () => {
@@ -35,9 +35,9 @@ export class LibraryBooks extends Component {
                     :
                     <div>
                         <br/><br/><Header as='h3' style={{color: 'white'}} textAlign="center">
-                            Your Library Bookshelf is Current Empty
+                            {this.props.searchField ? "No Books Match Your Search" : "Your Library Bookshelf is Current Empty"}
                         </Header>
-                        <Header as='h4' style={{color: 'white'}} textAlign="center"><Icon name='heart'/>Search for Books You'd Like to Donate</Header><br/><br/><br/><br/><br/>
+                       {this.props.searchField ? null : <Header as='h4' style={{color: 'white'}} textAlign="center"><Icon name='heart'/>Search for Books You'd Like to Donate</Header>}<br/><br/><br/><br/><br/>
                     </div>
                 }
             </div>
@@ -49,7 +49,8 @@ const mapStateToProps = state => {
     return {
         allLibraryBooks: state.allLibraryBooks,
         allWishedBooks: state.allWishedBooks,
-        auth: state.auth
+        auth: state.auth,
+        searchField: state.searchField
     }
 }
 

@@ -136,3 +136,10 @@ export const showUser = (user) => {
     }
 }
 
+export const searchField = (string) => {
+    return {
+        type: 'SEARCH_BOOKS',
+        string
+    }
+}
+
