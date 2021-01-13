@@ -6,7 +6,7 @@ import { Grid, Header } from 'semantic-ui-react'
 export class WishedBooks extends Component {
 
     wishedBooks = () => {
-        return this.props.allWishedBooks.filter(book => book[1].id === this.props.auth.id)
+        return this.props.books.filter(book => book[1].id === this.props.auth.id)
     }
 
     libraryBooks = () => {
@@ -35,11 +35,9 @@ export class WishedBooks extends Component {
                     :
                     <div>
                         <br/><br/><Header as='h3' style={{color: 'white'}} textAlign="center">
-                            Your WishList Bookshelf is Current Empty
+                        {this.props.searchField ? "No Books Match Your Search" : "Your WishList Bookshelf is Current Empty"}
                         </Header>
-                        <Header as='h4' style={{color: 'white'}} textAlign="center">
-                            Search for Books You'd Like to Find
-                        </Header><br/><br/><br/><br/><br/><br/><br/><br/>
+                        {this.props.searchField ? null : <Header as='h4' style={{color: 'white'}} textAlign="center">Search for Books You'd Like to Find</Header>}<br/><br/><br/><br/><br/><br/><br/><br/>
                     </div>
                 }
             </div>
@@ -51,7 +49,8 @@ const mapStateToProps = state => {
     return {
         allWishedBooks: state.allWishedBooks,
         allLibraryBooks: state.allLibraryBooks,
-        auth: state.auth
+        auth: state.auth,
+        searchField: state.searchField
     }
 }
 

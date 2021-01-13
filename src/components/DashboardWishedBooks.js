@@ -5,12 +5,12 @@ import { Grid } from 'semantic-ui-react'
 
 export class DashboardWishedBooks extends Component {
 
-    libraryBooks = () => {
-        return this.props.allLibraryBooks.filter(book => book[1].id === this.props.auth.id)
+    wishedBooks = () => {
+        return this.props.books.filter(book => book[1].id !== this.props.auth.id)
     }
 
-    wishedBooks = () => {
-        return this.props.allWishedBooks.filter(book => book[1].id !== this.props.auth.id)
+    libraryBooks = () => {
+        return this.props.allLibraryBooks.filter(book => book[1].id === this.props.auth.id)
     }
 
     render() {

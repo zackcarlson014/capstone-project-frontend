@@ -12,28 +12,43 @@ export class PublicProfile extends Component {
     componentDidMount() {
         window.scrollTo(0, 0)
     }
-    
-    userLibraryBooks = () => {
-        return this.props.allLibBooks.filter(book => book[1].id === this.props.user.id)
+
+    libraryBooks = () => {
+        if (this.props.searchField)  {
+            return this.props.allLibraryBooks.filter(b => b[0].title.toLowerCase().includes(this.props.searchField.toLowerCase()) || b[0].author.toLowerCase().includes(this.props.searchField.toLowerCase()))
+        } else {
+            return this.props.allLibraryBooks
+        }   
     }
 
+    wishedBooks = () => {
+        if (this.props.searchField)  {
+            return this.props.allWishedBooks.filter(b => b[0].title.toLowerCase().includes(this.props.searchField.toLowerCase()) || b[0].author.toLowerCase().includes(this.props.searchField.toLowerCase()))
+        } else {
+            return this.props.allWishedBooks
+        }   
+    }
+    
+    userLibraryBooks = () => {
+        return this.libraryBooks().filter(book => book[1].id === this.props.user.id)
+    }
 
     userWishedBooks = () => {
-        return this.props.allWishBooks.filter(book => book[1].id === this.props.user.id)
+        return this.wishedBooks().filter(book => book[1].id === this.props.user.id)
     }
 
     myLibraryBooks = () => {
-        return this.props.allLibBooks.filter(book => book[1].id === this.props.auth.id)
+        return this.props.allLibraryBooks.filter(book => book[1].id === this.props.auth.id)
     }
 
     myWishedBooks = () => {
-        return this.props.allWishBooks.filter(book => book[1].id === this.props.auth.id)
+        return this.props.allWishedBooks.filter(book => book[1].id === this.props.auth.id)
     }
 
     currentlyReading = () => {
         const books = this.props.reservedBooks.filter(b => b.user_id === this.props.user.id && b.delivered === true)
         const libBooks = books.map(b => {
-            return this.props.allLibBooks.find(book => book[2] === b.user_lib_book_id )
+            return this.props.allLibraryBooks.find(book => book[2] === b.user_lib_book_id )
         })
         return libBooks.map(b => b[0])
     }
@@ -128,8 +143,9 @@ const mapStateToProps = state => {
         user: state.showUser,
         auth: state.auth,
         reservedBooks: state.reservedBooks,
-        allLibBooks: state.allLibraryBooks,
-        allWishBooks: state.allWishedBooks
+        allLibraryBooks: state.allLibraryBooks,
+        allWishedBooks: state.allWishedBooks,
+        searchField: state.searchField
     }
 }
 

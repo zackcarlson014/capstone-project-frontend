@@ -10,7 +10,7 @@ export class DashboardLibraryBooks extends Component {
     }
 
     libraryBooks = () => {
-        return this.props.allLibraryBooks.filter(book => book[1].id !== this.props.auth.id)
+        return this.props.books.filter(book => book[1].id !== this.props.auth.id)
     }
 
     render() {

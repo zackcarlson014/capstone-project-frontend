@@ -37,7 +37,7 @@ export class LibraryBooks extends Component {
                         <br/><br/><Header as='h3' style={{color: 'white'}} textAlign="center">
                             {this.props.searchField ? "No Books Match Your Search" : "Your Library Bookshelf is Current Empty"}
                         </Header>
-                       {this.props.searchField ? null : <Header as='h4' style={{color: 'white'}} textAlign="center"><Icon name='heart'/>Search for Books You'd Like to Donate</Header>}<br/><br/><br/><br/><br/>
+                        {this.props.searchField ? null : <Header as='h4' style={{color: 'white'}} textAlign="center"><Icon name='heart'/>Search for Books You'd Like to Donate</Header>}<br/><br/><br/><br/><br/>
                     </div>
                 }
             </div>

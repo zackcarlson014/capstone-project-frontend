@@ -19,6 +19,14 @@ export class Profile extends Component {
         }   
     }
 
+    wishedBooks = () => {
+        if (this.props.searchField)  {
+            return this.props.allWishedBooks.filter(b => b[0].title.toLowerCase().includes(this.props.searchField.toLowerCase()) || b[0].author.toLowerCase().includes(this.props.searchField.toLowerCase()))
+        } else {
+            return this.props.allWishedBooks
+        }   
+    }
+
     componentDidMount() {
         window.scrollTo(0, 0)
     }
@@ -65,7 +73,7 @@ export class Profile extends Component {
                         <Button  as={ Link } to='/user_wish_books/new' color='blue'>Add Books To Wish List</Button><br/><br/>
                     </Grid.Column>
                 </Grid>
-                <WishedBooks /><br/><br/><br/><br/>
+                <WishedBooks books={this.wishedBooks()}/><br/><br/><br/><br/>
                 <div className="ui inverted vertical footer segment form-page">
                     <div className="ui container">
                         MyBrary
@@ -81,6 +89,7 @@ const mapStateToProps = state => {
         auth: state.auth,
         reservedBooks: state.reservedBooks,
         allLibraryBooks: state.allLibraryBooks,
+        allWishedBooks: state.allWishedBooks,
         searchField: state.searchField
     }
 }
