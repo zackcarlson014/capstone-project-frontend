@@ -62,13 +62,9 @@ export class AddWishedBookCard extends Component {
     render() {
         return (
             <Card color='blue'>
-                {this.props.match ?
-                    <Image as={ Link } exact to={`/books/${this.props.match[0].id}`} onClick={this.handleViewBook} src={this.props.image} wrapped ui={false} width='300px' height='300px'/>
-                    :
-                    <Image src={this.props.image} wrapped ui={false} width='300px' height='300px'/>
-                }
+                <Image as='a' onClick={()=> window.open(this.props.link, "_blank")} src={this.props.image} wrapped ui={false} width='300px' height='300px'/>
                 <Card.Content>
-                    <Card.Header>{this.props.title}</Card.Header>
+                    <Card.Header as='a' onClick={()=> window.open(this.props.link, "_blank")}>{this.props.title}</Card.Header>
                     <Card.Meta>
                         <span className='date'>Published in {this.props.published ? this.props.published : '???'}</span>
                     </Card.Meta>

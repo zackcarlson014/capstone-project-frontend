@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import request from 'superagent';
+import NavBar from './NavBar.js'
 import BookSearch from './BookSearch.js'
 import AddLibraryBookList from './AddLibraryBookList.js'
 import LibraryBooks from './LibraryBooks.js'
-import NavBar from './NavBar.js'
+import request from 'superagent';
 import { Grid, Button, Header, Icon } from 'semantic-ui-react'
 
 export class AddLibraryBookContainer extends Component {
@@ -39,6 +40,10 @@ export class AddLibraryBookContainer extends Component {
         })
     }
 
+    libraryBooks = () => {
+        return this.props.allLibraryBooks.filter(book => book[1].id === this.props.auth.id)
+    }
+
     render() {
         return (
             <div className='App'>
@@ -58,7 +63,7 @@ export class AddLibraryBookContainer extends Component {
                     <Icon name='book' circular />
                     <Header.Content>Your Library Books</Header.Content>
                 </Header><br/><br/>
-                <LibraryBooks /><br/>
+                <LibraryBooks books={this.libraryBooks()}/><br/>
                 <br/><br/><br/><Button as={ Link } to='/profile' color='blue'>Back to Profile</Button><br/><br/><br/>
                 <div className="ui inverted vertical footer segment form-page">
                     <div className="ui container">
@@ -70,4 +75,11 @@ export class AddLibraryBookContainer extends Component {
     }
 }
 
-export default AddLibraryBookContainer
+const mapStateToProps = state => {
+    return {
+        allLibraryBooks: state.allLibraryBooks,
+        auth: state.auth
+    }
+}
+
+export default connect(mapStateToProps, null)(AddLibraryBookContainer)

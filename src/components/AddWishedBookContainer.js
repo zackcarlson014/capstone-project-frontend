@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import request from 'superagent';
+import NavBar from './NavBar.js'
 import BookSearch from './BookSearch.js'
 import AddWishedBookList from './AddWishedBookList.js'
 import WishedBooks from './WishedBooks.js'
-import NavBar from './NavBar.js'
+import request from 'superagent';
 import { Grid, Button, Header, Icon } from 'semantic-ui-react'
 
 export class AddWishedBookContainer extends Component {
@@ -39,6 +40,10 @@ export class AddWishedBookContainer extends Component {
         })
     }
 
+    wishedBooks = () => {
+        return this.props.allWishedBooks.filter(book => book[1].id === this.props.auth.id)
+    }
+
     render() {
         return (
             <div className='App'>
@@ -58,7 +63,7 @@ export class AddWishedBookContainer extends Component {
                         <Icon name='book' circular />
                         <Header.Content>Your WishList Books</Header.Content>
                     </Header><br/><br/>
-                    <WishedBooks /><br/>
+                    <WishedBooks books={this.wishedBooks()}/><br/>
                     <br/><br/><br/><Button as={ Link } to='/profile' color='blue'>Back to Profile</Button><br/><br/><br/>
                     <div className="ui inverted vertical footer segment form-page">
                         <div className="ui container">
@@ -70,4 +75,11 @@ export class AddWishedBookContainer extends Component {
     }
 }
 
-export default AddWishedBookContainer
+const mapStateToProps = state => {
+    return {
+        allWishedBooks: state.allWishedBooks,
+        auth: state.auth
+    }
+}
+
+export default connect(mapStateToProps, null)(AddWishedBookContainer)
