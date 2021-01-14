@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router'
 import { Link } from 'react-router-dom'
-import { showBook, showUser, addLibBook, deleteLibBook, updateReservedBook } from '../actions/index.js'
+import { showBook, showUser, addLibBook, deleteLibBook, updateReservedBook, reservedBookMessages } from '../actions/index.js'
 import NavBar from './NavBar.js'
 import ReservedMessages from './ReservedMessages.js'
 import { Grid , Container, Header, Segment, Image, Button, Icon} from 'semantic-ui-react'
@@ -11,6 +11,13 @@ export class ReservedBookShowPage extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0)
+
+        fetch('http://localhost:3000/api/v1/reserved_messages')
+        .then(resp => resp.json())
+        .then(data => {
+            const messages = data.filter(m => m[0].reserved_book_id === this.reservedBook().id)
+            this.props.reservedBookMessages(messages)
+        })
     }
 
     handleShowUser = () => {
@@ -25,15 +32,10 @@ export class ReservedBookShowPage extends Component {
         return this.props.reservedBooks.find(b => b.user_lib_book_id === this.props.book[2])
     }
 
-    messages = () => {
-        return this.props.allMessages.filter(m => m[0].reserved_book_id === this.reservedBook().id)
-    }
-
     handleRemoveLibBook = () => {
         fetch(`http://localhost:3000/api/v1/user_lib_books/${this.props.book[2]}`, {method: 'DELETE'})
         .then(resp => resp.json())
         .then(data => {
-            console.log(data)
             this.props.deleteLibBook(this.props.book[2])
         })
     }
@@ -55,7 +57,6 @@ export class ReservedBookShowPage extends Component {
         fetch('http://localhost:3000/api/v1/user_lib_books', reqObj)
         .then(resp => resp.json())
         .then(data => {
-            console.log(data)
             this.handleRemoveLibBook()
             this.props.addLibBook(this.props.book[0], this.props.auth, data.id)
             this.handleDelivered(data.id)
@@ -80,12 +81,9 @@ export class ReservedBookShowPage extends Component {
         fetch(`http://localhost:3000/api/v1/reserved_books/${this.reservedBook().id}`, reqObj)
         .then(resp => resp.json())
         .then(resBook => {
-            console.log(resBook)
             this.props.updateReservedBook(resBook)
         })  
     }
-
-
 
     render() {
         if (!this.props.book) {
@@ -137,14 +135,19 @@ export class ReservedBookShowPage extends Component {
                             :
                             null
                         }
-                        <Grid.Row>
-                            <Grid.Column width='2'></Grid.Column>
-                            <Grid.Column width='11'>
-                                <Segment>
-                                    <ReservedMessages resBookId={this.reservedBook().id} messages={this.messages()} userName={this.props.book[1].username}/>
-                                </Segment><br/><br/>
-                            </Grid.Column>
-                        </Grid.Row>
+                        {this.props.messages ? 
+                            <Grid.Row>
+                                <Grid.Column width='2'></Grid.Column>
+                                <Grid.Column width='11'>
+                                    <Segment>
+                                        <ReservedMessages resBookId={this.reservedBook().id} messages={this.props.messages} userName={this.props.book[1].username}/>
+                                    </Segment><br/><br/>
+                                </Grid.Column>
+                            </Grid.Row>
+                            :
+                            null
+                        }
+
                         <Grid.Row>
                             <Grid.Column width='2'></Grid.Column>
                             <Grid.Column width='3'><br/><Button as={ Link } exact to={'/reserved_books'} color='blue'><Icon name='book'/>Reserved Books</Button></Grid.Column>
@@ -167,9 +170,9 @@ const mapStateToProps = state => {
         book: state.showReservedBook,
         allLibraryBooks: state.allLibraryBooks,
         reservedBooks: state.reservedBooks,
-        allMessages: state.allMessages,
-        auth: state.auth
+        auth: state.auth,
+        messages: state.allMessages
     }
 }
 
-export default connect(mapStateToProps, { showBook, showUser, addLibBook, deleteLibBook, updateReservedBook })(ReservedBookShowPage)
+export default connect(mapStateToProps, { showBook, showUser, addLibBook, deleteLibBook, updateReservedBook, reservedBookMessages })(ReservedBookShowPage)

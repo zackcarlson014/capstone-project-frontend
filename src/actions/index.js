@@ -51,6 +51,13 @@ export const deleteReservedBook = (id) => {
     }
 }
 
+export const bookComments = (comments) => {
+    return {
+        type: 'BOOK_COMMENTS',
+        comments
+    }
+}
+
 export const addComment = (comment, user, likes) => {
     return {
         type: 'ADD_COMMENT',
@@ -73,6 +80,13 @@ export const addLike = (comment, user, likes) => {
         comment,
         user,
         likes
+    }
+}
+
+export const reservedBookMessages = (messages) => {
+    return {
+        type: 'RESERVED_BOOK_MESSAGES',
+        messages
     }
 }
 

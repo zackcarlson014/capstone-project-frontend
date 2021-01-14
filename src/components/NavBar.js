@@ -7,8 +7,9 @@ import { Dropdown, Icon, Menu, Input } from 'semantic-ui-react'
 
 export class NavBar extends Component {
   state = { 
-    activeItem: 'green'
+    activeItem: ''
   }
+
 
   handleSearch = (e) => {
     this.props.searchField(e.target.value)
@@ -69,24 +70,20 @@ export class NavBar extends Component {
         >
           <Icon name='user'/>
         </Menu.Item>
+        <Menu.Item
+          header
+          as={NavLink}
+          to='/daf'
+          // name='home'
+          // active={activeItem === 'home'}
+          // onClick={this.handleItemClick}
+        >
+          <Icon name='coffee'/>
+        </Menu.Item>
         <Menu.Menu position='right'>
         <Menu.Item>
           <Input style={{color: 'white'}} onChange={this.handleSearch} className='nav' transparent icon='search' placeholder='Search...' />
         </Menu.Item>
-          {/* <div className='nav'>
-            <div className='ui right aligned category search item'>
-              <div className='ui transparent icon input'>
-                <input
-                  className='prompt'
-                  textColor='white'
-                  type='text'
-                  placeholder='Search Notes...'
-                />
-                <i className='search link icon' />
-              </div>
-              <div className='results' />
-            </div>
-          </div> */}
         </Menu.Menu>
         {
             this.props.auth ? 

@@ -1,15 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
 import NavBar from './NavBar'
-import UserCard from './UserCard'
-import { Header, Card, Image, Button, Icon } from 'semantic-ui-react'
+import PublicUserCard from './PublicUserCard'
+import { Grid, Loader, Header, Card, Icon } from 'semantic-ui-react'
 
 export class UsersDashboard extends Component {
 
     state = {
-        users: [],
-        books: []
+        users: []
     }
 
     componentDidMount() {
@@ -20,15 +18,10 @@ export class UsersDashboard extends Component {
                 users
             })
         })
-        fetch('http://localhost:3000/api/v1/reserved_books')
-        .then(resp => resp.json()) 
-        .then(books => {
-            const currentlyReading = books.filter(b => b.delivered === true)
-            this.setState({
-                books: currentlyReading
-            })
-        })
+    }
 
+    fellowMyBrarians = () => {
+        return this.state.users.filter(u => u.id !== this.props.auth.id)
     }
 
     render() {
@@ -40,40 +33,16 @@ export class UsersDashboard extends Component {
                     <Icon name='user' circular />
                     <Header.Content>MyBrarians</Header.Content>
                 </Header><br/><br/>
-                    <Card.Group itemsPerRow={9} centered inverted>
-                    {this.state.books.map(b => {
-                        if (currentlyReading.find(lb => lb[2] === b.user_lib_book_id) && this.state.users.find(u => u.id === b.user_id)) {
-                            const user = this.state.users.find(u => u.id === b.user_id)
-                            const libBook = currentlyReading.find(lb => lb[2] === b.user_lib_book_id)
-                            return (
-                                <Card color='blue'>
-                                    <Image size='medium' src={libBook[0].image} wrapped />
-                                    <Card.Content>
-                                        <Card.Header>{libBook[0].title}</Card.Header>
-                                        <Card.Meta>
-                                            {libBook[0].published}
-                                        </Card.Meta>
-                                        <Card.Description>
-                                            {libBook[0].author}
-                                        </Card.Description>
-                                    </Card.Content>
-                                    <Card.Content extra >
-                                        <Button color='red' fluid>{user.username}</Button>
-                                    </Card.Content>
-                                </Card>
-                            )
-                        } else {
-                            return null
-                        }
-                    })}
-                </Card.Group>
-                <Card.Group itemsPerRow={6} centered inverted>
-                    {this.state.users ? 
-                        this.state.users.map(u => <UserCard user={u}/>)
+                <Grid textAlign='center'>
+                    <Grid.Column width='1'></Grid.Column>
+                    {this.props.auth ? 
+                        <Card.Group itemsPerRow={3} centered inverted>
+                            {this.fellowMyBrarians().map(u => <PublicUserCard user={u}/>)}
+                        </Card.Group>
                         :
-                        null
-                    }
-                </Card.Group><br/><br/>
+                        <Grid style={{ height: '99vh' }} verticalAlign='middle'><Loader size='massive' active/></Grid>
+                    }   
+                </Grid><br/><br/><br/><br/>
                 <div className="ui inverted vertical footer segment form-page">
                     <div className="ui container">
                         MyBrary
@@ -86,7 +55,8 @@ export class UsersDashboard extends Component {
 
 const mapStateToProps = state => {
     return {
-        allLibraryBooks: state.allLibraryBooks
+        allLibraryBooks: state.allLibraryBooks,
+        auth: state.auth
     }
 }
 

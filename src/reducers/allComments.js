@@ -1,9 +1,11 @@
 export const allComments = (state=[], action) => {
     let updatedComments = []
     switch(action.type) {
-        case 'LOGIN_SUCCESS':
-            return action.comments
-        case 'CURRENT_USER':
+        // case 'LOGIN_SUCCESS':
+        //     return action.comments
+        // case 'CURRENT_USER':
+        //     return action.comments
+        case 'BOOK_COMMENTS':
             return action.comments
         case 'ADD_COMMENT':
             return [...state, [action.comment, action.user, action.likes]]

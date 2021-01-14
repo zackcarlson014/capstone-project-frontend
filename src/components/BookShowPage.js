@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Redirect } from 'react-router'
-import { showUser, addReservedBook, deleteWishBook } from '../actions/index.js'
+import { showUser, addReservedBook, deleteWishBook, bookComments } from '../actions/index.js'
 import NavBar from './NavBar.js'
 import Comments from './Comments.js'
 import UserCarousel from './UserCarousel.js'
@@ -13,10 +13,15 @@ export class BookShowPage extends Component {
 
     componentDidMount() {
         window.scrollTo(0, 0)
-    }
 
-    bookComments = () => {
-        return this.props.allComments.filter(comment => comment[0].book_id === this.props.book[0].id)
+        fetch()
+
+        fetch('http://localhost:3000/api/v1/comments')
+        .then(resp => resp.json())
+        .then(data => {
+            const comments = data.filter(comment => comment[0].book_id === this.props.book[0].id)
+            this.props.bookComments(comments)
+        })
     }
 
     handleShowUser = () => {
@@ -131,14 +136,18 @@ export class BookShowPage extends Component {
                             null
                             }               
                         </Grid.Row>
-                        <Grid.Row>
-                        <Grid.Column width='2'></Grid.Column>
-                            <Grid.Column width='12'>
-                                <Segment>
-                                    <Comments book={this.props.book[0]} comments={this.bookComments()}/>
-                                </Segment><br/>
-                            </Grid.Column>
-                        </Grid.Row>
+                        {this.props.allComments ?
+                            <Grid.Row>
+                            <Grid.Column width='2'></Grid.Column>
+                                <Grid.Column width='12'>
+                                    <Segment>
+                                        <Comments book={this.props.book[0]} comments={this.props.allComments}/>
+                                    </Segment><br/>
+                                </Grid.Column>
+                            </Grid.Row>
+                            :
+                            null
+                        }
                     </Grid>
                     <div className="ui inverted vertical footer segment form-page">
                         <div className="ui container">
@@ -163,4 +172,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, { showUser, addReservedBook, deleteWishBook })(BookShowPage)
+export default connect(mapStateToProps, { showUser, addReservedBook, deleteWishBook, bookComments })(BookShowPage)

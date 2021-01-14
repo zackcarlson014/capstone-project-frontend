@@ -1,10 +1,12 @@
 export const allMessages = (state=[], action) => {
     let updatedMessages = []
     switch(action.type) {
-        case 'LOGIN_SUCCESS':
-            return action.reserved_messages
-        case 'CURRENT_USER':
-            return action.reserved_messages
+        // case 'LOGIN_SUCCESS':
+        //     return action.reserved_messages
+        // case 'CURRENT_USER':
+        //     return action.reserved_messages
+        case 'RESERVED_BOOK_MESSAGES':
+            return action.messages
         case 'ADD_MESSAGE':
             return [...state, [action.message, action.user]]
         case 'DELETE_MESSAGE':
