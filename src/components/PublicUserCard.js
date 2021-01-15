@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { showUser } from '../actions/index'
 import { Card, Image, Icon, Button } from 'semantic-ui-react'
 
 export class PublicUserCard extends Component {
@@ -11,15 +10,11 @@ export class PublicUserCard extends Component {
         return books.length
     }
 
-    handleShowUser = () => {
-        this.props.showUser(this.props.user)
-    }
-
     render() {
         return (
             <Card color='blue' textAlign='center'>
                 <Card.Content>
-                <Image as={ Link } exact='true' to={`/users/${this.props.user.id}`} onClick={this.handleShowUser} fluid src={this.props.user.prof_pic_url ? this.props.user.prof_pic_url : 'https://icon-library.com/images/default-user-icon/default-user-icon-4.jpg'} />
+                <Image as={ Link } exact='true' to={`/users/${this.props.user.id}`} fluid src={this.props.user.prof_pic_url ? this.props.user.prof_pic_url : 'https://icon-library.com/images/default-user-icon/default-user-icon-4.jpg'} />
                 </Card.Content>
                 <Card.Content extra textAlign='center'>
                     <Card.Header>{this.props.user.username}</Card.Header>
@@ -45,4 +40,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, { showUser })(PublicUserCard)
+export default connect(mapStateToProps, null)(PublicUserCard)

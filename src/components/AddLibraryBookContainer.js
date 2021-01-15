@@ -19,10 +19,6 @@ export class AddLibraryBookContainer extends Component {
         }
     }
 
-    componentDidMount() {
-        window.scrollTo(0, 0)
-      }
-
     searchBook = (e) => {
         e.preventDefault();
         request
@@ -46,6 +42,7 @@ export class AddLibraryBookContainer extends Component {
     }
 
     render() {
+        window.scrollTo(0, 0)
         return (
             <div className='App'>
                 <NavBar/>

@@ -5,7 +5,7 @@ export const reservedBooks = (state=[], action) => {
             return action.reserved_books
         case 'CURRENT_USER':
             return action.reserved_books
-        case 'RESERVE_BOOK':
+        case 'ADD_RESERVED_BOOK':
             return [...state, action.newReservedBook]
         case 'UPDATE_RESERVED_BOOK':
         updatedBooks = state.map(b => {

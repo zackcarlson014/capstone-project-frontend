@@ -20,10 +20,6 @@ export class AddWishedBookContainer extends Component {
         }
     }
 
-    componentDidMount() {
-        window.scrollTo(0, 0)
-    }
-
     searchBook = (e) => {
         e.preventDefault();
         request
@@ -47,6 +43,7 @@ export class AddWishedBookContainer extends Component {
     }
 
     render() {
+        window.scrollTo(0, 0)
         return (
             <div className='App'>
                     <NavBar/>

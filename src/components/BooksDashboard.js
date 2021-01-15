@@ -9,21 +9,20 @@ import { Header, Icon } from 'semantic-ui-react'
 
 export class BooksDashboard extends Component {
 
-    componentDidMount() {
-        window.scrollTo(0, 0)
-    }
-
     libraryBooks = () => {
+        let matchedBooks = []
         if (this.props.searchField)  {
+            debugger
             const books = this.props.allLibraryBooks.filter(b => b[0].title.toLowerCase().includes(this.props.searchField.toLowerCase()) || b[0].author.toLowerCase().includes(this.props.searchField.toLowerCase()))
             if (books.length !== 0) {
-                return books
+                matchedBooks = books
             } else {
-                return this.props.allLibraryBooks
+                matchedBooks = this.props.allLibraryBooks
             } 
         } else {
-            return this.props.allLibraryBooks
-        }   
+            matchedBooks = this.props.allLibraryBooks
+        }
+        return matchedBooks
     }
 
     wishedBooks = () => {
@@ -40,6 +39,7 @@ export class BooksDashboard extends Component {
     }
 
     render() {
+        window.scrollTo(0, 0)
         return (
             <div className='App'>
                 <NavBar />
@@ -47,6 +47,7 @@ export class BooksDashboard extends Component {
                     <Icon name='book' circular />
                     <Header.Content>All Library Books</Header.Content>
                 </Header>
+                {this.props.noMatch ? <Header as='h4'><Icon/>No Matches</Header> : null}
                 <DashboardLibraryBooks books={this.libraryBooks()}/>
                 <br/><br/><br/><Header as='h2' icon style={{color: 'white'}} textAlign="center">
                     <Icon name='book' circular />

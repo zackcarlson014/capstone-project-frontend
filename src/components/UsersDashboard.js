@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import NavBar from './NavBar'
 import PublicUserCard from './PublicUserCard'
+import Footer from './Footer'
 import { Grid, Loader, Header, Card, Icon } from 'semantic-ui-react'
 
 export class UsersDashboard extends Component {
@@ -10,7 +11,7 @@ export class UsersDashboard extends Component {
         users: []
     }
 
-    componentDidMount() {
+    componentWillMount() {
         fetch('http://localhost:3000/api/v1/users')
         .then(resp => resp.json())
         .then(users => {
@@ -42,11 +43,7 @@ export class UsersDashboard extends Component {
                         <Grid style={{ height: '99vh' }} verticalAlign='middle'><Loader size='massive' active/></Grid>
                     }   
                 </Grid><br/><br/><br/><br/>
-                <div className="ui inverted vertical footer segment form-page">
-                    <div className="ui container">
-                        MyBrary
-                    </div>
-                </div>
+                <Footer/>
             </div>
         )
     }

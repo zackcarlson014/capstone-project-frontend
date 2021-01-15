@@ -112,12 +112,12 @@ export class BookShowPage extends Component {
                             <Grid.Row>
                                 <Grid.Column width='2'></Grid.Column>
                                 {this.libraryUsers().length !== 0 ?
-                                    this.libraryUsers().map(l => {
+                                    this.libraryUsers().map((l, i) => {
                                         if (this.props.reservedBooks.find(b => b.user_lib_book_id === l[2]) || this.myReservedBook()) {
                                             return null
                                         } else {
                                             return (
-                                                <Grid.Column width='2'>
+                                                <Grid.Column key={i} width='2'>
                                                     <Button as={ Link } exact='true' to={'/reserved_books'} fluid onClick={() => {this.handleAddReservedBook(l[0], l[2])}} animated='fade' icon='user' color='green' >
                                                         <Button.Content visible><Icon name='tag'/></Button.Content>
                                                         <Button.Content hidden>Reserve from {l[1].username}</Button.Content>

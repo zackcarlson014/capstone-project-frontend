@@ -10,10 +10,6 @@ import { Grid, Header, Icon, Button } from 'semantic-ui-react'
 
 export class ReservedBooks extends Component {
 
-    componentDidMount() {
-        window.scrollTo(0, 0)
-    }
-
     deliveredBooks = () => {
         return this.props.reservedBooks.filter(b => b.user_id === this.props.auth.id && b.delivered === true)
     }
@@ -27,6 +23,7 @@ export class ReservedBooks extends Component {
     }
 
     render() {
+        window.scrollTo(0, 0)
         return (
             <div className='App'>
                 <NavBar />

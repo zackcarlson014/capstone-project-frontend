@@ -1,14 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { showUser } from '../actions/index'
 import { Card, Image, Button, Icon, Header } from 'semantic-ui-react'
 
 export class DashboardWishedBookCard extends Component {
-
-    handleUserView = () => {
-        this.props.showUser(this.props.user)
-    }
 
     reservedBook = () => {
         return this.props.reservedBooks.find(b => b.user_lib_book_id === this.props.match[2])
@@ -45,7 +40,7 @@ export class DashboardWishedBookCard extends Component {
                         </Button>
                     :
                     <Button.Group widths='2'>
-                        <Button as={ Link } exact='true' to={`/users/${this.props.user.id}`} animated='fade' icon='user' color='green' onClick={this.handleUserView}>
+                        <Button as={ Link } exact='true' to={`/users/${this.props.user.id}`} animated='fade' icon='user' color='green'>
                             <Button.Content visible><Icon name='user'/></Button.Content>
                             <Button.Content hidden>{this.props.user.username}</Button.Content>
                         </Button>
@@ -68,4 +63,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, { showUser })(DashboardWishedBookCard)
+export default connect(mapStateToProps, null)(DashboardWishedBookCard)

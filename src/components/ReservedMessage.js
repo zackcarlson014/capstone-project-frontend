@@ -1,14 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { showUser, deleteMessage } from '../actions/index.js'
+import { deleteMessage } from '../actions/index.js'
 import { Comment, Icon } from 'semantic-ui-react'
 
 export class ReservedMessage extends Component {
-
-    handleUserView = () => {
-        this.props.showUser(this.props.user)
-    }
 
     handleDeleteMessage = (e) => {
         e.preventDefault()
@@ -50,9 +46,9 @@ export class ReservedMessage extends Component {
         return (
             <div>
                 <Comment>
-                    <Comment.Avatar as={ Link } exact='true' to={this.props.user.id !== this.props.auth.id ? `/users/${this.props.user.id}` : '/profile'} onClick={this.handleUserView} src={this.props.user.prof_pic_url}/>
+                    <Comment.Avatar as={ Link } exact='true' to={this.props.user.id !== this.props.auth.id ? `/users/${this.props.user.id}` : '/profile'} src={this.props.user.prof_pic_url}/>
                     <Comment.Content>
-                        <Comment.Author as={ Link } exact='true' to={this.props.user.id !== this.props.auth.id ? `/users/${this.props.user.id}` : '/profile'} onClick={this.handleUserView}>{this.props.user.username}</Comment.Author>
+                        <Comment.Author as={ Link } exact='true' to={this.props.user.id !== this.props.auth.id ? `/users/${this.props.user.id}` : '/profile'}>{this.props.user.username}</Comment.Author>
                         <Comment.Metadata>
                             <div>{this.dateTime()}</div>
                         </Comment.Metadata>
@@ -77,4 +73,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, { showUser, deleteMessage })(ReservedMessage)
+export default connect(mapStateToProps, { deleteMessage })(ReservedMessage)

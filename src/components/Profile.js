@@ -28,10 +28,6 @@ export class Profile extends Component {
         }   
     }
 
-    componentDidMount() {
-        window.scrollTo(0, 0)
-    }
-
     deliveredBooks = () => {
         const books = this.props.reservedBooks.filter(b => b.user_id === this.props.auth.id && b.delivered === true)
         const libBooks = books.map(b => {
@@ -41,6 +37,7 @@ export class Profile extends Component {
     }
 
     render() {
+        window.scrollTo(0, 0)
         return (
             <div className='App'>
                 <NavBar/>

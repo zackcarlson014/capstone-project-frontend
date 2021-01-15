@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { deleteComment, addLike, showUser } from '../actions/index'
+import { deleteComment, addLike, addCommentLike, deleteLike } from '../actions/index'
 import { Comment, Icon, Loader } from 'semantic-ui-react'
+
 
 export class CommentItem extends Component {
 
@@ -16,15 +17,11 @@ export class CommentItem extends Component {
             })
     }
 
-    handleUserView = () => {
-        this.props.showUser(this.props.user)
-    }
-
     handleAddLike = (e) => {
         e.preventDefault()
 
         const newCommentLike = {
-            user_id: this.props.user.id,
+            user_id: this.props.auth.id,
             comment_id: this.props.comment.id
         }
 
@@ -39,12 +36,26 @@ export class CommentItem extends Component {
         fetch('http://localhost:3000/api/v1/comment_likes', reqObj)
         .then(resp => resp.json())
         .then(data => {
-            console.log(data)
-            this.props.addLike(this.props.comment, this.props.user, this.props.likes + 1)
+            this.props.addLike(data.id, data.comment_id)
+            this.props.addCommentLike(this.props.comment, this.props.user, this.props.likes + 1)
         }) 
     }
 
-        dateTime = () => {
+    handleRemoveLike = (e) => {
+        const updatedLikes = this.props.likes - 1
+
+        e.preventDefault()
+
+        fetch(`http://localhost:3000/api/v1/comment_likes/${this.likedByMe().id}`, {method: 'DELETE'})
+            .then(resp => resp.json())
+            .then(data => {
+                console.log(data)
+                this.props.deleteLike(this.props.comment.id, updatedLikes)
+            })
+
+    }
+
+    dateTime = () => {
         let period = 'am'
         let hour = this.props.comment.created_at.slice(11, 13) 
         if (parseInt(hour) > 12) {
@@ -69,25 +80,34 @@ export class CommentItem extends Component {
         return `${hour}:${minutes} ${period} ${month}/${day}/${year}`
     }
 
+    likedByMe = () => {
+        return this.props.myLikes.find(l => l.comment_id === this.props.comment.id)
+    }
+
     render() {
         if (this.props.auth) {
             return (
                 <Comment>
-                    <Comment.Avatar as={ Link } exact='true' to={this.props.user.id !== this.props.auth.id ? `/users/${this.props.user.id}` : '/profile'} src={this.props.user.prof_pic_url} onClick={this.handleUserView}/>
+                    <Comment.Avatar as={ Link } exact='true' to={this.props.user.id !== this.props.auth.id ? `/users/${this.props.user.id}` : '/profile'} src={this.props.user.prof_pic_url}/>
                     <Comment.Content>
-                        <Comment.Author as={ Link } exact='true' to={this.props.user.id !== this.props.auth.id ? `/users/${this.props.user.id}` : '/profile'} onClick={this.handleUserView}>{this.props.user.username}</Comment.Author>
+                        <Comment.Author as={ Link } exact='true' to={this.props.user.id !== this.props.auth.id ? `/users/${this.props.user.id}` : '/profile'}>{this.props.user.username}</Comment.Author>
                         <Comment.Metadata>
                             <div>{this.dateTime()}</div>
                         </Comment.Metadata>
                         <Comment.Text>{this.props.comment.content}</Comment.Text>
                         {this.props.auth.id === this.props.user.id ?
                             <Comment.Actions color='red'>
-                                <Comment.Action style={{color: 'red'}}><Icon name='heart'/>{this.props.likes !== 0 ? this.props.likes : 0}</Comment.Action>
-                                <Comment.Action onClick={this.handleRemoveComment} ><Icon name='trash alternate outline'/></Comment.Action>
+                                <Comment.Action><Icon name={this.props.likes !== 0 ? 'heart' : 'heart outline'}/>{this.props.likes !== 0 ? this.props.likes : 0}</Comment.Action>
+                                <Comment.Action style={{color: 'red'}} onClick={this.handleRemoveComment} ><Icon name='trash alternate outline'/></Comment.Action>
                             </Comment.Actions>
                             :
                             <Comment.Actions color='red'>
-                                <Comment.Action onClick={this.handleAddLike} style={{color: 'red'}}><Icon name='heart'/>{this.props.likes !== 0 ? this.props.likes : null}</Comment.Action>
+                                {this.likedByMe() ?
+                                    <Comment.Action onClick={this.handleRemoveLike} style={{color: 'red'}}><Icon name='heart'/>{this.props.likes !== 0 ? this.props.likes : null}</Comment.Action>
+                                    :
+                                    <Comment.Action onClick={this.handleAddLike} style={{color: 'red'}}><Icon name='heart outline'/>{this.props.likes !== 0 ? this.props.likes : null}</Comment.Action>
+                                }
+                                
                             </Comment.Actions>
                          }
                     </Comment.Content>
@@ -101,9 +121,10 @@ export class CommentItem extends Component {
 
 const mapStateToProps = state => {
     return {
-        auth: state.auth
+        auth: state.auth,
+        myLikes: state.myLikes
     }
 }
 
 
-export default connect(mapStateToProps, { deleteComment, addLike, showUser })(CommentItem)
+export default connect(mapStateToProps, { deleteComment, addLike, addCommentLike, deleteLike })(CommentItem)

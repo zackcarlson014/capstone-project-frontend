@@ -32,7 +32,7 @@ export const deleteWishBook = (id) => {
 
 export const addReservedBook = (newReservedBook) => {
     return {
-        type: 'RESERVE_BOOK',
+        type: 'ADD_RESERVED_BOOK',
         newReservedBook
     }
 }
@@ -74,11 +74,27 @@ export const deleteComment = (id) => {
     }
 }
 
-export const addLike = (comment, user, likes) => {
+export const addLike = (id, like) => {
     return {
         type: 'ADD_LIKE',
+        id,
+        like
+    }
+}
+
+export const addCommentLike = (comment, user, likes) => {
+    return {
+        type: 'ADD_COMMENT_LIKE',
         comment,
         user,
+        likes
+    }
+}
+
+export const deleteLike = (like, likes) => {
+    return {
+        type: 'DELETE_LIKE',
+        like,
         likes
     }
 }
@@ -163,6 +179,12 @@ export const showUser = (user) => {
         user
     }
 }
+
+export const removeShowUser = () => {
+    return {
+      type: 'REMOVE_SHOW_USER',
+    }
+  }
 
 export const searchField = (string) => {
     return {

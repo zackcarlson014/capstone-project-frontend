@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { showUser, showReservedBook, removeShowReservedBook, addLibBook, deleteLibBook, updateReservedBook, reservedBookMessages } from '../actions/index'
+import { showReservedBook, removeShowReservedBook, addLibBook, deleteLibBook, updateReservedBook, reservedBookMessages } from '../actions/index'
 import NavBar from './NavBar'
 import ReservedMessages from './ReservedMessages'
 import Footer from './Footer'
@@ -19,16 +19,8 @@ export class ReservedBookShowPage extends Component {
         })
     }
 
-    componentDidMount() {
-        window.scrollTo(0, 0)
-    }
-
     componentWillUnmount() {
         this.props.removeShowReservedBook()
-    }
-
-    handleShowUser = () => {
-        this.props.showUser(this.props.book[1])
     }
 
     reservedBook = () => {
@@ -89,6 +81,7 @@ export class ReservedBookShowPage extends Component {
     }
 
     render() {
+        window.scrollTo(0, 0)
         if (!this.props.book || !this.reservedBook()) {
            return <Grid style={{ height: '99vh' }}><Loader active /></Grid>
         } else {
@@ -113,21 +106,21 @@ export class ReservedBookShowPage extends Component {
                             <Grid.Column width='6'><Segment compact><Image as={ Link } exact='true' to={`/books/${this.props.book[0].id}`} src={this.props.book[0].image} alt='' width='245px' height='350px' /></Segment><br/></Grid.Column>
                             <Grid.Column width='6'>
                             <Segment compact>
-                                    {this.reservedBook().user_id === this.props.auth.id ? 
+                                    {this.props.book[1].id === this.props.auth.id ? 
                                         <Header as='h4' textAlign='center' color='green'><Icon name='user'/>Reserved From</Header> 
                                         : 
                                         <Header as='h4' textAlign='center' color='green'><Icon name='user'/>Reserved By</Header>
                                     }
-                                    <Image src={this.props.book[1].prof_pic_url} alt='' size='medium'/><br/>
-                                    <Button as={ Link } exact='true' to={`/users/${this.props.book[1].id}`} fluid animated='fade' icon='user' color='green' onClick={this.handleShowUser}>
+                                    <Image src={this.props.book[1].id === this.props.auth.id ? this.props.book[2].user.prof_pic_url : this.props.book[1].prof_pic_url} alt='' size='medium'/><br/>
+                                    <Button as={ Link } exact='true' to={this.props.book[1].id === this.props.auth.id ? `/users/${this.props.book[2].user.id}` : `/users/${this.props.book[1].id}`} fluid animated='fade' icon='user' color='green'>
                                         <Button.Content visible><Icon name='user'/></Button.Content>
-                                        <Button.Content hidden>{this.props.book[1].username}'s Profile</Button.Content>
+                                        <Button.Content hidden>{this.props.book[1].id === this.props.auth.id ? this.props.book[2].user.username : this.props.book[1].username}'s Profile</Button.Content>
                                     </Button>
                                 </Segment><br/>
                             </Grid.Column>
                         </Grid.Row>
 
-                        {this.reservedBook().user_id === this.props.auth.id ?
+                        {this.props.book[1].id === this.props.auth.id ?
                             <Grid.Row>
                                 <Grid.Column width='2'></Grid.Column>
                                 <Grid.Column as={ Link } exact='true' to={`/profile`} width='2'>
@@ -146,7 +139,7 @@ export class ReservedBookShowPage extends Component {
                                 <Grid.Column width='2'></Grid.Column>
                                 <Grid.Column width='11'>
                                     <Segment>
-                                        <ReservedMessages resBookId={this.reservedBook().id} messages={this.props.messages} userName={this.props.book[1].username}/>
+                                        <ReservedMessages resBookId={this.props.book[1].id} messages={this.props.messages} userName={this.props.book[1].username}/>
                                     </Segment><br/><br/>
                                 </Grid.Column>
                             </Grid.Row>
@@ -177,4 +170,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, { showUser, showReservedBook, removeShowReservedBook, addLibBook, deleteLibBook, updateReservedBook, reservedBookMessages })(ReservedBookShowPage)
+export default connect(mapStateToProps, { showReservedBook, removeShowReservedBook, addLibBook, deleteLibBook, updateReservedBook, reservedBookMessages })(ReservedBookShowPage)

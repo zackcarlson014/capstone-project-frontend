@@ -1,18 +1,24 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Redirect } from 'react-router'
+import { showUser, removeShowUser } from '../actions/index'
 import NavBar from './NavBar'
 import DashboardLibraryBookCard from './DashboardLibraryBookCard'
 import DashboardWishedBookCard from './DashboardWishedBookCard'
 import CurrentlyReadingCarousel from './CurrentlyReadingCarousel'
 import Footer from './Footer'
-import { Grid, Header, Icon, Segment, Image } from 'semantic-ui-react'
+import { Grid, Header, Icon, Segment, Image, Loader } from 'semantic-ui-react'
 
 export class PublicProfile extends Component {
 
+    componentWillMount() {
+        const id = this.props.location.pathname.slice(7)
+        fetch(`http://localhost:3000/api/v1/users/${id}`)
+        .then(resp => resp.json())
+        .then(user => this.props.showUser(user))
+    }
 
-    componentDidMount() {
-        window.scrollTo(0, 0)
+    componentWillUnmount() {
+        this.props.removeShowUser()
     }
 
     libraryBooks = () => {
@@ -66,8 +72,9 @@ export class PublicProfile extends Component {
     }
 
     render() {
+        window.scrollTo(0, 0)
         if (!this.props.user) {
-            return <Redirect to='/books'/>
+            return <Grid style={{ height: '99vh' }}><Loader active /></Grid>
         } else {
             return (
                 <div className='App'>
@@ -157,4 +164,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, null)(PublicProfile)
+export default connect(mapStateToProps, { showUser, removeShowUser })(PublicProfile)
