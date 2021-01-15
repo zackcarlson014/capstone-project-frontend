@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router'
-import NavBar from './NavBar.js'
+import NavBar from './NavBar'
 import DashboardLibraryBookCard from './DashboardLibraryBookCard'
 import DashboardWishedBookCard from './DashboardWishedBookCard'
-import CurrentlyReadingCarousel from './CurrentlyReadingCarousel.js'
+import CurrentlyReadingCarousel from './CurrentlyReadingCarousel'
+import Footer from './Footer'
 import { Grid, Header, Icon, Segment, Image } from 'semantic-ui-react'
 
 export class PublicProfile extends Component {
@@ -138,11 +139,7 @@ export class PublicProfile extends Component {
                             </Grid.Column>
                         </Grid>
                     </div><br/><br/><br/><br/>
-                    <div className="ui inverted vertical footer segment form-page">
-                        <div className="ui container">
-                            MyBrary
-                        </div>
-                    </div>
+                    <Footer/>
                 </div>
             )
         }

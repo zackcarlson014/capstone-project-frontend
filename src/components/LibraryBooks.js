@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import LibraryBookCard from './LibraryBookCard.js'
+import LibraryBookCard from './LibraryBookCard'
 import { Grid, Header, Icon } from 'semantic-ui-react'
 
 

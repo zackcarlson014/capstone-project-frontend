@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { loginSuccess } from '../actions/auth'
+import Footer from './Footer'
 import { Button, Form, Grid, Header, Segment, Message, Icon } from 'semantic-ui-react'
 
 export class Login extends Component {
@@ -72,15 +73,11 @@ export class Login extends Component {
                             </Segment>
                         </Form>
                         <Message>
-                            New to us? <Button as={ Link } exact to={`/users/new`} color='green' size='mini'>Sign Up</Button>
+                            New to us? <Button as={ Link } exact='true' to={`/users/new`} color='green' size='mini'>Sign Up</Button>
                         </Message>
                     </Grid.Column>
                 </Grid>
-                <div className="ui inverted vertical footer segment form-page">
-                    <div className="ui container">
-                        MyBrary
-                    </div>
-                </div>
+                <Footer/>
             </div>
         )
     }

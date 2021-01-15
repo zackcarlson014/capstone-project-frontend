@@ -69,7 +69,7 @@ export class AddLibraryBookCard extends Component {
                 </Card.Content>
                 {this.props.match ? 
                 <Card.Content extra>
-                    <Button as={ Link } exact to={`/books/${this.props.match[0].id}`} fluid color='green'>View Book</Button>
+                    <Button as={ Link } exact='true' to={`/books/${this.props.match[0].id}`} fluid color='green'>View Book</Button>
                 </Card.Content>
                 :
                 <Card.Content extra>

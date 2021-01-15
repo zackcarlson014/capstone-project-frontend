@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import LibraryBooks from './LibraryBooks.js'
-import WishedBooks from './WishedBooks.js'
-import NavBar from './NavBar.js'
-import UserCard from './UserCard.js'
-import CurrentlyReadingCarousel from './CurrentlyReadingCarousel.js'
+import NavBar from './NavBar'
+import UserCard from './UserCard'
+import CurrentlyReadingCarousel from './CurrentlyReadingCarousel'
+import LibraryBooks from './LibraryBooks'
+import WishedBooks from './WishedBooks'
+import Footer from './Footer'
 import { Grid, Button, Header, Icon } from 'semantic-ui-react'
 
 
@@ -74,11 +75,7 @@ export class Profile extends Component {
                     </Grid.Column>
                 </Grid>
                 <WishedBooks books={this.wishedBooks()}/><br/><br/><br/><br/>
-                <div className="ui inverted vertical footer segment form-page">
-                    <div className="ui container">
-                        MyBrary
-                    </div>
-                </div>
+                <Footer/>
             </div>
         )
     }

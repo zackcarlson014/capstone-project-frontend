@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { addComment } from '../actions/index.js'
+import { addComment } from '../actions/index'
+import CommentItem from './CommentItem'
 import { Button, Comment, Form, Header } from 'semantic-ui-react'
-import CommentItem from './Comment.js'
+
 
 export class Comments extends Component {
 

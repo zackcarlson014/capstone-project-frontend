@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { showBook, addWishBook, deleteReservedBook } from '../actions/index.js'
+import { showBook, addWishBook, deleteReservedBook } from '../actions/index'
 import  Carousel  from  'semantic-ui-carousel-react';
 import { Grid, Header, Image, Button, Icon } from  'semantic-ui-react'
 
@@ -53,9 +53,9 @@ export class CurrentlyReadingCarousel extends Component {
                 return (
                     <Grid.Column width='2'>
                         <Header textAlign='center' color='blue'><Icon name='book'/>Currently Reading</Header>
-                        <Image as={ Link } exact to={`/books/${b.id}`} src={b.image} alt='' fluid/><br/>
+                        <Image as={ Link } exact='true' to={`/books/${b.id}`} src={b.image} alt='' fluid/><br/>
                         <Button.Group widths='2'>
-                        <Button as={ Link } exact to={`/books/${b.id}`} fluid animated='fade' icon='eye' color='blue'>
+                        <Button as={ Link } exact='true' to={`/books/${b.id}`} fluid animated='fade' icon='eye' color='blue'>
                                 <Button.Content visible><Icon name='eye'/></Button.Content>
                                 <Button.Content hidden>View</Button.Content>
                         </Button>

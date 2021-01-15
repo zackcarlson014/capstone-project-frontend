@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { showReservedBook, addReservedBook, deleteWishBook, showUser } from '../actions/index.js'
+import { showReservedBook, addReservedBook, deleteWishBook, showUser } from '../actions/index'
 import { Card, Image, Button, Icon, Header } from 'semantic-ui-react'
 
 export class DashboardLibraryBookCard extends Component {
@@ -75,7 +75,7 @@ export class DashboardLibraryBookCard extends Component {
         } else {
             return (
                 <Card color='blue'>
-                    <Image as={ Link } exact to={`/books/${this.props.book.id}`} src={this.props.book.image ? this.props.book.image : 'https://www.pngfind.com/pngs/m/216-2160526_jpg-royalty-free-library-3-books-clipart-book.png'} wrapped ui={false} width='300px' height='300px'/>
+                    <Image as={ Link } exact='true' to={`/books/${this.props.book.id}`} src={this.props.book.image ? this.props.book.image : 'https://www.pngfind.com/pngs/m/216-2160526_jpg-royalty-free-library-3-books-clipart-book.png'} wrapped ui={false} width='300px' height='300px'/>
                     <Card.Content>
                         <Card.Header>{this.props.book.title}</Card.Header>
                         <Card.Meta>
@@ -116,7 +116,7 @@ export class DashboardLibraryBookCard extends Component {
                                 null
                             }
                             {this.reservedBook() && !this.myReservedBook() ?
-                                <Button as={ Link } exact to={this.props.pub ? `/users/${this.reservedBookUser().id}` : `/users/${this.props.user.id}`} animated='fade' icon='user' color='green' onClick={this.props.pub ? this.handleReservedUserView : this.handleUserView}>
+                                <Button as={ Link } exact='true' to={this.props.pub ? `/users/${this.reservedBookUser().id}` : `/users/${this.props.user.id}`} animated='fade' icon='user' color='green' onClick={this.props.pub ? this.handleReservedUserView : this.handleUserView}>
                                     <Button.Content visible><Icon name='user'/></Button.Content>
                                     <Button.Content hidden>{this.props.pub ? this.reservedBookUser().username : this.props.user.username}</Button.Content>
                                 </Button>
@@ -124,7 +124,7 @@ export class DashboardLibraryBookCard extends Component {
                                 null
                             }
                             {!this.props.pub && !this.reservedBook() ?
-                                <Button as={ Link } exact to={`/users/${this.props.user.id}`} animated='fade' icon='user' color='green' onClick={this.handleUserView}>
+                                <Button as={ Link } exact='true' to={`/users/${this.props.user.id}`} animated='fade' icon='user' color='green' onClick={this.handleUserView}>
                                     <Button.Content visible><Icon name='user'/></Button.Content>
                                     <Button.Content hidden>{this.props.user.username}</Button.Content>
                                 </Button>
@@ -132,14 +132,14 @@ export class DashboardLibraryBookCard extends Component {
                                 null
                             }
                             {!this.props.pub && this.myReservedBook() ?
-                                <Button as={ Link } exact to={`/users/${this.props.user.id}`} animated='fade' icon='user' color='green' onClick={this.handleUserView}>
+                                <Button as={ Link } exact='true' to={`/users/${this.props.user.id}`} animated='fade' icon='user' color='green' onClick={this.handleUserView}>
                                     <Button.Content visible><Icon name='user'/></Button.Content>
                                     <Button.Content hidden>{this.props.user.username}</Button.Content>
                                 </Button>
                                 :
                                 null
                             }
-                            <Button as={ Link } exact to={this.myReservedBook() ? `/reserved_books/${this.myReservedBook().id}` : `/books/${this.props.book.id}`} animated='fade' icon='eye' color='blue'>
+                            <Button as={ Link } exact='true' to={this.myReservedBook() ? `/reserved_books/${this.myReservedBook().id}` : `/books/${this.props.book.id}`} animated='fade' icon='eye' color='blue'>
                                 <Button.Content visible><Icon name='eye'/></Button.Content>
                                 <Button.Content hidden>View</Button.Content>
                             </Button>

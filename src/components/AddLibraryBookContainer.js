@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import NavBar from './NavBar.js'
-import BookSearch from './BookSearch.js'
-import AddLibraryBookList from './AddLibraryBookList.js'
-import LibraryBooks from './LibraryBooks.js'
+import NavBar from './NavBar'
+import BookSearch from './BookSearch'
+import AddLibraryBookList from './AddLibraryBookList'
+import LibraryBooks from './LibraryBooks'
+import Footer from './Footer'
 import request from 'superagent';
 import { Grid, Button, Header, Icon } from 'semantic-ui-react'
 
@@ -65,11 +66,7 @@ export class AddLibraryBookContainer extends Component {
                 </Header><br/><br/>
                 <LibraryBooks books={this.libraryBooks()}/><br/>
                 <br/><br/><br/><Button as={ Link } to='/profile' color='blue'>Back to Profile</Button><br/><br/><br/>
-                <div className="ui inverted vertical footer segment form-page">
-                    <div className="ui container">
-                        MyBrary
-                    </div>
-                </div>
+                <Footer/>
             </div>
         )
     }

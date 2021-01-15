@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import WishedBookCard from './WishedBookCard.js'
+import WishedBookCard from './WishedBookCard'
 import { Grid, Header } from 'semantic-ui-react'
 
 export class WishedBooks extends Component {

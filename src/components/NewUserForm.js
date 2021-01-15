@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+import Footer from './Footer'
 import { Button, Form, Grid, Header, Segment, Message, Icon, Image } from 'semantic-ui-react'
 
 
@@ -91,15 +92,11 @@ export class NewUserForm extends Component {
                             </Segment>
                         </Form>
                         <Message>
-                            Already have an account? <Button as={ Link } exact to={`/login`} color='blue' size='mini'>Login</Button>
+                            Already have an account? <Button as={ Link } exact='true' to={`/login`} color='blue' size='mini'>Login</Button>
                         </Message>
                     </Grid.Column>
                 </Grid>
-                <div className="ui inverted vertical footer segment form-page">
-                    <div className="ui container">
-                        MyBrary
-                    </div>
-                </div>
+                <Footer/>
           </div>
         )
     }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { deleteComment, addLike, showUser } from '../actions/index.js'
+import { deleteComment, addLike, showUser } from '../actions/index'
 import { Comment, Icon, Loader } from 'semantic-ui-react'
 
 export class CommentItem extends Component {
@@ -73,9 +73,9 @@ export class CommentItem extends Component {
         if (this.props.auth) {
             return (
                 <Comment>
-                    <Comment.Avatar as={ Link } exact to={this.props.user.id !== this.props.auth.id ? `/users/${this.props.user.id}` : '/profile'} src={this.props.user.prof_pic_url} onClick={this.handleUserView}/>
+                    <Comment.Avatar as={ Link } exact='true' to={this.props.user.id !== this.props.auth.id ? `/users/${this.props.user.id}` : '/profile'} src={this.props.user.prof_pic_url} onClick={this.handleUserView}/>
                     <Comment.Content>
-                        <Comment.Author as={ Link } exact to={this.props.user.id !== this.props.auth.id ? `/users/${this.props.user.id}` : '/profile'} onClick={this.handleUserView}>{this.props.user.username}</Comment.Author>
+                        <Comment.Author as={ Link } exact='true' to={this.props.user.id !== this.props.auth.id ? `/users/${this.props.user.id}` : '/profile'} onClick={this.handleUserView}>{this.props.user.username}</Comment.Author>
                         <Comment.Metadata>
                             <div>{this.dateTime()}</div>
                         </Comment.Metadata>

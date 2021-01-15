@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { updateUser } from '../actions/auth.js'
+import { updateUser } from '../actions/auth'
+import Footer from './Footer'
 import { Button, Form, Grid, Header, Segment, Message, Image } from 'semantic-ui-react'
 
 
@@ -79,15 +80,11 @@ export class EditUserForm extends Component {
                             </Segment>
                         </Form>
                         <Message>
-                            <Button as={ Link } exact to={`/profile`} fluid color='red' size='mini'>Cancel</Button>
+                            <Button as={ Link } exact='true' to={`/profile`} fluid color='red' size='mini'>Cancel</Button>
                         </Message>
                     </Grid.Column>
                 </Grid>
-                <div className="ui inverted vertical footer segment form-page">
-                    <div className="ui container">
-                        MyBrary
-                    </div>
-                </div>
+                <Footer/>
           </div>
         )
     }

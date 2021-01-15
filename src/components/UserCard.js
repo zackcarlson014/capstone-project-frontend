@@ -27,7 +27,7 @@ export class UserCard extends Component {
                         </Card.Description>
                     </Card.Content>
                     <Card.Content extra >
-                        <Button as={ Link } exact to={this.props.auth ? `/users/${this.props.auth.id}/edit` : null} color='red' fluid>Edit Profile</Button>
+                        <Button as={ Link } exact='true' to={this.props.auth ? `/users/${this.props.auth.id}/edit` : null} color='red' fluid>Edit Profile</Button>
                     </Card.Content>
                 </Card>
             </div>

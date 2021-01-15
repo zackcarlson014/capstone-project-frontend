@@ -25,7 +25,6 @@ export class UsersDashboard extends Component {
     }
 
     render() {
-        const currentlyReading = this.props.allLibraryBooks
         return (
             <div className='App'>
                 <NavBar/>
@@ -55,7 +54,6 @@ export class UsersDashboard extends Component {
 
 const mapStateToProps = state => {
     return {
-        allLibraryBooks: state.allLibraryBooks,
         auth: state.auth
     }
 }

@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import NavBar from './NavBar.js'
-import DashboardLibraryBooks from './DashboardLibraryBooks.js'
-import DashboardWishedBooks from './DashboardWishedBooks.js'
+import NavBar from './NavBar'
+import DashboardLibraryBooks from './DashboardLibraryBooks'
+import DashboardWishedBooks from './DashboardWishedBooks'
+import Footer from './Footer'
 import { Header, Icon } from 'semantic-ui-react'
 
 
@@ -52,11 +53,7 @@ export class BooksDashboard extends Component {
                     <Header.Content>All WishList Books</Header.Content>
                 </Header>
                 <DashboardWishedBooks books={this.wishedBooks()}/><br/><br/><br/><br/><br/><br/>
-                <div className="ui inverted vertical footer segment form-page">
-                    <div className="ui container">
-                        MyBrary
-                    </div>
-                </div>
+                <Footer/>
             </div>
         )
     }
