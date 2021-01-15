@@ -98,7 +98,7 @@ export class BookShowPage extends Component {
                         </Grid.Row>
                         <Grid.Row>
                             <Grid.Column width='2'></Grid.Column>
-                            <Grid.Column width='6'><Segment compact><Image src={this.props.book.image} alt='' width='245px' height='350px'/></Segment><br/></Grid.Column>
+                            <Grid.Column width='6'><Segment compact><Image src={this.props.book.image} alt='' size='medium'/></Segment><br/></Grid.Column>
                             {this.libraryUsers().length !== 0 ?
                                 <UserCarousel users={this.libraryUsers()}/>
                                 :

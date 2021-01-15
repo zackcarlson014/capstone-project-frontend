@@ -1,35 +1,33 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Redirect } from 'react-router'
 import { Link } from 'react-router-dom'
-import { showBook, showUser, addLibBook, deleteLibBook, updateReservedBook, reservedBookMessages } from '../actions/index.js'
+import { showUser, showReservedBook, removeShowReservedBook, addLibBook, deleteLibBook, updateReservedBook, reservedBookMessages } from '../actions/index.js'
 import NavBar from './NavBar.js'
 import ReservedMessages from './ReservedMessages.js'
-import { Grid , Container, Header, Segment, Image, Button, Icon} from 'semantic-ui-react'
+import { Grid, Container, Header, Segment, Image, Button, Icon, Loader} from 'semantic-ui-react'
 
 export class ReservedBookShowPage extends Component {
 
     componentWillMount() {
-        if (this.props.book) {
-            fetch('http://localhost:3000/api/v1/reserved_messages')
-            .then(resp => resp.json())
-            .then(data => {
-                const messages = data.filter(m => m[0].reserved_book_id === this.reservedBook().id)
-                this.props.reservedBookMessages(messages)
-            })
-        }
+        const id = this.props.location.pathname.slice(16)
+
+        fetch(`http://localhost:3000/api/v1/reserved_books/${id}`)
+        .then(resp => resp.json())
+        .then(data => {
+            this.props.showReservedBook(data.book.book, data.book.user, data.book.user_lib_book_id, data.book.id, data.messages)
+        })
     }
 
     componentDidMount() {
         window.scrollTo(0, 0)
     }
 
-    handleShowUser = () => {
-        this.props.showUser(this.props.book[1])
+    componentWillUnmount() {
+        this.props.removeShowReservedBook()
     }
 
-    handleShowBook = () => {
-        this.props.showBook(this.props.book[0], this.props.book[1])
+    handleShowUser = () => {
+        this.props.showUser(this.props.book[1])
     }
 
     reservedBook = () => {
@@ -91,7 +89,7 @@ export class ReservedBookShowPage extends Component {
 
     render() {
         if (!this.props.book) {
-           return <Redirect to='/reserved_books'/>
+           return <Grid style={{ height: '99vh' }}><Loader active /></Grid>
         } else {
             return (
                 <div className='App'>
@@ -103,7 +101,7 @@ export class ReservedBookShowPage extends Component {
                         </Grid.Row>
                         <Grid.Row>
                             <Grid.Column width='2'></Grid.Column>
-                            <Grid.Column width='8'><br/><Container compact as={ Link } exact to={`/books/${this.props.book[0].id}`} onClick={this.handleShowBook}><Header as='h1' style={{color: 'white'}}>{this.props.book[0].title}</Header></Container></Grid.Column>
+                            <Grid.Column width='12'><br/><Container compact as={ Link } exact to={`/books/${this.props.book[0].id}`}><Header as='h1' style={{color: 'white'}}>{this.props.book[0].title}</Header></Container></Grid.Column>
                         </Grid.Row>
                         <Grid.Row>
                             <Grid.Column width='2'></Grid.Column>
@@ -111,7 +109,7 @@ export class ReservedBookShowPage extends Component {
                         </Grid.Row>
                         <Grid.Row>
                             <Grid.Column width='2'></Grid.Column>
-                            <Grid.Column width='6'><Segment compact><Image as={ Link } exact to={`/books/${this.props.book[0].id}`} src={this.props.book[0].image} alt='' width='245px' height='350px' onClick={this.handleShowBook}/></Segment><br/></Grid.Column>
+                            <Grid.Column width='6'><Segment compact><Image as={ Link } exact to={`/books/${this.props.book[0].id}`} src={this.props.book[0].image} alt='' width='245px' height='350px' /></Segment><br/></Grid.Column>
                             <Grid.Column width='6'>
                             <Segment compact>
                                     {this.reservedBook().user_id === this.props.auth.id ? 
@@ -183,4 +181,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, { showBook, showUser, addLibBook, deleteLibBook, updateReservedBook, reservedBookMessages })(ReservedBookShowPage)
+export default connect(mapStateToProps, { showUser, showReservedBook, removeShowReservedBook, addLibBook, deleteLibBook, updateReservedBook, reservedBookMessages })(ReservedBookShowPage)

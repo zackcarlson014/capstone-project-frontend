@@ -139,7 +139,7 @@ export class DashboardLibraryBookCard extends Component {
                                 :
                                 null
                             }
-                            <Button as={ Link } exact to={this.myReservedBook() ? `/reserved_books/${this.myReservedBook().id}` : `/books/${this.props.book.id}`} animated='fade' icon='eye' color='blue' onClick={this.myReservedBook() ? this.handleReservedBookView : null}>
+                            <Button as={ Link } exact to={this.myReservedBook() ? `/reserved_books/${this.myReservedBook().id}` : `/books/${this.props.book.id}`} animated='fade' icon='eye' color='blue'>
                                 <Button.Content visible><Icon name='eye'/></Button.Content>
                                 <Button.Content hidden>View</Button.Content>
                             </Button>

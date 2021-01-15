@@ -62,7 +62,7 @@ export class ReservedMessage extends Component {
                                 <Comment.Action onClick={this.handleDeleteMessage} ><Icon name='trash alternate outline'/></Comment.Action>
                             </Comment.Actions>
                             :
-                            <Loader active/>
+                            null
                         }
                     </Comment.Content>
                 </Comment>

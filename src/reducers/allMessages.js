@@ -5,8 +5,10 @@ export const allMessages = (state=[], action) => {
         //     return action.reserved_messages
         // case 'CURRENT_USER':
         //     return action.reserved_messages
-        case 'RESERVED_BOOK_MESSAGES':
+        case 'SHOW_RESERVED_BOOK':
             return action.messages
+        case 'REMOVE_SHOW_RESERVED_BOOK':
+            return []
         case 'ADD_MESSAGE':
             return [...state, [action.message, action.user]]
         case 'DELETE_MESSAGE':

@@ -140,14 +140,22 @@ export const removeShowBook = () => {
     }
   }
 
-export const showReservedBook = (book, user, libBookId) => {
+export const showReservedBook = (book, user, libBookId, id, messages) => {
     return {
         type: 'SHOW_RESERVED_BOOK',
         book,
         user,
-        libBookId
+        libBookId,
+        id,
+        messages
     }
 }
+
+export const removeShowReservedBook = () => {
+    return {
+      type: 'REMOVE_SHOW_RESERVED_BOOK',
+    }
+  }
 
 export const showUser = (user) => {
     return {
