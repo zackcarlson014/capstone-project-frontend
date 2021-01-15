@@ -7,10 +7,6 @@ import { Grid, Header, Image, Button, Icon } from  'semantic-ui-react'
 
 export class CurrentlyReadingCarousel extends Component {
 
-    handleShowBook = (book) => {
-        this.props.showBook(book, this.props.auth)
-    }
-
     handleAddWishedBook = (book) => {
         const newWishedBook = {
             user_id: this.props.auth.id,
@@ -57,9 +53,9 @@ export class CurrentlyReadingCarousel extends Component {
                 return (
                     <Grid.Column width='2'>
                         <Header textAlign='center' color='blue'><Icon name='book'/>Currently Reading</Header>
-                        <Image as={ Link } exact to={`/books/${b.id}`} onClick={() => this.handleShowBook(b)} src={b.image} alt='' fluid/><br/>
+                        <Image as={ Link } exact to={`/books/${b.id}`} src={b.image} alt='' fluid/><br/>
                         <Button.Group widths='2'>
-                        <Button as={ Link } exact to={`/books/${b.id}`} fluid animated='fade' icon='eye' color='blue' onClick={() => this.handleShowBook(b)}>
+                        <Button as={ Link } exact to={`/books/${b.id}`} fluid animated='fade' icon='eye' color='blue'>
                                 <Button.Content visible><Icon name='eye'/></Button.Content>
                                 <Button.Content hidden>View</Button.Content>
                         </Button>

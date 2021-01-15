@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom';
-import { deleteWishBook, showBook } from '../actions/index.js'
+import { deleteWishBook } from '../actions/index.js'
 import { Card, Image, Button, Icon, Header } from 'semantic-ui-react'
 
 export class WishedBookCard extends Component {
@@ -16,10 +16,6 @@ export class WishedBookCard extends Component {
             })
     }
 
-    handleCardClick = () => {
-        this.props.showBook(this.props.book, this.props.user)
-    }
-
     reservedBook = () => {
         return this.props.reservedBooks.find(b => b.user_lib_book_id === this.props.match[0][2])
     }
@@ -27,9 +23,9 @@ export class WishedBookCard extends Component {
     render() {
         return (
             <Card color='blue'>
-                <Image as={ Link } exact to={`/books/${this.props.book.id}`} onClick={this.handleCardClick} src={this.props.book.image ? this.props.book.image : 'https://www.pngfind.com/pngs/m/216-2160526_jpg-royalty-free-library-3-books-clipart-book.png'} wrapped ui={false} width='300px' height='300px'/>
+                <Image as={ Link } exact to={`/books/${this.props.book.id}`} src={this.props.book.image ? this.props.book.image : 'https://www.pngfind.com/pngs/m/216-2160526_jpg-royalty-free-library-3-books-clipart-book.png'} wrapped ui={false} width='300px' height='300px'/>
                 <Card.Content>
-                    <Card.Header as={ Link } exact to={`/books/${this.props.book.id}`} onClick={this.handleCardClick}>{this.props.book.title}</Card.Header>
+                    <Card.Header as={ Link } exact to={`/books/${this.props.book.id}`}>{this.props.book.title}</Card.Header>
                     <Card.Meta>
                         <span className='date'>Published in {this.props.book.published_date ? this.props.book.published_date : 2020}</span>
                     </Card.Meta>
@@ -50,7 +46,7 @@ export class WishedBookCard extends Component {
                 }
                 <Card.Content extra>
                     <Button.Group widths='2'>
-                        <Button as={ Link } exact to={`/books/${this.props.book.id}`} animated='fade' icon='eye' color='blue' onClick={this.handleCardClick}>
+                        <Button as={ Link } exact to={`/books/${this.props.book.id}`} animated='fade' icon='eye' color='blue'>
                             <Button.Content visible><Icon name='eye'/></Button.Content>
                             <Button.Content hidden>View</Button.Content>
                         </Button>
@@ -71,4 +67,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, { deleteWishBook, showBook })(WishedBookCard)
+export default connect(mapStateToProps, { deleteWishBook })(WishedBookCard)

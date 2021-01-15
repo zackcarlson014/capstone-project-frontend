@@ -5,8 +5,10 @@ export const allComments = (state=[], action) => {
         //     return action.comments
         // case 'CURRENT_USER':
         //     return action.comments
-        case 'BOOK_COMMENTS':
+        case 'SHOW_BOOK':
             return action.comments
+        case 'REMOVE_SHOW_BOOK':
+            return []
         case 'ADD_COMMENT':
             return [...state, [action.comment, action.user, action.likes]]
         case 'ADD_LIKE':

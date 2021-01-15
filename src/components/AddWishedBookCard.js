@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Card, Image, Button } from 'semantic-ui-react'
-import { addWishBook, showBook } from '../actions/index'
+import { addWishBook } from '../actions/index'
 
 export class AddWishedBookCard extends Component {
 
@@ -55,10 +55,6 @@ export class AddWishedBookCard extends Component {
             })
     }
 
-    handleViewBook = () => {
-        this.props.showBook(this.props.match[0], this.props.match[1])
-    }
-
     render() {
         return (
             <Card color='blue'>
@@ -74,7 +70,7 @@ export class AddWishedBookCard extends Component {
                 </Card.Content>
                 {this.props.match ?
                 <Card.Content extra>
-                    <Button as={ Link } exact to={`/books/${this.props.match[0].id}`} fluid color='green' onClick={this.handleViewBook}>View Book</Button>
+                    <Button as={ Link } exact to={`/books/${this.props.match[0].id}`} fluid color='green'>View Book</Button>
                 </Card.Content>
                 :
                 <Card.Content extra>
@@ -93,4 +89,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, { addWishBook, showBook })(AddWishedBookCard)
+export default connect(mapStateToProps, { addWishBook })(AddWishedBookCard)

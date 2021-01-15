@@ -1,33 +1,37 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { Redirect } from 'react-router'
-import { showUser, addReservedBook, deleteWishBook, bookComments } from '../actions/index.js'
+import { showUser, showBook, removeShowBook, addReservedBook, deleteWishBook, bookComments } from '../actions/index.js'
 import NavBar from './NavBar.js'
 import Comments from './Comments.js'
 import UserCarousel from './UserCarousel.js'
-import { Grid, Segment, Header, Image, Button, Icon } from 'semantic-ui-react'
+import { Grid, Segment, Header, Image, Button, Icon, Loader } from 'semantic-ui-react'
 
 
 export class BookShowPage extends Component {
 
+    state = {
+        book: null
+    }
+
+    componentWillMount() {
+        const id = this.props.location.pathname.slice(7)
+
+        fetch(`http://localhost:3000/api/v1/books/${id}`)
+        .then(resp => resp.json())
+        .then(book => {
+            const comments = book.comments.filter(c => c[0].book_id === parseInt(id))
+            this.props.showBook(book.book, comments)
+        }) 
+    }
+
     componentDidMount() {
         window.scrollTo(0, 0)
-
-        fetch()
-
-        fetch('http://localhost:3000/api/v1/comments')
-        .then(resp => resp.json())
-        .then(data => {
-            const comments = data.filter(comment => comment[0].book_id === this.props.book[0].id)
-            this.props.bookComments(comments)
-        })
     }
 
-    handleShowUser = () => {
-        this.props.showUser(this.props.book[1])
+    componentWillUnmount() {
+        this.props.removeShowBook()
     }
-
 
     handleAddReservedBook = (book, libBookId) => {
 
@@ -45,6 +49,7 @@ export class BookShowPage extends Component {
             },
             body: JSON.stringify(newReservedBook)
         }
+
         fetch('http://localhost:3000/api/v1/reserved_books', reqObj)
             .then(resp => resp.json())
             .then(newReservedBook => {
@@ -59,15 +64,16 @@ export class BookShowPage extends Component {
                 this.props.deleteWishBook(wishBook[2])
             })
         }
+
         this.props.history.push('/reserved_books')
     }
 
     libraryUsers = () => {
-        return this.props.allLibraryBooks.filter(b => b[0].id === this.props.book[0].id && b[1].id !== this.props.auth.id)
+        return this.props.allLibraryBooks.filter(b => b[0].id === this.props.book.id && b[1].id !== this.props.auth.id)
     }
 
     myBook = () => {
-        return this.props.allLibraryBooks.find(b => b[0].id === this.props.book[0].id && b[1].id === this.props.auth.id)
+        return this.props.allLibraryBooks.find(b => b[0].id === this.props.book.id && b[1].id === this.props.auth.id)
     }
 
     myReservedBook = () => {
@@ -76,7 +82,7 @@ export class BookShowPage extends Component {
 
     render() {
         if (!this.props.book) {
-            return <Redirect to='/books'/>
+            return <Grid style={{ height: '99vh' }}><Loader active /></Grid>
         } else {
             return (
                 <div className='App'>
@@ -84,56 +90,56 @@ export class BookShowPage extends Component {
                     <br/><Grid>
                         <Grid.Row>
                             <Grid.Column width='2'></Grid.Column>
-                            <Grid.Column width='8'><br/><Header as='h1' style={{color: 'white'}}>{this.props.book[0].title}</Header></Grid.Column>
+                            <Grid.Column width='8'><br/><Header as='h1' style={{color: 'white'}}>{this.props.book.title}</Header></Grid.Column>
                         </Grid.Row>
                         <Grid.Row>
                             <Grid.Column width='2'></Grid.Column>
-                            <Grid.Column width='5'><Header as='h3' style={{color: 'white'}}><strong>{this.props.book[0].author}</strong></Header></Grid.Column>
+                            <Grid.Column width='5'><Header as='h3' style={{color: 'white'}}><strong>{this.props.book.author}</strong></Header></Grid.Column>
                         </Grid.Row>
                         <Grid.Row>
                             <Grid.Column width='2'></Grid.Column>
-                            <Grid.Column width='6'><Segment compact><Image src={this.props.book[0].image} alt='' width='245px' height='350px'/></Segment><br/></Grid.Column>
+                            <Grid.Column width='6'><Segment compact><Image src={this.props.book.image} alt='' width='245px' height='350px'/></Segment><br/></Grid.Column>
                             {this.libraryUsers().length !== 0 ?
-                            <UserCarousel users={this.libraryUsers()}/>
-                            :
-                            null
+                                <UserCarousel users={this.libraryUsers()}/>
+                                :
+                                null
                             }  
                         </Grid.Row>
                         {this.myBook() ?
-                        null
-                        :
-                        <Grid.Row>
-                            <Grid.Column width='2'></Grid.Column>
-                            {this.libraryUsers().length !== 0 ?
-                            this.libraryUsers().map(l => {
-                                if (this.props.reservedBooks.find(b => b.user_lib_book_id === l[2]) || this.myReservedBook()) {
-                                    return null
-                                } else {
-                                    return (
-                                        <Grid.Column width='2'>
-                                            <Button as={ Link } exact to={'/reserved_books'} fluid onClick={() => {this.handleAddReservedBook(l[0], l[2])}} animated='fade' icon='user' color='green' >
-                                                <Button.Content visible><Icon name='tag'/></Button.Content>
-                                                <Button.Content hidden>Reserve from {l[1].username}</Button.Content>
-                                            </Button>
-                                        </Grid.Column>
-                                    )
-                                }
-                            })
-                            :
                             null
-                            } 
-                        </Grid.Row>
+                            :
+                            <Grid.Row>
+                                <Grid.Column width='2'></Grid.Column>
+                                {this.libraryUsers().length !== 0 ?
+                                    this.libraryUsers().map(l => {
+                                        if (this.props.reservedBooks.find(b => b.user_lib_book_id === l[2]) || this.myReservedBook()) {
+                                            return null
+                                        } else {
+                                            return (
+                                                <Grid.Column width='2'>
+                                                    <Button as={ Link } exact to={'/reserved_books'} fluid onClick={() => {this.handleAddReservedBook(l[0], l[2])}} animated='fade' icon='user' color='green' >
+                                                        <Button.Content visible><Icon name='tag'/></Button.Content>
+                                                        <Button.Content hidden>Reserve from {l[1].username}</Button.Content>
+                                                    </Button>
+                                                </Grid.Column>
+                                            )
+                                        }
+                                    })
+                                    :
+                                    null
+                                } 
+                            </Grid.Row>
                         }
                         <Grid.Row>
                         <Grid.Column width='2'></Grid.Column>
-                            {this.props.book[0].description ? 
-                            <Grid.Column width='12'>
-                                <Segment compact>
-                                        <p>{this.props.book[0].description}</p>
-                                </Segment>
-                            </Grid.Column>
-                            :
-                            null
+                            {this.props.book.description ? 
+                                <Grid.Column width='12'>
+                                    <Segment compact>
+                                            <p>{this.props.book.description}</p>
+                                    </Segment>
+                                </Grid.Column>
+                                :
+                                null
                             }               
                         </Grid.Row>
                         {this.props.allComments ?
@@ -141,7 +147,7 @@ export class BookShowPage extends Component {
                             <Grid.Column width='2'></Grid.Column>
                                 <Grid.Column width='12'>
                                     <Segment>
-                                        <Comments book={this.props.book[0]} comments={this.props.allComments}/>
+                                        <Comments book={this.props.book} comments={this.props.allComments}/>
                                     </Segment><br/>
                                 </Grid.Column>
                             </Grid.Row>
@@ -172,4 +178,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, { showUser, addReservedBook, deleteWishBook, bookComments })(BookShowPage)
+export default connect(mapStateToProps, { showUser, showBook, removeShowBook, addReservedBook, deleteWishBook, bookComments })(BookShowPage)

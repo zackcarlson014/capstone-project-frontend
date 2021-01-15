@@ -1,14 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { showBook, showUser } from '../actions/index.js'
+import { showUser } from '../actions/index.js'
 import { Card, Image, Button, Icon, Header } from 'semantic-ui-react'
 
 export class DashboardWishedBookCard extends Component {
-
-    handleBookView = () => {
-        this.props.showBook(this.props.book, this.props.user)
-    }
 
     handleUserView = () => {
         this.props.showUser(this.props.user)
@@ -21,7 +17,7 @@ export class DashboardWishedBookCard extends Component {
     render() {
         return (
             <Card color='blue'>
-                <Image as={ Link } exact to={`/books/${this.props.book.id}`} onClick={this.handleBookView} src={this.props.book.image ? this.props.book.image : 'https://www.pngfind.com/pngs/m/216-2160526_jpg-royalty-free-library-3-books-clipart-book.png'} wrapped ui={false} width='300px' height='300px'/>
+                <Image as={ Link } exact to={`/books/${this.props.book.id}`} src={this.props.book.image ? this.props.book.image : 'https://www.pngfind.com/pngs/m/216-2160526_jpg-royalty-free-library-3-books-clipart-book.png'} wrapped ui={false} width='300px' height='300px'/>
                 <Card.Content>
                     <Card.Header>{this.props.book.title}</Card.Header>
                     <Card.Meta>
@@ -43,7 +39,7 @@ export class DashboardWishedBookCard extends Component {
                 }
                 <Card.Content extra>
                 {this.props.pub ?
-                        <Button as={ Link } fluid exact to={`/books/${this.props.book.id}`} animated='fade' icon='eye' color='blue' onClick={this.handleBookView}>
+                        <Button as={ Link } fluid exact to={`/books/${this.props.book.id}`} animated='fade' icon='eye' color='blue'>
                             <Button.Content visible><Icon name='eye'/></Button.Content>
                             <Button.Content hidden>View</Button.Content>
                         </Button>
@@ -53,7 +49,7 @@ export class DashboardWishedBookCard extends Component {
                             <Button.Content visible><Icon name='user'/></Button.Content>
                             <Button.Content hidden>{this.props.user.username}</Button.Content>
                         </Button>
-                        <Button as={ Link } exact to={`/books/${this.props.book.id}`} animated='fade' icon='eye' color='blue' onClick={this.handleBookView}>
+                        <Button as={ Link } exact to={`/books/${this.props.book.id}`} animated='fade' icon='eye' color='blue'>
                             <Button.Content visible><Icon name='eye'/></Button.Content>
                             <Button.Content hidden>View</Button.Content>
                         </Button>
@@ -72,4 +68,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, { showBook, showUser })(DashboardWishedBookCard)
+export default connect(mapStateToProps, { showUser })(DashboardWishedBookCard)

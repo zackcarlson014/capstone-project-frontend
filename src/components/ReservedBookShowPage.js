@@ -9,15 +9,19 @@ import { Grid , Container, Header, Segment, Image, Button, Icon} from 'semantic-
 
 export class ReservedBookShowPage extends Component {
 
+    componentWillMount() {
+        if (this.props.book) {
+            fetch('http://localhost:3000/api/v1/reserved_messages')
+            .then(resp => resp.json())
+            .then(data => {
+                const messages = data.filter(m => m[0].reserved_book_id === this.reservedBook().id)
+                this.props.reservedBookMessages(messages)
+            })
+        }
+    }
+
     componentDidMount() {
         window.scrollTo(0, 0)
-
-        fetch('http://localhost:3000/api/v1/reserved_messages')
-        .then(resp => resp.json())
-        .then(data => {
-            const messages = data.filter(m => m[0].reserved_book_id === this.reservedBook().id)
-            this.props.reservedBookMessages(messages)
-        })
     }
 
     handleShowUser = () => {
@@ -110,7 +114,11 @@ export class ReservedBookShowPage extends Component {
                             <Grid.Column width='6'><Segment compact><Image as={ Link } exact to={`/books/${this.props.book[0].id}`} src={this.props.book[0].image} alt='' width='245px' height='350px' onClick={this.handleShowBook}/></Segment><br/></Grid.Column>
                             <Grid.Column width='6'>
                             <Segment compact>
-                                    {this.reservedBook().user_id === this.props.auth.id ? <Header as='h4' textAlign='center' color='green'><Icon name='user'/>Reserved From</Header> : <Header as='h4' textAlign='center' color='green'><Icon name='user'/>Reserved By</Header>}
+                                    {this.reservedBook().user_id === this.props.auth.id ? 
+                                        <Header as='h4' textAlign='center' color='green'><Icon name='user'/>Reserved From</Header> 
+                                        : 
+                                        <Header as='h4' textAlign='center' color='green'><Icon name='user'/>Reserved By</Header>
+                                    }
                                     <Image src={this.props.book[1].prof_pic_url} alt='' size='medium'/><br/>
                                     {/* <Button as={ Link } exact to={`/users/${this.props.book[1].id}`} fluid color='green' onClick={this.handleShowUser}>{this.props.book[1].username}'s Profile</Button> */}
                                     <Button as={ Link } exact to={`/users/${this.props.book[1].id}`} fluid animated='fade' icon='user' color='green' onClick={this.handleShowUser}>

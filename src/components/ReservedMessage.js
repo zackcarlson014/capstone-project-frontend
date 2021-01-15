@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { showUser, deleteMessage } from '../actions/index.js'
-import { Comment, Icon } from 'semantic-ui-react'
+import { Comment, Icon, Loader } from 'semantic-ui-react'
 
 export class ReservedMessage extends Component {
 
@@ -62,7 +62,7 @@ export class ReservedMessage extends Component {
                                 <Comment.Action onClick={this.handleDeleteMessage} ><Icon name='trash alternate outline'/></Comment.Action>
                             </Comment.Actions>
                             :
-                            null
+                            <Loader active/>
                         }
                     </Comment.Content>
                 </Comment>

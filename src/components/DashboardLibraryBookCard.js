@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { showBook, showReservedBook, addReservedBook, deleteWishBook, showUser } from '../actions/index.js'
+import { showReservedBook, addReservedBook, deleteWishBook, showUser } from '../actions/index.js'
 import { Card, Image, Button, Icon, Header } from 'semantic-ui-react'
 
 export class DashboardLibraryBookCard extends Component {
@@ -36,10 +36,6 @@ export class DashboardLibraryBookCard extends Component {
                 this.props.deleteWishBook(wishBook[2])
             })
         }
-    }
-
-    handleBookView = () => {
-        this.props.showBook(this.props.book, this.props.user)
     }
 
     handleReservedBookView = () => {
@@ -79,7 +75,7 @@ export class DashboardLibraryBookCard extends Component {
         } else {
             return (
                 <Card color='blue'>
-                    <Image as={ Link } exact to={`/books/${this.props.book.id}`} onClick={this.handleBookView} src={this.props.book.image ? this.props.book.image : 'https://www.pngfind.com/pngs/m/216-2160526_jpg-royalty-free-library-3-books-clipart-book.png'} wrapped ui={false} width='300px' height='300px'/>
+                    <Image as={ Link } exact to={`/books/${this.props.book.id}`} src={this.props.book.image ? this.props.book.image : 'https://www.pngfind.com/pngs/m/216-2160526_jpg-royalty-free-library-3-books-clipart-book.png'} wrapped ui={false} width='300px' height='300px'/>
                     <Card.Content>
                         <Card.Header>{this.props.book.title}</Card.Header>
                         <Card.Meta>
@@ -143,7 +139,7 @@ export class DashboardLibraryBookCard extends Component {
                                 :
                                 null
                             }
-                            <Button as={ Link } exact to={this.myReservedBook() ? `/reserved_books/${this.myReservedBook().id}` : `/books/${this.props.book.id}`} animated='fade' icon='eye' color='blue' onClick={this.myReservedBook() ? this.handleReservedBookView : this.handleBookView}>
+                            <Button as={ Link } exact to={this.myReservedBook() ? `/reserved_books/${this.myReservedBook().id}` : `/books/${this.props.book.id}`} animated='fade' icon='eye' color='blue' onClick={this.myReservedBook() ? this.handleReservedBookView : null}>
                                 <Button.Content visible><Icon name='eye'/></Button.Content>
                                 <Button.Content hidden>View</Button.Content>
                             </Button>
@@ -164,4 +160,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, { showBook, showReservedBook, addReservedBook, deleteWishBook, showUser })(DashboardLibraryBookCard)
+export default connect(mapStateToProps, { showReservedBook, addReservedBook, deleteWishBook, showUser })(DashboardLibraryBookCard)

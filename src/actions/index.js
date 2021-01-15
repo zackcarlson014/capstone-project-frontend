@@ -126,13 +126,19 @@ export const allComments = (comments) => {
     }
 }
 
-export const showBook = (book, user) => {
+export const showBook = (book, comments) => {
     return {
         type: 'SHOW_BOOK',
         book,
-        user
+        comments
     }
 }
+
+export const removeShowBook = () => {
+    return {
+      type: 'REMOVE_SHOW_BOOK',
+    }
+  }
 
 export const showReservedBook = (book, user, libBookId) => {
     return {

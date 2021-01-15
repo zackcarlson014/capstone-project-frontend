@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { deleteComment, addLike, showUser } from '../actions/index.js'
-import { Comment, Icon } from 'semantic-ui-react'
+import { Comment, Icon, Loader } from 'semantic-ui-react'
 
 export class CommentItem extends Component {
 
@@ -70,28 +70,32 @@ export class CommentItem extends Component {
     }
 
     render() {
-        return (
-            <Comment>
-                <Comment.Avatar as={ Link } exact to={this.props.user.id !== this.props.auth.id ? `/users/${this.props.user.id}` : '/profile'} src={this.props.user.prof_pic_url} onClick={this.handleUserView}/>
-                <Comment.Content>
-                    <Comment.Author as={ Link } exact to={this.props.user.id !== this.props.auth.id ? `/users/${this.props.user.id}` : '/profile'} onClick={this.handleUserView}>{this.props.user.username}</Comment.Author>
-                    <Comment.Metadata>
-                        <div>{this.dateTime()}</div>
-                    </Comment.Metadata>
-                    <Comment.Text>{this.props.comment.content}</Comment.Text>
-                    {this.props.auth.id === this.props.user.id ?
-                        <Comment.Actions color='red'>
-                            <Comment.Action style={{color: 'red'}}><Icon name='heart'/>{this.props.likes !== 0 ? this.props.likes : 0}</Comment.Action>
-                            <Comment.Action onClick={this.handleRemoveComment} ><Icon name='trash alternate outline'/></Comment.Action>
-                        </Comment.Actions>
-                        :
-                        <Comment.Actions color='red'>
-                            <Comment.Action onClick={this.handleAddLike} style={{color: 'red'}}><Icon name='heart'/>{this.props.likes !== 0 ? this.props.likes : null}</Comment.Action>
-                        </Comment.Actions>
-                     }
-                </Comment.Content>
-            </Comment>
-        )
+        if (this.props.auth) {
+            return (
+                <Comment>
+                    <Comment.Avatar as={ Link } exact to={this.props.user.id !== this.props.auth.id ? `/users/${this.props.user.id}` : '/profile'} src={this.props.user.prof_pic_url} onClick={this.handleUserView}/>
+                    <Comment.Content>
+                        <Comment.Author as={ Link } exact to={this.props.user.id !== this.props.auth.id ? `/users/${this.props.user.id}` : '/profile'} onClick={this.handleUserView}>{this.props.user.username}</Comment.Author>
+                        <Comment.Metadata>
+                            <div>{this.dateTime()}</div>
+                        </Comment.Metadata>
+                        <Comment.Text>{this.props.comment.content}</Comment.Text>
+                        {this.props.auth.id === this.props.user.id ?
+                            <Comment.Actions color='red'>
+                                <Comment.Action style={{color: 'red'}}><Icon name='heart'/>{this.props.likes !== 0 ? this.props.likes : 0}</Comment.Action>
+                                <Comment.Action onClick={this.handleRemoveComment} ><Icon name='trash alternate outline'/></Comment.Action>
+                            </Comment.Actions>
+                            :
+                            <Comment.Actions color='red'>
+                                <Comment.Action onClick={this.handleAddLike} style={{color: 'red'}}><Icon name='heart'/>{this.props.likes !== 0 ? this.props.likes : null}</Comment.Action>
+                            </Comment.Actions>
+                         }
+                    </Comment.Content>
+                </Comment>
+            )
+        } else {
+            return <Loader active/>
+        }
     }
 }
 
