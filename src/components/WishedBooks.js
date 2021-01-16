@@ -69,7 +69,7 @@ export class WishedBooks extends Component {
                         {this.props.searchField ? null : <Header as='h4' style={{color: 'white'}} textAlign="center">Search for Books You'd Like to Find</Header>}<br/><br/><br/><br/><br/><br/><br/><br/>
                     </div>
                 }
-                <Grid textAlign='center'><Segment compact='true'><Pagination activePage={this.state.activePage} onPageChange={this.handlePaginationChange} totalPages={this.count()}/></Segment></Grid>
+                <Grid textAlign='center'><Segment color='blue' compact='true'><Pagination color='blue' activePage={this.state.activePage} onPageChange={this.handlePaginationChange} totalPages={this.count()}/></Segment></Grid>
             </div>
         )
     }

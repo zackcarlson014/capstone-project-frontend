@@ -5,9 +5,19 @@ import { showReservedBook, removeShowReservedBook, addLibBook, deleteLibBook, up
 import NavBar from './NavBar'
 import ReservedMessages from './ReservedMessages'
 import Footer from './Footer'
-import { Grid, Container, Header, Segment, Image, Button, Icon, Loader} from 'semantic-ui-react'
+import { Grid, Container, Header, Segment, Image, Button, Icon, Loader, Modal} from 'semantic-ui-react'
 
 export class ReservedBookShowPage extends Component {
+
+    state = {
+        open: false
+    }
+
+    setOpen = (bool) => {
+        this.setState({
+            open: bool
+        })
+    }
 
     componentWillMount() {
         const id = this.props.location.pathname.slice(16)
@@ -123,12 +133,48 @@ export class ReservedBookShowPage extends Component {
                         {this.props.book[1].id === this.props.auth.id ?
                             <Grid.Row>
                                 <Grid.Column width='2'></Grid.Column>
-                                <Grid.Column as={ Link } exact='true' to={`/profile`} width='2'>
-                                    <Button fluid animated='fade' icon='user' color='red' onClick={this.handleAddLibBook}>
+                                {/* <Grid.Column as={ Link } exact='true' to={`/profile`} width='2'> */}
+                                <Grid.Column width='2'>
+                                    <Modal
+                                    onClose={() => this.setOpen(false)}
+                                    onOpen={() => this.setOpen(true)}
+                                    open={this.state.open}
+                                    trigger={
+                                        <Button fluid animated='fade' icon='user' color='red'>
+                                            <Button.Content visible><Icon name='truck'/></Button.Content>
+                                            <Button.Content hidden>Received Book</Button.Content>
+                                        </Button>
+                                    }
+                                    >
+                                        <Modal.Header>{this.props.book[0].title} - {this.props.book[0].author}</Modal.Header>
+                                        <Modal.Content image>
+                                            <Image size='medium' src={this.props.book[0].image} wrapped />
+                                            <Modal.Description>
+                                            <br/><br/><p>
+                                                Have you recieved this book from {this.props.book[1].id === this.props.auth.id ? this.props.book[2].user.username : this.props.book[1].username}?
+                                            </p>
+                                            <p>Add it to your Currently Reading list!</p>
+                                            </Modal.Description>
+                                        </Modal.Content>
+                                        <Modal.Actions>
+                                            <Button color='black' onClick={() => this.setOpen(false)}>
+                                            Not yet
+                                            </Button>
+                                            <Button
+                                            as={ Link }
+                                            to='/profile'
+                                            content="+Currently Reading"
+                                            labelPosition='right'
+                                            icon='checkmark'
+                                            onClick={this.handleAddLibBook}
+                                            positive
+                                            />
+                                        </Modal.Actions>
+                                    </Modal>
+                                    {/* <Button fluid animated='fade' icon='user' color='red' onClick={this.handleAddLibBook}>
                                         <Button.Content visible><Icon name='truck'/></Button.Content>
                                         <Button.Content hidden>Received Book</Button.Content>
-                                    </Button>
-                                    {/* <Button color='red' onClick={this.handleAddLibBook}>Received Book</Button> */}
+                                    </Button> */}
                                 </Grid.Column>
                             </Grid.Row>
                             :

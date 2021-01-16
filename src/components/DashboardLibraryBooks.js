@@ -33,6 +33,10 @@ export class DashboardLibraryBooks extends Component {
         }
         return (this.state.activePage - 1) * 8
     }
+
+    endIndex = () => {
+        return this.bookIndex() + 8
+    }
     
     render() {
         return (
@@ -41,7 +45,7 @@ export class DashboardLibraryBooks extends Component {
                     <Grid.Column width='1'></Grid.Column>
                     <Grid.Column width='14'>
                         <br/><div className='ui eight centered cards'>
-                            {this.libraryBooks().slice(this.bookIndex(), this.bookIndex() + 8).map((book, i) => {
+                            {this.libraryBooks().slice(this.bookIndex(), this.endIndex()).map((book, i) => {
                                 if (this.wishedBooks().find(b => b[0].id === book[0].id)) {
                                     return <DashboardLibraryBookCard key={i} book={book[0]} user={book[1]} userBookId={book[2]} match={true}/>
                                 } else {
