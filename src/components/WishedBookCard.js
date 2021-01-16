@@ -13,6 +13,7 @@ export class WishedBookCard extends Component {
             .then(resp => resp.json())
             .then(data => {
                 this.props.deleteWishBook(data.id)
+                this.props.deleteBookIndex()
             })
     }
 

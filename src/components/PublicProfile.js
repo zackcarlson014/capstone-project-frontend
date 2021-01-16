@@ -89,10 +89,10 @@ export class PublicProfile extends Component {
                             <Grid.Column width='10'>
                             <Grid>
                             <Grid.Row>
-                                <Segment textAlign="center" compact><Image src={this.props.user.prof_pic_url} alt='' size='large'/></Segment>
+                                <Segment color='blue' textAlign="center" compact><Image src={this.props.user.prof_pic_url} alt='' size='large'/></Segment>
                             </Grid.Row>
                             <Grid.Row>
-                                <Segment textAlign="center" compact>{this.props.user.bio}</Segment>
+                                <Segment color='blue' textAlign="center" compact>{this.props.user.bio}</Segment>
                             </Grid.Row>
                             </Grid>
                             </Grid.Column>

@@ -1,9 +1,19 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import WishedBookCard from './WishedBookCard'
-import { Grid, Header } from 'semantic-ui-react'
+import { Grid, Header, Pagination, Segment } from 'semantic-ui-react'
 
 export class WishedBooks extends Component {
+
+    state = { 
+        activePage: 1 
+    }
+
+    handlePaginationChange = (e, { activePage }) => {
+        this.setState({ 
+            activePage 
+        })
+    }
 
     wishedBooks = () => {
         return this.props.books.filter(book => book[1].id === this.props.auth.id)
@@ -13,6 +23,25 @@ export class WishedBooks extends Component {
         return this.props.allLibraryBooks.filter(book => book[1].id !== this.props.auth.id)
     }
 
+    count = () => {
+        return this.wishedBooks().length / 8
+    }
+
+    bookIndex = () => {
+        if (this.state.activePage === 1) {
+            return this.state.activePage - 1
+        }
+        return (this.state.activePage - 1) * 8
+    }
+
+    deleteBookIndex = () => {
+        const updatedPage = this.state.activePage - 1
+        if ((this.wishedBooks().length / 8) < this.state.activePage) {
+            this.setState({
+                activePage: updatedPage
+            })
+        }
+    }
 
     render() {
         return (
@@ -22,11 +51,11 @@ export class WishedBooks extends Component {
                         <Grid.Column width='1'></Grid.Column>
                         <Grid.Column width='14'>
                             <div className='ui eight centered cards'>
-                                {this.wishedBooks().map((wishBook, i) => {
+                                {this.wishedBooks().slice(this.bookIndex(), this.bookIndex() + 8).map((wishBook, i) => {
                                     if (this.libraryBooks().find(b => b[0].id === wishBook[0].id)) {
-                                        return <WishedBookCard key={i} book={wishBook[0]} user={wishBook[1]} userBookId={wishBook[2]} match={this.libraryBooks().filter(b => b[0].id === wishBook[0].id)}/>
+                                        return <WishedBookCard key={i} book={wishBook[0]} user={wishBook[1]} userBookId={wishBook[2]} deleteBookIndex={this.deleteBookIndex} match={this.libraryBooks().filter(b => b[0].id === wishBook[0].id)}/>
                                     } else {
-                                        return <WishedBookCard key={i} book={wishBook[0]} user={wishBook[1]} userBookId={wishBook[2]}/>
+                                        return <WishedBookCard key={i} book={wishBook[0]} user={wishBook[1]} userBookId={wishBook[2]} deleteBookIndex={this.deleteBookIndex}/>
                                     }
                                 })}
                             </div>
@@ -40,6 +69,7 @@ export class WishedBooks extends Component {
                         {this.props.searchField ? null : <Header as='h4' style={{color: 'white'}} textAlign="center">Search for Books You'd Like to Find</Header>}<br/><br/><br/><br/><br/><br/><br/><br/>
                     </div>
                 }
+                <Grid textAlign='center'><Segment compact='true'><Pagination activePage={this.state.activePage} onPageChange={this.handlePaginationChange} totalPages={this.count()}/></Segment></Grid>
             </div>
         )
     }

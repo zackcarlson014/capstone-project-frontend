@@ -12,7 +12,6 @@ export class BooksDashboard extends Component {
     libraryBooks = () => {
         let matchedBooks = []
         if (this.props.searchField)  {
-            debugger
             const books = this.props.allLibraryBooks.filter(b => b[0].title.toLowerCase().includes(this.props.searchField.toLowerCase()) || b[0].author.toLowerCase().includes(this.props.searchField.toLowerCase()))
             if (books.length !== 0) {
                 matchedBooks = books

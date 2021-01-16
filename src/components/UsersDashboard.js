@@ -26,26 +26,30 @@ export class UsersDashboard extends Component {
     }
 
     render() {
-        return (
-            <div className='App'>
-                <NavBar/>
-                <br/><br/><Header as='h2' icon style={{color: 'white'}} textAlign='center'>
-                    <Icon name='user' circular />
-                    <Header.Content>MyBrarians</Header.Content>
-                </Header><br/><br/>
-                <Grid textAlign='center'>
-                    <Grid.Column width='1'></Grid.Column>
-                    {this.props.auth ? 
-                        <Card.Group itemsPerRow={3} centered inverted>
-                            {this.fellowMyBrarians().map(u => <PublicUserCard user={u}/>)}
-                        </Card.Group>
-                        :
-                        <Grid style={{ height: '99vh' }} verticalAlign='middle'><Loader size='massive' active/></Grid>
-                    }   
-                </Grid><br/><br/><br/><br/>
-                <Footer/>
-            </div>
-        )
+        if (!this.state.users) {
+            return <Grid style={{ height: '99vh' }}><Loader active /></Grid>
+        } else {
+            return (
+                <div className='App'>
+                    <NavBar/>
+                    <br/><br/><Header as='h2' icon style={{color: 'white'}} textAlign='center'>
+                        <Icon name='user' circular />
+                        <Header.Content>MyBrarians</Header.Content>
+                    </Header><br/><br/>
+                    <Grid textAlign='center'>
+                        <Grid.Column width='1'></Grid.Column>
+                        {this.props.auth ? 
+                            <Card.Group itemsPerRow={3} centered inverted>
+                                {this.fellowMyBrarians().map(u => <PublicUserCard user={u}/>)}
+                            </Card.Group>
+                            :
+                            <Grid style={{ height: '99vh' }} verticalAlign='middle'><Loader size='massive' active/></Grid>
+                        }   
+                    </Grid><br/><br/><br/><br/>
+                    <Footer/>
+                </div>
+            )
+        }
     }
 }
 
