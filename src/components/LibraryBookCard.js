@@ -2,11 +2,20 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { deleteLibBook, deleteReservedBook } from '../actions/index'
-import { Card, Image, Button, Icon, Header } from 'semantic-ui-react'
+import { Card, Image, Button, Icon, Header, Modal } from 'semantic-ui-react'
 
 
 export class LibraryBookCard extends Component {
 
+    state = {
+        open: false
+    }
+
+    setOpen = (bool) => {
+        this.setState({
+            open: bool
+        })
+    }
     
     handleRemoveBook = (e) => {
         e.preventDefault()
@@ -112,10 +121,44 @@ export class LibraryBookCard extends Component {
                                     <Button.Content visible><Icon name='eye'/></Button.Content>
                                     <Button.Content hidden>View</Button.Content>
                                 </Button>
-                                <Button animated='fade' icon='trash alternate outline' color='red' onClick={this.handleRemoveBook}>
+                                <Modal
+                                onClose={() => this.setOpen(false)}
+                                onOpen={() => this.setOpen(true)}
+                                open={this.state.open}
+                                trigger={
+                                    <Button animated='fade' icon='trash alternate outline' color='red'>
+                                        <Button.Content visible><Icon name='trash alternate outline'/></Button.Content>
+                                        <Button.Content hidden>Delete</Button.Content>
+                                    </Button>
+                                }
+                                >
+                                    <Modal.Header>{this.props.book.title} - {this.props.book.author}</Modal.Header>
+                                    <Modal.Content image>
+                                        <Image size='medium' src={this.props.book.image} wrapped />
+                                        <Modal.Description>
+                                        <br/><br/><p>
+                                            Are you sure you want to remove {this.props.book.title} from your Libraray?
+                                        </p>
+                                        <p>This book will no longer appear on your profile!</p>
+                                        </Modal.Description>
+                                    </Modal.Content>
+                                    <Modal.Actions>
+                                        <Button color='black' onClick={() => this.setOpen(false)}>
+                                        Not yet
+                                        </Button>
+                                        <Button
+                                        content="Remove"
+                                        labelPosition='right'
+                                        icon='checkmark'
+                                        onClick={this.handleRemoveBook}
+                                        positive
+                                        />
+                                    </Modal.Actions>
+                                </Modal>
+                                {/* <Button animated='fade' icon='trash alternate outline' color='red' onClick={this.handleRemoveBook}>
                                     <Button.Content visible><Icon name='trash alternate outline'/></Button.Content>
                                     <Button.Content hidden>Delete</Button.Content>
-                                </Button>
+                                </Button> */}
                             </Button.Group>
                          }
                     </Card.Content>    
