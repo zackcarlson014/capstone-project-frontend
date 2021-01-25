@@ -10,7 +10,8 @@ export class AddLibraryBookCard extends Component {
     handleAddLibraryBook = (book) => {
         const newLibraryBook = {
             user_id: this.props.auth.id,
-            book_id: book.id
+            book_id: book.id,
+            original_user_id: this.props.auth.id
         }
 
         const reqObj = {

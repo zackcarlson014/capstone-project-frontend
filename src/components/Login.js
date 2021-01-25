@@ -83,8 +83,4 @@ export class Login extends Component {
     }
 }
 
-const mapDispatchToProps = {
-    loginSuccess
-}
-
-export default connect(null, mapDispatchToProps)(Login)
+export default connect(null, { loginSuccess })(Login)

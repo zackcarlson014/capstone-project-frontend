@@ -32,8 +32,8 @@ export class CurrentlyReadingCarousel extends Component {
     handleAddToLibrary = (id) => {
         fetch(`http://localhost:3000/api/v1/reserved_books/${id}`, {method: 'DELETE'})
             .then(resp => resp.json())
-            .then(data => {
-                this.props.deleteReservedBook(data.id)
+            .then(reservedBook => {
+                this.props.deleteReservedBook(reservedBook.id)
             })
     }
 
@@ -43,8 +43,10 @@ export class CurrentlyReadingCarousel extends Component {
     
     reservedBookId = (b) => {
         const libBook = this.props.allLibraryBooks.find(book => book[1].id === this.props.auth.id && book[0].id === b.id)
-        const resBook = this.props.reservedBooks.find(book => book.user_id === this.props.auth.id && book.user_lib_book_id === libBook[2])
-        return resBook.id
+        if (libBook) {
+            const resBook = this.props.reservedBooks.find(book => book.user_id === this.props.auth.id && book.user_lib_book_id === libBook[2])
+            return resBook.id
+        }
     }
 
     findElements = () => {

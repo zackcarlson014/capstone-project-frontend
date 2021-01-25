@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { showReservedBook, removeShowReservedBook, addLibBook, deleteLibBook, updateReservedBook, reservedBookMessages } from '../actions/index'
+import { showReservedBook, removeShowReservedBook, updateLibBook, updateReservedBook, reservedBookMessages } from '../actions/index'
 import NavBar from './NavBar'
 import ReservedMessages from './ReservedMessages'
 import Footer from './Footer'
@@ -25,7 +25,7 @@ export class ReservedBookShowPage extends Component {
         fetch(`http://localhost:3000/api/v1/reserved_books/${id}`)
         .then(resp => resp.json())
         .then(data => {
-            this.props.showReservedBook(data.book.book, data.book.user, data.book.user_lib_book, data.book.id, data.messages)
+            this.props.showReservedBook(data.reserved_book.book, data.reserved_book.user, data.reserved_book.user_lib_book, data.reserved_book.id, data.messages)
         })
     }
 
@@ -33,22 +33,10 @@ export class ReservedBookShowPage extends Component {
         this.props.removeShowReservedBook()
     }
 
-    reservedBook = () => {
-        return this.props.reservedBooks.find(b => b.user_lib_book_id === this.props.book[2].id)
-    }
-
-    handleRemoveLibBook = () => {
-        fetch(`http://localhost:3000/api/v1/user_lib_books/${this.props.book[2]}`, {method: 'DELETE'})
-        .then(resp => resp.json())
-        .then(data => {
-            this.props.deleteLibBook(this.props.book[2])
-        })
-    }
-
-    handleAddLibBook = () => {
-        const newLibraryBook = {
-            user_id: this.props.auth.id,
-            book_id: this.props.book[0].id
+    addLibraryBookHistory = () => {
+        const newLibraryHistoryItem = {
+            user_id: this.props.book[2].user.id,
+            user_lib_book_id: this.props.book[2].id
         }
 
         const reqObj = {
@@ -57,20 +45,41 @@ export class ReservedBookShowPage extends Component {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
             },
-            body: JSON.stringify(newLibraryBook)
+            body: JSON.stringify(newLibraryHistoryItem)
         }
-        fetch('http://localhost:3000/api/v1/user_lib_books', reqObj)
+        fetch('http://localhost:3000/api/v1/lib_book_history_items', reqObj)
+        .then(resp => resp.json())
+    }
+
+    handleAddLibBook = () => {
+        const libBookId = this.props.book[2].id
+
+        const updatedLibraryBook = {
+            user_id: this.props.auth.id,
+        }
+
+        const reqObj = {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(updatedLibraryBook)
+        }
+        fetch(`http://localhost:3000/api/v1/user_lib_books/${libBookId}`, reqObj)
         .then(resp => resp.json())
         .then(data => {
-            this.handleRemoveLibBook()
-            this.props.addLibBook(this.props.book[0], this.props.auth, data.id)
-            this.handleDelivered(data.id)
+            console.log(data)
+            this.props.updateLibBook(data)
+            this.addLibraryBookHistory()
+            this.handleDelivered()
         })
     }
 
-    handleDelivered = (newLibBookId) => {
+    handleDelivered = () => {
+        const reservedBookId = this.props.book[3]
+
         const deliveredBook = {
-            user_lib_book_id: newLibBookId,
             delivered: true
         }
         
@@ -83,16 +92,17 @@ export class ReservedBookShowPage extends Component {
             body: JSON.stringify(deliveredBook)
         }
 
-        fetch(`http://localhost:3000/api/v1/reserved_books/${this.reservedBook().id}`, reqObj)
+        fetch(`http://localhost:3000/api/v1/reserved_books/${reservedBookId}`, reqObj)
         .then(resp => resp.json())
         .then(resBook => {
+            console.log(resBook)
             this.props.updateReservedBook(resBook)
         })  
     }
 
     render() {
         window.scrollTo(0, 0)
-        if (!this.props.book || !this.reservedBook()) {
+        if (!this.props.book || !this.props.auth) {
            return <Grid style={{ height: '99vh' }}><Loader active /></Grid>
         } else {
             return (
@@ -171,10 +181,6 @@ export class ReservedBookShowPage extends Component {
                                             />
                                         </Modal.Actions>
                                     </Modal>
-                                    {/* <Button fluid animated='fade' icon='user' color='red' onClick={this.handleAddLibBook}>
-                                        <Button.Content visible><Icon name='truck'/></Button.Content>
-                                        <Button.Content hidden>Received Book</Button.Content>
-                                    </Button> */}
                                 </Grid.Column>
                             </Grid.Row>
                             :
@@ -216,4 +222,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, { showReservedBook, removeShowReservedBook, addLibBook, deleteLibBook, updateReservedBook, reservedBookMessages })(ReservedBookShowPage)
+export default connect(mapStateToProps, { showReservedBook, removeShowReservedBook, updateLibBook, updateReservedBook, reservedBookMessages })(ReservedBookShowPage)

@@ -7,6 +7,13 @@ export const addLibBook = (newLibBook, auth, userBookId) => {
     }
 }
 
+export const updateLibBook = (book) => {
+    return {
+        type: 'UPDATE_LIBRARY_BOOK',
+        book
+    }
+}
+
 export const deleteLibBook = (id) => {
     return {
         type: 'DELETE_LIBRARY_BOOK',

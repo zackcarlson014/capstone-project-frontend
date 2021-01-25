@@ -6,10 +6,10 @@ import { searchField } from '../actions/index'
 import { Dropdown, Icon, Menu, Input } from 'semantic-ui-react'
 
 export class NavBar extends Component {
+  
   state = { 
     activeItem: ''
   }
-
 
   handleSearch = (e) => {
     this.props.searchField(e.target.value)

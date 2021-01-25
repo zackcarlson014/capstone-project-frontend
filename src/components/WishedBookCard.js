@@ -10,21 +10,24 @@ export class WishedBookCard extends Component {
         open: false
     }
 
+    //toggle state open value to control view of 'delete wish list book' modal
     setOpen = (bool) => {
         this.setState({
             open: bool
         })
     }
 
-    handleRemoveBook = (e) => {
+    //delete Wish List book from back-end and front-end
+    handleDeleteWishedBook = (e) => {
         e.preventDefault()
-
+        //make delete reqest to back end with Wish List book ID passed from WishedBooks props
         fetch(`http://localhost:3000/api/v1/user_wish_books/${this.props.userBookId}`, {method: 'DELETE'})
             .then(resp => resp.json())
-            .then(data => {
-                this.props.deleteWishBook(data.id)
+            .then(wishBook => {
+                this.props.deleteWishBook(wishBook.id)
                 this.props.deleteBookIndex()
             })
+        this.setOpen(false)
     }
 
     reservedBook = () => {
@@ -90,15 +93,11 @@ export class WishedBookCard extends Component {
                                 content="Remove"
                                 labelPosition='right'
                                 icon='checkmark'
-                                onClick={this.handleRemoveBook}
+                                onClick={this.handleDeleteWishedBook}
                                 positive
                                 />
                             </Modal.Actions>
                         </Modal>
-                        {/* <Button animated='fade' icon='trash alternate outline' color='red' onClick={this.handleRemoveBook}>
-                            <Button.Content visible><Icon name='trash alternate outline'/></Button.Content>
-                            <Button.Content hidden>Delete</Button.Content>
-                        </Button> */}
                     </Button.Group>
                 </Card.Content>
             </Card>

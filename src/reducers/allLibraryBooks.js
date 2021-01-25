@@ -11,6 +11,15 @@ export const allLibraryBooks = (state=[], action) => {
             } else {
                 return [...state, [action.newLibBook, action.auth, action.userBookId]]
             }
+        case 'UPDATE_LIBRARY_BOOK':
+            updatedBooks = state.map(b => {
+                if (b[2] === action.book[2]) {
+                    return action.book
+                } else {
+                    return b
+                }
+            })
+            return updatedBooks
         case 'DELETE_LIBRARY_BOOK':
             updatedBooks = state.filter(b => b[2] !== action.id)
             return updatedBooks
