@@ -26,7 +26,7 @@ export class AddLibraryBookCard extends Component {
         .then(resp => resp.json())
         .then(data => {
             console.log(data)
-            this.props.addLibBook(book, this.props.auth, data.id)
+            this.props.addLibBook(book, this.props.auth, data.id, this.props.auth.id)
         })
     }
 
@@ -37,9 +37,11 @@ export class AddLibraryBookCard extends Component {
             author: this.props.author[0],
             image: this.props.image,
             published_date: this.props.published,
-            description: this.props.description
+            description: this.props.description,
+            average_rating: this.props.averageRating,
+            ratings_count: this.props.ratingsCount,
+            preview_link: this.props.previewLink
         }
-
         const reqObj = {
             method: 'POST',
             headers: {
@@ -51,6 +53,7 @@ export class AddLibraryBookCard extends Component {
         fetch('http://localhost:3000/api/v1/books', reqObj)
             .then(resp => resp.json())
             .then(newLibBook => {
+                console.log(newLibBook)
                 this.handleAddLibraryBook(newLibBook)
             })
     }
@@ -58,24 +61,40 @@ export class AddLibraryBookCard extends Component {
     render() {
         return (
             <Card color='blue'>
-                <Image as='a' onClick={()=> window.open(this.props.link, "_blank")} src={this.props.image} wrapped ui={false} width='300px' height='300px'/>
+                <Image 
+                    as='a' 
+                    onClick={()=> window.open(this.props.link, "_blank")} 
+                    src={this.props.image}
+                    alt=''
+                    wrapped ui={false} 
+                    width='300px' 
+                    height='300px'
+                />
                 <Card.Content>
-                    <Card.Header as='a' onClick={()=> window.open(this.props.link, "_blank")}>{this.props.title}</Card.Header>
+                    <Card.Header as='a' onClick={()=> window.open(this.props.link, "_blank")}>
+                        {this.props.title}
+                    </Card.Header>
                     <Card.Meta>
-                        <span className='date'>Published in {this.props.published ? this.props.published.split("-")[0] : '???'}</span>
+                        <span className='date'>
+                            Published in {this.props.published ? this.props.published.split("-")[0] : '???'}
+                        </span>
                     </Card.Meta>
                     <Card.Description>
                         By: {this.props.author ? this.props.author[0] : 'unknown'}
                     </Card.Description>
                 </Card.Content>
                 {this.props.match ? 
-                <Card.Content extra>
-                    <Button as={ Link } exact='true' to={`/books/${this.props.match[0].id}`} fluid color='green'>View Book</Button>
-                </Card.Content>
-                :
-                <Card.Content extra>
-                    <Button fluid color='blue' onClick={this.handleAddBook}>Add Book to Library</Button>
-                </Card.Content>
+                    <Card.Content extra>
+                        <Button as={ Link } exact='true' to={`/books/${this.props.match[0].id}`} fluid color='green'>
+                            View Book
+                        </Button>
+                    </Card.Content>
+                    :
+                    <Card.Content extra>
+                        <Button fluid color='blue' onClick={this.handleAddBook}>
+                            +Library
+                        </Button>
+                    </Card.Content>
                 }
             </Card>
         )

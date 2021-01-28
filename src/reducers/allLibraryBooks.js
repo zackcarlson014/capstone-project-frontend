@@ -9,7 +9,7 @@ export const allLibraryBooks = (state=[], action) => {
             if (state.find(b => b[2] === action.userBookId)) {
                 return state
             } else {
-                return [...state, [action.newLibBook, action.auth, action.userBookId]]
+                return [...state, [action.newLibBook, action.auth, action.userBookId, action.originalUserId]]
             }
         case 'UPDATE_LIBRARY_BOOK':
             updatedBooks = state.map(b => {

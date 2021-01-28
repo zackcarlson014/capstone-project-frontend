@@ -133,7 +133,7 @@ export class LibraryBookCard extends Component {
                     :
                     <Card.Content extra>
                         { this.currentlyReadingBook() ?
-                            <Button.Group widths='2'>
+                            <Button.Group widths='2' fluid>
                                 <Button as={ Link } exact='true' to={`/books/${this.props.book.id}`} animated='fade' icon='eye' color='blue'>
                                     <Button.Content visible>
                                         <Icon name='eye'/>
@@ -152,7 +152,7 @@ export class LibraryBookCard extends Component {
                                 </Button>
                             </Button.Group>
                             :
-                            <Button.Group widths='2'>
+                            <Button.Group widths='2' fluid>
                                 <Button as={ Link } exact='true' to={`/books/${this.props.book.id}`} animated='fade' icon='eye' color='blue'>
                                     <Button.Content visible>
                                         <Icon name='eye'/>
@@ -161,44 +161,48 @@ export class LibraryBookCard extends Component {
                                         View
                                     </Button.Content>
                                 </Button>
-                                <Modal
-                                    onClose={() => this.setOpen(false)}
-                                    onOpen={() => this.setOpen(true)}
-                                    open={this.state.open}
-                                    trigger={
-                                        <Button animated='fade' icon='trash alternate outline' color='red'>
-                                            <Button.Content visible>
-                                                <Icon name='trash alternate outline'/>
-                                            </Button.Content>
-                                            <Button.Content hidden>
-                                                Delete
-                                            </Button.Content>
-                                        </Button>
-                                    }
-                                >
-                                    <Modal.Header>{this.props.book.title} - {this.props.book.author}</Modal.Header>
-                                    <Modal.Content image>
-                                        <Image size='medium' src={this.props.book.image} wrapped />
-                                        <Modal.Description>
-                                            <br/><br/><p>
-                                                Are you sure you want to remove {this.props.book.title} from your Libraray?
-                                            </p>
-                                            <p>This book will no longer appear on your profile!</p>
-                                        </Modal.Description>
-                                    </Modal.Content>
-                                    <Modal.Actions>
-                                        <Button color='black' onClick={() => this.setOpen(false)}>
-                                            Not yet
-                                        </Button>
-                                        <Button
-                                            content="Remove"
-                                            labelPosition='right'
-                                            icon='checkmark'
-                                            onClick={this.handleDeleteLibraryBook}
-                                            positive
-                                        />
-                                    </Modal.Actions>
-                                </Modal>
+                                {this.props.originalUser === this.props.auth.id ?
+                                    <Modal
+                                        onClose={() => this.setOpen(false)}
+                                        onOpen={() => this.setOpen(true)}
+                                        open={this.state.open}
+                                        trigger={
+                                            <Button animated='fade' icon='trash alternate outline' color='red'>
+                                                <Button.Content visible>
+                                                    <Icon name='trash alternate outline'/>
+                                                </Button.Content>
+                                                <Button.Content hidden>
+                                                    Delete
+                                                </Button.Content>
+                                            </Button>
+                                        }
+                                    >
+                                        <Modal.Header>{this.props.book.title} - {this.props.book.author}</Modal.Header>
+                                        <Modal.Content image>
+                                            <Image size='medium' src={this.props.book.image} wrapped />
+                                            <Modal.Description>
+                                                <br/><br/><p>
+                                                    Are you sure you want to remove {this.props.book.title} from your Libraray?
+                                                </p>
+                                                <p>This book will no longer appear on your profile!</p>
+                                            </Modal.Description>
+                                        </Modal.Content>
+                                        <Modal.Actions>
+                                            <Button color='black' onClick={() => this.setOpen(false)}>
+                                                Not yet
+                                            </Button>
+                                            <Button
+                                                content="Remove"
+                                                labelPosition='right'
+                                                icon='checkmark'
+                                                onClick={this.handleDeleteLibraryBook}
+                                                positive
+                                            />
+                                        </Modal.Actions>
+                                    </Modal>
+                                    :
+                                    null
+                                }
                             </Button.Group>
                          }
                     </Card.Content>    

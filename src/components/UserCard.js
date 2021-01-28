@@ -10,11 +10,13 @@ export class UserCard extends Component {
                 <br/><br/><Card color='blue'>
                     <Image src={this.props.user.prof_pic_url ? this.props.user.prof_pic_url : 'https://icon-library.com/images/default-user-icon/default-user-icon-4.jpg'} wrapped ui={false}/>
                     <Card.Content>
-                        <Card.Header>{this.props.user.username}</Card.Header>
+                        <Card.Header>
+                            {this.props.user.username}
+                        </Card.Header>
                         <Card.Meta>
                             <Icon name='book' />
                             {this.props.bookCount} Library Books
-                        </Card.Meta>
+                        </Card.Meta><br/>
                         <Card.Description>
                             {this.props.user.bio}
                         </Card.Description>

@@ -66,24 +66,33 @@ export class DashboardLibraryBookCard extends Component {
                         exact='true' 
                         to={`/books/${this.props.book.id}`} 
                         src={this.props.book.image ? this.props.book.image : 'https://www.pngfind.com/pngs/m/216-2160526_jpg-royalty-free-library-3-books-clipart-book.png'} 
+                        alt=''
                         wrapped 
                         ui={false} 
                         width='300px' 
                         height='300px'
                     />
-                    <Card.Content>
-                        <Card.Header>
-                            {this.props.book.title}
-                        </Card.Header>
-                        <Card.Meta>
-                            <span className='date'>
-                                Published in {this.props.book.published_date ? this.props.book.published_date : 2020}
-                            </span>
-                        </Card.Meta>
-                        <Card.Description>
-                            {this.props.book.author}
-                        </Card.Description>
-                    </Card.Content>
+                    {this.props.userDash ? 
+                        <Card.Content>
+                            <Card.Description as={ Link } exact='true' to={`/books/${this.props.book.id}`}>
+                                {this.props.book.title}
+                            </Card.Description>
+                        </Card.Content>
+                        :
+                        <Card.Content>
+                            <Card.Header>
+                                {this.props.book.title}
+                            </Card.Header>
+                            <Card.Meta>
+                                <span className='date'>
+                                    Published in {this.props.book.published_date ? this.props.book.published_date : 2020}
+                                </span>
+                            </Card.Meta>
+                            <Card.Description>
+                                {this.props.book.author}
+                            </Card.Description>
+                        </Card.Content>
+                    }
                     {this.reservedBook() ?
                         <Card.Content extra textAlign="center">
                             <Header as='h5' icon color={this.myReservedBook() ? 'green' : 'red'} textAlign="center">
@@ -109,7 +118,7 @@ export class DashboardLibraryBookCard extends Component {
                         null
                     }
                     <Card.Content extra>
-                        <Button.Group widths='2'>
+                        <Button.Group widths='2' >
                             {this.props.pub && !this.reservedBook() ? 
                                 <Button 
                                     animated='fade' 

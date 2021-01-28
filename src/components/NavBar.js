@@ -6,7 +6,7 @@ import { searchField } from '../actions/index'
 import { Dropdown, Icon, Menu, Input } from 'semantic-ui-react'
 
 export class NavBar extends Component {
-  
+
   state = { 
     activeItem: ''
   }
@@ -28,14 +28,15 @@ export class NavBar extends Component {
 
   render() {
     const { activeItem } = this.state
+
     const style = {
       position: "fixed",
-        width: "100%",
+        // width: "100%",
         zIndex: "999"
     }
 
     return (
-      <Menu inverted color='black' style={style}>
+      <Menu fluid inverted color='black' style={style}>
         <Menu.Item
           header
           as={NavLink}

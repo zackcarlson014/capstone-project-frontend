@@ -50,7 +50,6 @@ export class DashboardWishedBookCard extends Component {
                         </Button>
                     </Button.Group>    
                 }
-
                 </Card.Content>
             </Card>
         )

@@ -53,8 +53,9 @@ export class Profile extends Component {
          } else {
             return (
                 <div className='App'>
-                    <NavBar/>
-                    <br/><br/><Grid>
+                    <NavBar/><br/>
+                    <Grid>
+                    <Grid.Row></Grid.Row>
                     <Grid.Row>
                         <Grid.Column width='1'></Grid.Column>
                         <Grid.Column width='10'>
@@ -68,33 +69,52 @@ export class Profile extends Component {
                             null
                         }  
                         </Grid.Row>
+                        <Grid.Row></Grid.Row>
                     </Grid>
-                    <Header as='h3' icon style={{color: 'white'}} textAlign="center">
+                    <Header as='h2' icon style={{color: 'white'}} textAlign="center">
                         <Icon name='book' circular />
                         <Header.Content>
                             Your Library Books
                         </Header.Content>
                     </Header><br/>
                     <Grid>
-                        <Grid.Column textAlign="center">
-                            <Button as={ Link } to='/user_lib_books/new' color='blue'>Add Books To Library</Button><br/><br/>
-                        </Grid.Column>
+                        <Grid.Row>
+                            <Grid.Column textAlign="center">
+                                <Button as={ Link } exact='true' to={'/user_lib_books/new'} animated='fade' icon='book' color='blue'>
+                                    <Button.Content visible>
+                                        <Icon name='book'/> +Library
+                                    </Button.Content>
+                                    <Button.Content hidden>
+                                        Search Books
+                                    </Button.Content>
+                                </Button>
+                            </Grid.Column>
+                        </Grid.Row>
+                        <Grid.Row></Grid.Row>
                     </Grid>
-                    <LibraryBooks books={this.libraryBooks()}/><br/><br/><br/><br/>
-                    <Header as='h3' icon style={{color: 'white'}} textAlign="center">
+                    <LibraryBooks books={this.libraryBooks()}/><br/>
+                    <Header as='h2' icon style={{color: 'white'}} textAlign="center">
                         <Icon name='book' circular />
                         <Header.Content>
                             Your WishList Books
                         </Header.Content>
                     </Header><br/>
                     <Grid>
-                        <Grid.Column textAlign="center">
-                            <Button  as={ Link } to='/user_wish_books/new' color='blue'>
-                                Add Books To Wish List
-                            </Button><br/><br/>
-                        </Grid.Column>
+                        <Grid.Row>
+                            <Grid.Column textAlign="center">
+                                <Button as={ Link } exact='true' to={'/user_wish_books/new'} animated='fade' icon='book' color='blue'>
+                                    <Button.Content visible>
+                                        <Icon name='book'/> +WishList
+                                    </Button.Content>
+                                    <Button.Content hidden>
+                                        Search Books
+                                    </Button.Content>
+                                </Button>
+                            </Grid.Column>
+                        </Grid.Row>
+                        <Grid.Row></Grid.Row>
                     </Grid>
-                    <WishedBooks books={this.wishedBooks()}/><br/><br/><br/><br/>
+                    <WishedBooks books={this.wishedBooks()}/><br/>
                     <Footer/>
                 </div>
             )

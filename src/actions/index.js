@@ -1,9 +1,10 @@
-export const addLibBook = (newLibBook, auth, userBookId) => {
+export const addLibBook = (newLibBook, auth, userBookId, originalUserId) => {
     return {
       type: 'ADD_LIBRARY_BOOK',
       newLibBook,
       auth,
-      userBookId
+      userBookId,
+      originalUserId
     }
 }
 

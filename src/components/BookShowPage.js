@@ -91,15 +91,27 @@ export class BookShowPage extends Component {
                     <br/><Grid>
                         <Grid.Row>
                             <Grid.Column width='2'></Grid.Column>
-                            <Grid.Column width='8'><br/><Header as='h1' style={{color: 'white'}}>{this.props.book.title}</Header></Grid.Column>
+                            <Grid.Column width='8'><br/>
+                                <Header as='h1' style={{color: 'white'}}>
+                                    {this.props.book.title}
+                                </Header>
+                            </Grid.Column>
                         </Grid.Row>
                         <Grid.Row>
                             <Grid.Column width='2'></Grid.Column>
-                            <Grid.Column width='5'><Header as='h3' style={{color: 'white'}}><strong>{this.props.book.author}</strong></Header></Grid.Column>
+                            <Grid.Column width='5'>
+                                <Header as='h3' style={{color: 'white'}}>
+                                    <strong>{this.props.book.author}</strong>
+                                </Header>
+                            </Grid.Column>
                         </Grid.Row>
                         <Grid.Row>
                             <Grid.Column width='2'></Grid.Column>
-                            <Grid.Column width='6'><Segment compact><Image src={this.props.book.image} alt='' size='medium'/></Segment><br/></Grid.Column>
+                            <Grid.Column width='8'>
+                                <Segment compact>
+                                    <Image src={this.props.book.image} alt='' size='medium'/>
+                                </Segment><br/>
+                            </Grid.Column>
                             {this.libraryUsers().length !== 0 ?
                                 <UserCarousel users={this.libraryUsers()}/>
                                 :
@@ -119,8 +131,12 @@ export class BookShowPage extends Component {
                                             return (
                                                 <Grid.Column key={i} width='2'>
                                                     <Button as={ Link } exact='true' to={'/reserved_books'} fluid onClick={() => {this.handleAddReservedBook(l[0], l[2])}} animated='fade' icon='user' color='green' >
-                                                        <Button.Content visible><Icon name='tag'/></Button.Content>
-                                                        <Button.Content hidden>Reserve from {l[1].username}</Button.Content>
+                                                        <Button.Content visible>
+                                                            <Icon name='tag'/>
+                                                        </Button.Content>
+                                                        <Button.Content hidden>
+                                                            Reserve from {l[1].username}
+                                                        </Button.Content>
                                                     </Button>
                                                 </Grid.Column>
                                             )

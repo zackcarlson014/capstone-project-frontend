@@ -3,7 +3,9 @@ import { connect } from 'react-redux'
 import { showUser, removeShowUser } from '../actions/index'
 import NavBar from './NavBar'
 import CurrentlyReadingCarousel from './CurrentlyReadingCarousel'
+import DashboardLibraryBooks from './DashboardLibraryBooks'
 import DashboardLibraryBookCard from './DashboardLibraryBookCard'
+import DashboardWishedBooks from './DashboardWishedBooks'
 import DashboardWishedBookCard from './DashboardWishedBookCard'
 import Footer from './Footer'
 import { Grid, Header, Icon, Segment, Image, Loader } from 'semantic-ui-react'
@@ -89,22 +91,19 @@ export class PublicProfile extends Component {
                 <div className='App'>
                     <NavBar/>
                     <br/><Grid>
+                        <Grid.Row></Grid.Row>
+                        <Grid.Row></Grid.Row>
                         <Grid.Row>
                             <Grid.Column width='1'></Grid.Column>
-                            <Grid.Column width='8'>
-                                <br/><Header as='h1' style={{color: 'white'}}>
-                                    {this.props.user.username}
-                                </Header>
-                            </Grid.Column>
-                        </Grid.Row>
-                        <Grid.Row>
-                            <Grid.Column width='1'></Grid.Column>
-                            <Grid.Column width='10'>
-                                <Grid>
+                            <Grid.Column width='5'>
+                                <Grid textAlign='centered'>
                                     <Grid.Row>
-                                        <Segment color='blue' textAlign="center" compact>
-                                            <Image src={this.props.user.prof_pic_url} alt='' size='large'/>
-                                        </Segment>
+                                        <Header as='h1' style={{color: 'white'}}>
+                                            {this.props.user.username}
+                                        </Header>
+                                    </Grid.Row>
+                                    <Grid.Row>
+                                        <Image avatar src={this.props.user.prof_pic_url} alt='' size='large'/>
                                     </Grid.Row>
                                     <Grid.Row>
                                         <Segment color='blue' textAlign="center" compact>
@@ -113,8 +112,10 @@ export class PublicProfile extends Component {
                                     </Grid.Row>
                                 </Grid>
                             </Grid.Column>
+                            <Grid.Column width='5'></Grid.Column>
                             {this.currentlyReading().length !== 0 ?
                                 <Grid>
+                                    <Grid.Row></Grid.Row>
                                     <Grid.Row>
                                         <CurrentlyReadingCarousel books={this.currentlyReading()} pub={true}/>
                                     </Grid.Row>
@@ -123,14 +124,22 @@ export class PublicProfile extends Component {
                                 null
                             }
                         </Grid.Row>
-                    </Grid><br/><br/><br/>
-                    <Header as='h3' icon style={{color: 'white'}} textAlign="center">
+                        <Grid.Row></Grid.Row>
+                        <Grid.Row></Grid.Row>
+                    </Grid><br/>
+                    <Header as='h2' icon style={{color: 'white'}} textAlign="center">
                             <Icon name='book' circular />
                             <Header.Content>
                                 {this.props.user.username}'s Library Books ({this.userLibraryBooks().length})
                             </Header.Content>
-                    </Header><br/><br/> 
-                    <div>
+                    </Header><br/>
+                    <DashboardLibraryBooks books={this.userLibraryBooks()} pub={true}/><br/>
+                    <Grid>
+                        <Grid.Row></Grid.Row>
+                        <Grid.Row></Grid.Row>
+                        <Grid.Row></Grid.Row>
+                    </Grid>
+                    {/* <div>
                         <Grid>
                             <Grid.Column width='1'></Grid.Column>
                             <Grid.Column width='14'>
@@ -145,14 +154,15 @@ export class PublicProfile extends Component {
                                 </div>
                             </Grid.Column>
                         </Grid>
-                    </div><br/><br/><br/>
-                    <Header as='h3' icon style={{color: 'white'}} textAlign="center">
+                    </div><br/><br/><br/> */}
+                    <Header as='h2' icon style={{color: 'white'}} textAlign="center">
                             <Icon name='book' circular />
                             <Header.Content>
                                 {this.props.user.username}'s WishList Books ({this.userWishedBooks().length})
                             </Header.Content>
                     </Header><br/><br/>
-                    <div>
+                    <DashboardWishedBooks books={this.userWishedBooks()} pub={true}/>
+                    {/* <div>
                         <Grid>
                             <Grid.Column width='1'></Grid.Column>
                             <Grid.Column width='14'>
@@ -167,7 +177,7 @@ export class PublicProfile extends Component {
                                 </div>
                             </Grid.Column>
                         </Grid>
-                    </div><br/><br/><br/><br/>
+                    </div><br/><br/><br/><br/> */}
                     <Footer/>
                 </div>
             )

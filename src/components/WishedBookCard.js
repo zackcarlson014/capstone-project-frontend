@@ -30,6 +30,7 @@ export class WishedBookCard extends Component {
         this.setOpen(false)
     }
 
+    
     reservedBook = () => {
         return this.props.reservedBooks.find(b => b.user_lib_book_id === this.props.match[0][2])
     }
