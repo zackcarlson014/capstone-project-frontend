@@ -20,7 +20,7 @@ export class DashboardLibraryBooks extends Component {
     }
 
     indexCount = () => {
-        return this.libraryBooks().length / this.cardCount()
+        return Math.ceil(this.libraryBooks().length / this.cardCount())
     }
 
     currentStartIndex = () => {

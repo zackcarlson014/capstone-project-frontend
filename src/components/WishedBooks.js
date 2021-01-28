@@ -70,18 +70,22 @@ export class WishedBooks extends Component {
                         </Grid.Row>
                     </Grid>
                     :
-                    <div>
-                        <br/><br/><Header as='h3' style={{color: 'white'}} textAlign="center">
-                        {this.props.searchField ? "No Books Match Your Search" : "Your WishList Bookshelf is Current Empty"}
-                        </Header>
-                        {this.props.searchField ? 
-                            null 
-                            : 
-                            <Header as='h4' style={{color: 'white'}} textAlign="center">
-                                Search for Books You'd Like to Find
-                            </Header>
-                        }<br/>
-                    </div>
+                    <Grid textAlign='centered'>
+                        <Grid.Row>
+                            <Grid.Column>
+                                <Header as='h3' style={{color: 'white'}} textAlign="center">
+                                    {this.props.searchField ? "No Books Match Your Search" : "Your WishList Bookshelf is Current Empty"}
+                                </Header>
+                                {this.props.searchField ? 
+                                    null 
+                                    : 
+                                    <Header as='h4' style={{color: 'white'}} textAlign="center">
+                                        Search for Books to add to you WishList
+                                    </Header>
+                                }
+                            </Grid.Column>
+                        </Grid.Row>
+                    </Grid>
                 }
                 <Grid textAlign='center'>
                     <Grid.Row>

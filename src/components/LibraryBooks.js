@@ -37,7 +37,7 @@ export class LibraryBooks extends Component {
 
     //amount of page buttons that should appear on pagination component
     paginationCount = () => {
-        return this.myLibraryBooks().length / 8
+        return Math.ceil(this.myLibraryBooks().length / 8)
     }
 
     //all Library books that belong to current user
@@ -51,6 +51,7 @@ export class LibraryBooks extends Component {
     }
 
     render() {
+        debugger
         return (
             <div>
                 {this.myLibraryBooks().length !== 0 ?
@@ -71,18 +72,22 @@ export class LibraryBooks extends Component {
                         </Grid.Row>
                     </Grid>
                     :
-                    <div>
-                        <br/><br/><Header as='h3' style={{color: 'white'}} textAlign="center">
-                            {this.props.searchField ? "No Books Match Your Search" : "Your Library Bookshelf is Current Empty"}
-                        </Header>
-                        {this.props.searchField ? 
-                            null 
-                            : 
-                            <Header as='h4' style={{color: 'white'}} textAlign="center">
-                                <Icon name='heart'/>Search for Books You'd Like to Donate
-                            </Header>
-                        }<br/>
-                    </div>
+                    <Grid textAlign='centered'>
+                        <Grid.Row>
+                            <Grid.Column>
+                                <Header as='h3' style={{color: 'white'}} textAlign="center">
+                                    {this.props.searchField ? "No Books Match Your Search" : "Your Library Bookshelf is Current Empty"}
+                                </Header>
+                                {this.props.searchField ? 
+                                    null 
+                                    : 
+                                    <Header as='h4' style={{color: 'white'}} textAlign="center">
+                                        <Icon name='heart'/>Search for Books You'd Like to Donate
+                                    </Header>
+                                }
+                            </Grid.Column>
+                        </Grid.Row>
+                    </Grid>
                 }
                 <Grid textAlign='center'>
                     <Grid.Row>

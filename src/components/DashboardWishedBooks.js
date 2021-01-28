@@ -23,8 +23,8 @@ export class DashboardWishedBooks extends Component {
         return this.props.allLibraryBooks.filter(book => book[1].id === this.props.auth.id)
     }
 
-    count = () => {
-        return this.wishedBooks().length / 8
+    indexCount = () => {
+        return Math.ceil(this.wishedBooks().length / 8)
     }
 
     bookIndex = () => {
@@ -59,7 +59,7 @@ export class DashboardWishedBooks extends Component {
                             <Pagination 
                                 activePage={this.state.activePage} 
                                 onPageChange={this.handlePaginationChange} 
-                                totalPages={this.count()}
+                                totalPages={this.indexCount()}
                             />
                         </Segment>
                     </Grid.Row>
