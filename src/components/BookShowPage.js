@@ -82,6 +82,7 @@ export class BookShowPage extends Component {
     }
 
     render() {
+        debugger
         if (!this.props.book) {
             return <Grid style={{ height: '99vh' }}><Loader active /></Grid>
         } else {

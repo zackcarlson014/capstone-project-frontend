@@ -4,9 +4,7 @@ import { showUser, removeShowUser } from '../actions/index'
 import NavBar from './NavBar'
 import CurrentlyReadingCarousel from './CurrentlyReadingCarousel'
 import DashboardLibraryBooks from './DashboardLibraryBooks'
-import DashboardLibraryBookCard from './DashboardLibraryBookCard'
 import DashboardWishedBooks from './DashboardWishedBooks'
-import DashboardWishedBookCard from './DashboardWishedBookCard'
 import Footer from './Footer'
 import { Grid, Header, Icon, Segment, Image, Loader } from 'semantic-ui-react'
 
@@ -139,22 +137,6 @@ export class PublicProfile extends Component {
                         <Grid.Row></Grid.Row>
                         <Grid.Row></Grid.Row>
                     </Grid>
-                    {/* <div>
-                        <Grid>
-                            <Grid.Column width='1'></Grid.Column>
-                            <Grid.Column width='14'>
-                                <div className='ui eight centered cards'>
-                                    {this.userLibraryBooks().map((book, i) => {
-                                        if (this.myWishedBooks().find(b => b[0].id === book[0].id)) {
-                                            return <DashboardLibraryBookCard key={i} book={book[0]} user={book[1]} userBookId={book[2]} match={true} pub={true}/>
-                                        } else {
-                                            return <DashboardLibraryBookCard key={i} book={book[0]} user={book[1]} userBookId={book[2]} pub={true}/>
-                                        } 
-                                    })}
-                                </div>
-                            </Grid.Column>
-                        </Grid>
-                    </div><br/><br/><br/> */}
                     <Header as='h2' icon style={{color: 'white'}} textAlign="center">
                             <Icon name='book' circular />
                             <Header.Content>
@@ -162,22 +144,6 @@ export class PublicProfile extends Component {
                             </Header.Content>
                     </Header><br/><br/>
                     <DashboardWishedBooks books={this.userWishedBooks()} pub={true}/>
-                    {/* <div>
-                        <Grid>
-                            <Grid.Column width='1'></Grid.Column>
-                            <Grid.Column width='14'>
-                                <div className='ui eight centered cards'>
-                                    {this.userWishedBooks().map((book, i) => {
-                                        if (this.myLibraryBooks().find(b => b[0].id === book[0].id)) {
-                                            return <DashboardWishedBookCard key={i} book={book[0]} user={book[1]} match={true}  pub={true}/>
-                                        } else {
-                                            return <DashboardWishedBookCard key={i} book={book[0]} user={book[1]}  pub={true}/>
-                                        }
-                                    })}
-                                </div>
-                            </Grid.Column>
-                        </Grid>
-                    </div><br/><br/><br/><br/> */}
                     <Footer/>
                 </div>
             )

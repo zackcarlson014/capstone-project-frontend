@@ -107,13 +107,6 @@ export const deleteLike = (like, likes) => {
     }
 }
 
-export const reservedBookMessages = (messages) => {
-    return {
-        type: 'RESERVED_BOOK_MESSAGES',
-        messages
-    }
-}
-
 export const addMessage = (message, user) => {
     return {
         type: 'ADD_MESSAGE',

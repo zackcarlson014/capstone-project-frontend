@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { showReservedBook, removeShowReservedBook, updateLibBook, updateReservedBook, reservedBookMessages } from '../actions/index'
+import { showReservedBook, removeShowReservedBook, updateLibBook, updateReservedBook } from '../actions/index'
 import NavBar from './NavBar'
 import ReservedMessages from './ReservedMessages'
 import Footer from './Footer'
@@ -220,7 +220,6 @@ export class ReservedBookShowPage extends Component {
                             :
                             null
                         }
-
                         <Grid.Row>
                             <Grid.Column width='2'></Grid.Column>
                             <Grid.Column width='3'><br/>
@@ -244,8 +243,8 @@ const mapStateToProps = state => {
         allLibraryBooks: state.allLibraryBooks,
         reservedBooks: state.reservedBooks,
         auth: state.auth,
-        messages: state.allMessages
+        messages: state.allReservedMessages
     }
 }
 
-export default connect(mapStateToProps, { showReservedBook, removeShowReservedBook, updateLibBook, updateReservedBook, reservedBookMessages })(ReservedBookShowPage)
+export default connect(mapStateToProps, { showReservedBook, removeShowReservedBook, updateLibBook, updateReservedBook })(ReservedBookShowPage)

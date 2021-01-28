@@ -51,7 +51,6 @@ export class LibraryBooks extends Component {
     }
 
     render() {
-        debugger
         return (
             <div>
                 {this.myLibraryBooks().length !== 0 ?

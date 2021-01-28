@@ -10,7 +10,7 @@ import allWishedBooks from './allWishedBooks.js'
 import reservedBooks from './reservedBooks.js'
 import myLikes from './myLikes.js'
 import allComments from './allComments.js'
-import allMessages from './allMessages.js'
+import allReservedMessages from './allReservedMessages.js'
 import searchField from './searchField.js'
 
 export default combineReducers({
@@ -23,6 +23,6 @@ export default combineReducers({
     reservedBooks,
     myLikes,
     allComments,
-    allMessages,
+    allReservedMessages,
     searchField
 })

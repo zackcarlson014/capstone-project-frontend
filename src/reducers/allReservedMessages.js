@@ -1,4 +1,4 @@
-export const allMessages = (state=[], action) => {
+export const allReservedMessages = (state=[], action) => {
     let updatedMessages = []
     switch(action.type) {
         case 'SHOW_RESERVED_BOOK':
@@ -17,4 +17,4 @@ export const allMessages = (state=[], action) => {
     }
 }
 
-export default allMessages
+export default allReservedMessages

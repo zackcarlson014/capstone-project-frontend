@@ -49,7 +49,7 @@ export class NavBar extends Component {
         </Menu.Item>
         <Dropdown item icon='book' simple>
           <Dropdown.Menu>
-            <Dropdown.Item as={ NavLink } to='/books'>All Books</Dropdown.Item>
+            <Dropdown.Item as={ NavLink } to='/books'>Public Bookshelf</Dropdown.Item>
             <Dropdown.Item as={ NavLink } to='/reserved_books'>My Reserved Books</Dropdown.Item>
             <Dropdown.Item>
                 <Icon name='book' />

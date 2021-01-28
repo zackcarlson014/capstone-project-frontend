@@ -22,6 +22,10 @@ export class ReservedBooks extends Component {
         return this.props.allLibraryBooks.filter(book => book[1].id === this.props.auth.id && this.props.reservedBooks.find(b => b.user_lib_book_id === book[2] && b.delivered === false))
     }
 
+    libraryBooks = () => {
+        return this.props.allLibraryBooks.filter(book => this.reservedBooks().find(b => b.user_lib_book_id === book[2]))
+    }
+
     render() {
         window.scrollTo(0, 0)
         return (
@@ -37,10 +41,10 @@ export class ReservedBooks extends Component {
                     <Grid.Column width='14'>
                         <div>
                             <br/><br/><div className='ui seven centered cards'>
-                                {this.props.allLibraryBooks.map((book, i) => {
-                                    if (this.reservedBooks().find(b => b.user_lib_book_id === book[2])){
+                                {this.libraryBooks().map((book, i) => {
+                                    // if (this.reservedBooks().find(b => b.user_lib_book_id === book[2])){
                                         return <DashboardLibraryBookCard key={i} book={book[0]} user={book[1]} userBookId={book[2]}/>
-                                    }
+                                    // }
                                 })}
                             </div><br/><br/><br/><br/>
                         </div>

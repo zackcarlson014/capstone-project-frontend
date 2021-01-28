@@ -7,7 +7,7 @@ import AddWishedBookList from './AddWishedBookList'
 import WishedBooks from './WishedBooks'
 import Footer from './Footer'
 import request from 'superagent';
-import { Grid, Button, Header, Icon, Popup, Image, Loader } from 'semantic-ui-react'
+import { Grid, Button, Header, Icon, Loader } from 'semantic-ui-react'
 
 
 export class AddWishedBookContainer extends Component {

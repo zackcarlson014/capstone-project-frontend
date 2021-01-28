@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import NavBar from './NavBar'
 import DashboardLibraryBooks from './DashboardLibraryBooks'
 import Footer from './Footer'
-import { Grid, Loader, Header, Button, Card, Icon, Popup, Image } from 'semantic-ui-react'
+import { Grid, Loader, Header, Button, Icon, Popup, Image } from 'semantic-ui-react'
 
 export class UsersDashboard extends Component {
 
