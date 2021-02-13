@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { updateUser } from '../actions/auth'
-import Footer from './Footer'
+import { updateUser } from '../../actions/auth'
+import Footer from '../Footer'
 import { Button, Form, Grid, Header, Segment, Message, Image } from 'semantic-ui-react'
 
 

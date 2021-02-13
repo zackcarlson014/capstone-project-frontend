@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { showBook, addWishBook, deleteReservedBook } from '../actions/index'
-import  Carousel  from  'semantic-ui-carousel-react';
+import Carousel from 'semantic-ui-carousel-react';
 import { Grid, Header, Image, Button, Icon } from  'semantic-ui-react'
 
 export class CurrentlyReadingCarousel extends Component {

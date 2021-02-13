@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import NavBar from './NavBar'
+import NavBar from '../NavBar'
 import BookSearch from './BookSearch'
 import AddWishedBookList from './AddWishedBookList'
-import WishedBooks from './WishedBooks'
-import Footer from './Footer'
+import WishedBooks from '../userProfile/WishedBooks'
+import Footer from '../Footer'
 import request from 'superagent';
 import { Grid, Button, Header, Icon, Loader } from 'semantic-ui-react'
 
@@ -112,3 +112,24 @@ const mapStateToProps = state => {
 }
 
 export default connect(mapStateToProps, null)(AddWishedBookContainer)
+
+
+const palindrome = (string) => {
+    let pal = "crap"
+    let indexLeft = (string.length / 2) - 1
+    let indexRight = string.length / 2
+    if (string.length % 2 === 0) { 
+        for (let step = 0; step < indexLeft; step++) {
+            if (string[indexLeft] !== string[indexRight]) {
+                console.log(indexLeft, indexRight)
+                pal = "great!"
+            }
+            indexLeft--
+            indexRight++
+        }
+        console.log(indexLeft, indexRight)
+        return pal
+    } else {
+        return "what!"
+    }
+}

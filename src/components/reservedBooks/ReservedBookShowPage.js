@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { showReservedBook, removeShowReservedBook, updateLibBook, updateReservedBook } from '../actions/index'
-import NavBar from './NavBar'
+import NavBar from '../NavBar'
 import ReservedMessages from './ReservedMessages'
-import Footer from './Footer'
+import Footer from '../Footer'
 import { Grid, Container, Header, Segment, Image, Button, Icon, Loader, Modal} from 'semantic-ui-react'
 
 export class ReservedBookShowPage extends Component {

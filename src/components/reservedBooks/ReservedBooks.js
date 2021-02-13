@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { showBook } from '../actions/index'
-import NavBar from './NavBar'
-import LibraryBookCard from './LibraryBookCard'
-import DashboardLibraryBookCard from './DashboardLibraryBookCard'
-import Footer from './Footer'
+import { showBook } from '../../actions/index'
+import NavBar from '../NavBar'
+import LibraryBookCard from '../userProfile/LibraryBookCard'
+import DashboardLibraryBookCard from '../booksDashboard/DashboardLibraryBookCard'
+import Footer from '../Footer'
 import { Grid, Header, Icon, Button } from 'semantic-ui-react'
 
 export class ReservedBooks extends Component {

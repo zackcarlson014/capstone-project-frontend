@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import Footer from './Footer'
+import Footer from '../Footer'
 import { Button, Form, Grid, Header, Segment, Message, Icon, Image } from 'semantic-ui-react'
 
 

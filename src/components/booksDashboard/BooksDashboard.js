@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import NavBar from './NavBar'
-import DashboardLibraryBooks from './DashboardLibraryBooks'
-import DashboardWishedBooks from './DashboardWishedBooks'
-import Footer from './Footer'
+import NavBar from '../NavBar'
+import DashboardLibraryBooks from '../DashboardLibraryBooks'
+import DashboardWishedBooks from '../DashboardWishedBooks'
+import Footer from '../Footer'
 import { Header, Icon } from 'semantic-ui-react'
 
 

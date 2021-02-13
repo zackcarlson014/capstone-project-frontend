@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import NavBar from './NavBar'
+import NavBar from '../NavBar'
 import BookSearch from './BookSearch'
 import AddLibraryBookList from './AddLibraryBookList'
-import LibraryBooks from './LibraryBooks'
-import Footer from './Footer'
+import LibraryBooks from '../userProfile/LibraryBooks'
+import Footer from '../Footer'
 import request from 'superagent';
 import { Grid, Button, Header, Icon, Loader } from 'semantic-ui-react'
 

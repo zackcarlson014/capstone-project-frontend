@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { addLibBook } from '../actions/index'
+import { addLibBook } from '../../actions/index'
 import { Card, Image, Button } from 'semantic-ui-react'
 
 

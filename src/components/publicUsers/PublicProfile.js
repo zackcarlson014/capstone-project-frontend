@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { showUser, removeShowUser } from '../actions/index'
-import NavBar from './NavBar'
-import CurrentlyReadingCarousel from './CurrentlyReadingCarousel'
-import DashboardLibraryBooks from './DashboardLibraryBooks'
-import DashboardWishedBooks from './DashboardWishedBooks'
-import Footer from './Footer'
+import { showUser, removeShowUser } from '../../actions/index'
+import NavBar from '../NavBar'
+import CurrentlyReadingCarousel from '../carousels/carousels/CurrentlyReadingCarousel'
+import DashboardLibraryBooks from '../booksDashboard/DashboardLibraryBooks'
+import DashboardWishedBooks from '../booksDashboard/DashboardWishedBooks'
+import Footer from '../Footer'
 import { Grid, Header, Icon, Segment, Image, Loader } from 'semantic-ui-react'
 
 export class PublicProfile extends Component {

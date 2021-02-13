@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { showUser, showBook, removeShowBook, addReservedBook, deleteWishBook, bookComments } from '../actions/index'
-import NavBar from './NavBar'
-import UserCarousel from './UserCarousel'
+import { showUser, showBook, removeShowBook, addReservedBook, deleteWishBook, bookComments } from '../../actions/index'
+import NavBar from '../NavBar'
+import UserCarousel from '../carousels/UserCarousel'
 import Comments from './Comments'
-import Footer from './Footer'
+import Footer from '../Footer'
 import { Grid, Segment, Header, Image, Button, Icon, Loader } from 'semantic-ui-react'
 
 

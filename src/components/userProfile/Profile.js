@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import NavBar from './NavBar'
+import NavBar from '../NavBar'
 import UserCard from './UserCard'
-import CurrentlyReadingCarousel from './CurrentlyReadingCarousel'
+import CurrentlyReadingCarousel from '../carousels/CurrentlyReadingCarousel'
 import LibraryBooks from './LibraryBooks'
 import WishedBooks from './WishedBooks'
-import Footer from './Footer'
+import Footer from '../Footer'
 import { Grid, Button, Header, Icon, Loader } from 'semantic-ui-react'
 
 
