@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { deleteComment, addLike, addCommentLike, deleteLike } from '../actions/index'
+import { deleteComment, addLike, addCommentLike, deleteLike } from '../../actions/index'
 import { Comment, Icon, Loader } from 'semantic-ui-react'
 
 

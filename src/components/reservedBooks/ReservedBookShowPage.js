@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { showReservedBook, removeShowReservedBook, updateLibBook, updateReservedBook } from '../actions/index'
+import { showReservedBook, removeShowReservedBook, updateLibBook, updateReservedBook } from '../../actions/index'
 import NavBar from '../NavBar'
 import ReservedMessages from './ReservedMessages'
 import Footer from '../Footer'

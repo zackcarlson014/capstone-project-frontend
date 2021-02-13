@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { deleteMessage } from '../actions/index.js'
+import { deleteMessage } from '../../actions/index.js'
 import { Comment, Icon } from 'semantic-ui-react'
 
 export class ReservedMessage extends Component {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { showUser } from '../actions/index'
+import { showUser } from '../../actions/index'
 import Carousel from 'semantic-ui-carousel-react';
 import { Image, Button, Icon, Header } from  'semantic-ui-react'
 

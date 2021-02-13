@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { addWishBook } from '../actions/index'
+import { addWishBook } from '../../actions/index'
 import { Card, Image, Button } from 'semantic-ui-react'
 
 

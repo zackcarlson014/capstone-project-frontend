@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import NavBar from '../NavBar'
-import DashboardLibraryBooks from './DashboardLibraryBooks'
+import DashboardLibraryBooks from '../booksDashboard/DashboardLibraryBooks'
 import Footer from '../Footer'
 import { Grid, Loader, Header, Button, Icon, Popup, Image } from 'semantic-ui-react'
 

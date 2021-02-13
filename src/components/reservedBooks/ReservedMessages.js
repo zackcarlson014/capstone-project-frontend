@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { addMessage } from '../actions/index.js'
+import { addMessage } from '../../actions/index.js'
 import ReservedMessage from './ReservedMessage.js'
 import { Button, Comment, Form, Header } from 'semantic-ui-react'
 

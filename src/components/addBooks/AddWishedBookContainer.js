@@ -112,24 +112,3 @@ const mapStateToProps = state => {
 }
 
 export default connect(mapStateToProps, null)(AddWishedBookContainer)
-
-
-const palindrome = (string) => {
-    let pal = "crap"
-    let indexLeft = (string.length / 2) - 1
-    let indexRight = string.length / 2
-    if (string.length % 2 === 0) { 
-        for (let step = 0; step < indexLeft; step++) {
-            if (string[indexLeft] !== string[indexRight]) {
-                console.log(indexLeft, indexRight)
-                pal = "great!"
-            }
-            indexLeft--
-            indexRight++
-        }
-        console.log(indexLeft, indexRight)
-        return pal
-    } else {
-        return "what!"
-    }
-}

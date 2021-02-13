@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { showReservedBook, addReservedBook, deleteWishBook, showUser } from '../actions/index'
+import { showReservedBook, addReservedBook, deleteWishBook, showUser } from '../../actions/index'
 import { Card, Image, Button, Icon, Header } from 'semantic-ui-react'
 
 export class DashboardLibraryBookCard extends Component {
