@@ -194,3 +194,10 @@ export const searchField = (string) => {
     }
 }
 
+export const clearSearch = () => {
+    return {
+        type: 'CLEAR_SEARCH'
+    }
+}
+
+

@@ -65,7 +65,7 @@ export class Comments extends Component {
                     }
                     <Form reply onSubmit={this.handleSubmit}>
                         <Form.TextArea onChange={this.handleInputChange} name='content' value={this.state.content}/>
-                        <Button type='submit' content='Add Reply' labelPosition='left' icon='edit' primary />
+                        <Button type='submit' content='Comment' labelPosition='left' icon='comment' primary />
                     </Form>
                 </Comment.Group>
             </div>

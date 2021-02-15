@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { clearSearch } from '../../actions/index'
 import NavBar from '../NavBar'
 import DashboardLibraryBooks from './DashboardLibraryBooks'
 import DashboardWishedBooks from './DashboardWishedBooks'
@@ -8,6 +9,10 @@ import { Header, Icon } from 'semantic-ui-react'
 
 
 export class BooksDashboard extends Component {
+
+    componentWillUnmount() {
+        this.props.clearSearch()
+    }
 
     libraryBooks = () => {
         let matchedBooks = []
@@ -68,4 +73,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, null)(BooksDashboard)
+export default connect(mapStateToProps, { clearSearch })(BooksDashboard)

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { clearSearch } from '../../actions/index'
 import NavBar from '../NavBar'
 import UserCard from './UserCard'
 import CurrentlyReadingCarousel from '../carousels/CurrentlyReadingCarousel'
@@ -11,6 +12,11 @@ import { Grid, Button, Header, Icon, Loader } from 'semantic-ui-react'
 
 
 export class Profile extends Component {
+
+    //clear store state serachField before navigating away from component
+    componentWillUnmount() {
+        this.props.clearSearch()
+    }
 
     //list of all Library Books, searchField conditional results
     libraryBooks = () => {
@@ -132,4 +138,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, null)(Profile)
+export default connect(mapStateToProps, { clearSearch })(Profile)

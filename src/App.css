@@ -13,6 +13,10 @@ p {
   color: white !important;
 }
 
+.nav > input {
+  color: white !important;
+}
+
 .ui.container {
   overflow: auto;
   white-space: nowrap;
