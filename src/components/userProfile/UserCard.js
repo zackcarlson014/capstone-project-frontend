@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import { Card, Image, Icon, Button } from 'semantic-ui-react'
+import { Card, Image, Icon, Button, Placeholder } from 'semantic-ui-react'
 
 export class UserCard extends Component {
 
@@ -8,7 +8,13 @@ export class UserCard extends Component {
         return (
             <div>
                 <br/><br/><Card color='blue'>
-                    <Image src={this.props.user.prof_pic_url ? this.props.user.prof_pic_url : 'https://icon-library.com/images/default-user-icon/default-user-icon-4.jpg'} wrapped ui={false}/>
+                    {this.props.user.prof_pic_url ? 
+                        <Image src={this.props.user.prof_pic_url} wrapped ui={false}/> 
+                        : 
+                        <Placeholder>
+                            <Placeholder.Image square />
+                        </Placeholder>
+                    }
                     <Card.Content>
                         <Card.Header>
                             {this.props.user.username}

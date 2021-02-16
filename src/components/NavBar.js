@@ -74,7 +74,7 @@ export class NavBar extends Component {
         <Menu.Item
           header
           as={NavLink}
-          to='/daf'
+          to='/messages'
           // name='home'
           // active={activeItem === 'home'}
           // onClick={this.handleItemClick}

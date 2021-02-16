@@ -15,6 +15,7 @@ import AddLibraryBookContainer from './components/addBooks/AddLibraryBookContain
 import AddWishedBookContainer from './components/addBooks/AddWishedBookContainer.js'
 import ReservedBooks from './components/reservedBooks/ReservedBooks.js'
 import ReservedBookShowPage from './components/reservedBooks/ReservedBookShowPage.js'
+import Messages from './components/messages/Messages.js'
 import './App.css';
 
 export class App extends Component {
@@ -56,6 +57,7 @@ export class App extends Component {
           <Route exact path='/user_wish_books/new' component={AddWishedBookContainer}/>
           <Route exact path='/reserved_books/:id' component={ReservedBookShowPage}/>
           <Route exact path='/reserved_books' component={ReservedBooks}/>
+          <Route exact path='/messages' component={Messages}/>
         </Switch>
       </div>
 
