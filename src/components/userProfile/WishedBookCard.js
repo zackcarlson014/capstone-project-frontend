@@ -61,7 +61,7 @@ export class WishedBookCard extends Component {
                 }
                 <Card.Content extra>
                     <Button.Group widths='2'>
-                        <Button as={ Link } exact='true' to={`/books/${this.props.book.id}`} animated='fade' icon='eye' color='blue'>
+                        <Button as={ Link } exact='true' to={`/books/${this.props.book.id}`} animated='fade' color='blue'>
                             <Button.Content visible><Icon name='eye'/></Button.Content>
                             <Button.Content hidden>View</Button.Content>
                         </Button>

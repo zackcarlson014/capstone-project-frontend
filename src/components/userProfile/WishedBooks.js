@@ -70,7 +70,7 @@ export class WishedBooks extends Component {
                         </Grid.Row>
                     </Grid>
                     :
-                    <Grid textAlign='centered'>
+                    <Grid textAlign='center'>
                         <Grid.Row>
                             <Grid.Column>
                                 <Header as='h3' style={{color: 'white'}} textAlign="center">

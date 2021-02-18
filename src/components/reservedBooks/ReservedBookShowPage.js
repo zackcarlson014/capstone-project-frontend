@@ -213,7 +213,7 @@ export class ReservedBookShowPage extends Component {
                                 <Grid.Column width='2'></Grid.Column>
                                 <Grid.Column width='11'>
                                     <Segment>
-                                        <ReservedMessages resBookId={this.props.book[1].id} messages={this.props.messages} user={this.props.book[1].id === this.props.auth.id ? this.props.book[2].user : this.props.book[1]}/>
+                                        <ReservedMessages resBookId={this.props.book[3]} messages={this.props.messages} user={this.props.book[1].id === this.props.auth.id ? this.props.book[2].user : this.props.book[1]}/>
                                     </Segment><br/><br/>
                                 </Grid.Column>
                             </Grid.Row>

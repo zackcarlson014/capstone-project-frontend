@@ -73,19 +73,21 @@ export class LibraryBooks extends Component {
                     :
                     <Grid textAlign='centered'>
                         <Grid.Row>
-                            <Grid.Column>
-                                <Header as='h3' style={{color: 'white'}} textAlign="center">
+                            <Segment compact='true'>
+                                <Header as='h3' style={{color: 'red'}}>
                                     {this.props.searchField ? "No Books Match Your Search" : "Your Library Bookshelf is Current Empty"}
                                 </Header>
-                                {this.props.searchField ? 
-                                    null 
-                                    : 
-                                    <Header as='h4' style={{color: 'white'}} textAlign="center">
-                                        <Icon name='heart'/>Search for Books You'd Like to Donate
-                                    </Header>
-                                }
-                            </Grid.Column>
+                            </Segment>
                         </Grid.Row>
+                        {this.props.searchField ? 
+                            null 
+                            : 
+                            <Grid.Row>
+                                <Header as='h4' style={{color: 'white'}} textAlign="center">
+                                    <Icon name='heart'/>Search for Books You'd Like to Donate
+                                </Header>
+                            </Grid.Row>
+                        }
                     </Grid>
                 }
                 <Grid textAlign='center'>
