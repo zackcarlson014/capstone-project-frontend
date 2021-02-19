@@ -1,13 +1,13 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
-import NavBar from '../NavBar'
-import BookSearch from './BookSearch'
-import AddLibraryBookList from './AddLibraryBookList'
-import LibraryBooks from '../userProfile/LibraryBooks'
-import Footer from '../Footer'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import NavBar from '../NavBar';
+import BookSearch from './BookSearch';
+import AddLibraryBookList from './AddLibraryBookList';
+import LibraryBooks from '../userProfile/LibraryBooks';
+import Footer from '../Footer';
 import request from 'superagent';
-import { Grid, Button, Header, Icon, Loader } from 'semantic-ui-react'
+import { Grid, Button, Header, Icon, Loader } from 'semantic-ui-react';
 
 export class AddLibraryBookContainer extends Component {
 
@@ -17,7 +17,7 @@ export class AddLibraryBookContainer extends Component {
             books: [],
             searchField: ''
         }
-    }
+    };
 
     //request books from Google Books API based on searchField parameters
     searchBook = (e) => {
@@ -27,24 +27,24 @@ export class AddLibraryBookContainer extends Component {
             .query({ q: this.state.searchField})
             .query({ maxResults: '24' })
             .then(data => {
-                this.setState({ books: [...data.body.items]})
-            })
-    }
+                this.setState({ books: [...data.body.items]});
+            });
+    };
 
     //update state based on user input
     handleSearch = (e) => {
         this.setState({
             searchField: e.target.value
-        })
-    }
+        });
+    };
 
     //list of Current User's Library books ({book, user, id})
     myLibraryBooks = () => {
-        return this.props.allLibraryBooks.filter(book => book[1].id === this.props.auth.id)
-    }
+        return this.props.allLibraryBooks.filter(book => book[1].id === this.props.auth.id);
+    };
 
     render() {
-        window.scrollTo(0, 0)
+        window.scrollTo(0, 0);
         if (!this.props.auth) {
             return <Grid style={{ height: '99vh' }}><Loader active /></Grid>
         } else {
@@ -95,16 +95,16 @@ export class AddLibraryBookContainer extends Component {
                     
                     <Footer/>
                 </div>
-            )
-        }
-    }
-}
+            );
+        };
+    };
+};
 
 const mapStateToProps = state => {
     return {
         allLibraryBooks: state.allLibraryBooks,
         auth: state.auth
-    }
-}
+    };
+};
 
-export default connect(mapStateToProps, null)(AddLibraryBookContainer)
+export default connect(mapStateToProps, null)(AddLibraryBookContainer);

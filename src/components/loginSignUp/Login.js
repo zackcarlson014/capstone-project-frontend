@@ -1,9 +1,9 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
-import { loginSuccess } from '../../actions/auth'
-import Footer from '../Footer'
-import { Button, Form, Grid, Header, Segment, Message, Icon } from 'semantic-ui-react'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { loginSuccess } from '../../actions/auth';
+import Footer from '../Footer';
+import { Button, Form, Grid, Header, Segment, Message, Icon } from 'semantic-ui-react';
 
 export class Login extends Component {
 
@@ -11,39 +11,37 @@ export class Login extends Component {
         username: '',
         password: '',
         error: null
-    }
+    };
 
     handleInputChange = (e) => {
         this.setState({
             [e.target.name]: e.target.value
-        })
-    }
+        });
+    };
 
     handleSubmit = (e) => {
         e.preventDefault();
-
         const reqObj = {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(this.state)
-        }
-
+        };
         fetch('http://localhost:3000/api/v1/auth', reqObj)
         .then(resp => resp.json())
         .then(data => {
             if (data.error) {
                 this.setState({
                     error: data.error
-                })
+                });
             } else {
-                this.props.loginSuccess(data)
-                this.props.history.push('/profile')
-                localStorage.setItem('my_app_token', data.token)
-            }
-        })
-    }
+                this.props.loginSuccess(data);
+                this.props.history.push('/profile');
+                localStorage.setItem('my_app_token', data.token);
+            };
+        });
+    };
 
     render() {
         return (
@@ -79,8 +77,8 @@ export class Login extends Component {
                 </Grid>
                 <Footer/>
             </div>
-        )
-    }
-}
+        );
+    };
+};
 
-export default connect(null, { loginSuccess })(Login)
+export default connect(null, { loginSuccess })(Login);

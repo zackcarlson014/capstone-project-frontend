@@ -1,88 +1,75 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
-import { deleteComment, addLike, addCommentLike, deleteLike } from '../../actions/index'
-import { Comment, Icon, Loader } from 'semantic-ui-react'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { deleteComment, addLike, addCommentLike, deleteLike } from '../../actions/index';
+import { Comment, Icon, Loader } from 'semantic-ui-react';
 
 
 export class CommentItem extends Component {
 
     handleRemoveComment = (e) => {
-        e.preventDefault()
-
+        e.preventDefault();
         fetch(`http://localhost:3000/api/v1/comments/${this.props.comment.id}`, {method: 'DELETE'})
-            .then(resp => resp.json())
-            .then(data => {
-                this.props.deleteComment(data.id)
-            })
-    }
+        .then(resp => resp.json())
+        .then(data => {
+            this.props.deleteComment(data.id);
+        });
+    };
 
     handleAddLike = (e) => {
-        e.preventDefault()
-
+        e.preventDefault();
         const newCommentLike = {
             user_id: this.props.auth.id,
             comment_id: this.props.comment.id
-        }
-
+        };
         const reqObj = {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(newCommentLike)
-        }
-
+        };
         fetch('http://localhost:3000/api/v1/comment_likes', reqObj)
         .then(resp => resp.json())
         .then(data => {
-            this.props.addLike(data.id, data.comment_id)
-            this.props.addCommentLike(this.props.comment, this.props.user, this.props.likes + 1)
-        }) 
-    }
+            this.props.addLike(data.id, data.comment_id);
+            this.props.addCommentLike(this.props.comment, this.props.user, this.props.likes + 1);
+        }) ;
+    };
 
     handleRemoveLike = (e) => {
-        const updatedLikes = this.props.likes - 1
-
-        e.preventDefault()
-
+        const updatedLikes = this.props.likes - 1;
+        e.preventDefault();
         fetch(`http://localhost:3000/api/v1/comment_likes/${this.likedByMe().id}`, {method: 'DELETE'})
-            .then(resp => resp.json())
-            .then(data => {
-                console.log(data)
-                this.props.deleteLike(this.props.comment.id, updatedLikes)
-            })
-
-    }
+        .then(resp => resp.json())
+        .then(data => {
+            this.props.deleteLike(this.props.comment.id, updatedLikes);
+        });
+    };
 
     dateTime = () => {
-        let period = 'am'
-        let hour = this.props.comment.created_at.slice(11, 13) 
+        let period = 'am';
+        let hour = this.props.comment.created_at.slice(11, 13);
         if (parseInt(hour) > 12) {
-            hour = String(parseInt(hour) - 12)
-            period = 'pm'
-        }
-
-        let minutes = this.props.comment.created_at.slice(14,16)
-
-        let month = this.props.comment.created_at.slice(5, 7)
+            hour = String(parseInt(hour) - 12);
+            period = 'pm';
+        };
+        let minutes = this.props.comment.created_at.slice(14,16);
+        let month = this.props.comment.created_at.slice(5, 7);
         if (month[0] === '0') {
-            month = month[1]
-        } 
-
-        let day = this.props.comment.created_at.slice(8, 10)
+            month = month[1];
+        } ;
+        let day = this.props.comment.created_at.slice(8, 10);
         if (day[0] === '0') {
-            day = day[1]
-        } 
-
-        let year = this.props.comment.created_at.slice(2,4)
-
-        return `${hour}:${minutes} ${period} ${month}/${day}/${year}`
-    }
+            day = day[1];
+        };
+        let year = this.props.comment.created_at.slice(2,4);
+        return `${hour}:${minutes} ${period} ${month}/${day}/${year}`;
+    };
 
     likedByMe = () => {
-        return this.props.myLikes.find(l => l.comment_id === this.props.comment.id)
-    }
+        return this.props.myLikes.find(l => l.comment_id === this.props.comment.id);
+    };
 
     render() {
         if (this.props.auth) {
@@ -112,19 +99,19 @@ export class CommentItem extends Component {
                          }
                     </Comment.Content>
                 </Comment>
-            )
+            );
         } else {
-            return <Loader active/>
-        }
-    }
-}
+            return <Loader active/>;
+        };
+    };
+};
 
 const mapStateToProps = state => {
     return {
         auth: state.auth,
         myLikes: state.myLikes
-    }
-}
+    };
+};
 
 
-export default connect(mapStateToProps, { deleteComment, addLike, addCommentLike, deleteLike })(CommentItem)
+export default connect(mapStateToProps, { deleteComment, addLike, addCommentLike, deleteLike })(CommentItem);

@@ -1,31 +1,29 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { addComment } from '../../actions/index'
-import CommentItem from './CommentItem'
-import { Button, Comment, Form, Header } from 'semantic-ui-react'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { addComment } from '../../actions/index';
+import CommentItem from './CommentItem';
+import { Button, Comment, Form, Header } from 'semantic-ui-react';
 
 
 export class Comments extends Component {
 
     state = {
         content: ''
-    }
+    };
 
     handleInputChange = (e) => {
         this.setState({
             [e.target.name]: e.target.value
-        })
-    }
+        });
+    };
 
     handleSubmit = (e) => {
-        e.preventDefault()
-
+        e.preventDefault();
         const newComment = {
             user_id: this.props.auth.id,
             book_id: this.props.book.id,
             content: this.state.content
-        }
-
+        };
         const reqObj = {
             method: 'POST',
             headers: {
@@ -33,17 +31,16 @@ export class Comments extends Component {
                 'Accept': 'application/json'
             },
             body: JSON.stringify(newComment)
-        }
-
+        };
         fetch('http://localhost:3000/api/v1/comments', reqObj)
         .then(resp => resp.json())
         .then(data => {
-            this.props.addComment(data, this.props.auth, 0)
+            this.props.addComment(data, this.props.auth, 0);
             this.setState({
                 content: ''
-            })
-        })
-    }
+            });
+        });
+    };
 
     render() {
         return (
@@ -69,15 +66,15 @@ export class Comments extends Component {
                     </Form>
                 </Comment.Group>
             </div>
-        )
-    }
-}
+        );
+    };
+};
 
 const mapStateToProps = state => {
     return {
         auth: state.auth
-    }
-}
+    };
+};
 
 
-export default connect(mapStateToProps, { addComment })(Comments)
+export default connect(mapStateToProps, { addComment })(Comments);

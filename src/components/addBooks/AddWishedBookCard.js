@@ -1,8 +1,8 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
-import { addWishBook } from '../../actions/index'
-import { Card, Image, Button } from 'semantic-ui-react'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { addWishBook } from '../../actions/index';
+import { Card, Image, Button } from 'semantic-ui-react';
 
 
 export class AddWishedBookCard extends Component {
@@ -11,7 +11,7 @@ export class AddWishedBookCard extends Component {
         const newWishedBook = {
             user_id: this.props.auth.id,
             book_id: book.id
-        }
+        };
         const reqObj = {
             method: 'POST',
             headers: {
@@ -19,16 +19,16 @@ export class AddWishedBookCard extends Component {
                 'Accept': 'application/json'
             },
             body: JSON.stringify(newWishedBook)
-        }
+        };
         fetch('http://localhost:3000/api/v1/user_wish_books', reqObj)
         .then(resp => resp.json())
-        .then(newWishBook => {
-            this.props.addWishBook(book, this.props.auth, newWishBook.id)
-        })
-    }
+        .then(wishBook => {
+            this.props.addWishBook(book, this.props.auth, wishBook.id);
+        });
+    };
 
     handleAddBook = (e) => {
-        e.preventDefault()
+        e.preventDefault();
         const newBook = {
             title: this.props.title,
             author: this.props.author[0],
@@ -37,8 +37,9 @@ export class AddWishedBookCard extends Component {
             description: this.props.description,
             average_rating: this.props.averageRating,
             ratings_count: this.props.ratingsCount,
-            preview_link: this.props.previewLink
-        }
+            preview_link: this.props.previewLink,
+            google_id: this.props.googleID
+        };
         const reqObj = {
             method: 'POST',
             headers: {
@@ -46,13 +47,13 @@ export class AddWishedBookCard extends Component {
                 'Accept': 'application/json'
             },
             body: JSON.stringify(newBook)
-        }
+        };
         fetch('http://localhost:3000/api/v1/books', reqObj)
-            .then(resp => resp.json())
-            .then(newWishBook => {
-                this.handleAddWishedBook(newWishBook)
-            })
-    }
+        .then(resp => resp.json())
+        .then(newWishBook => {
+            this.handleAddWishedBook(newWishBook);
+        });
+    };
 
     render() {
         return (
@@ -92,14 +93,14 @@ export class AddWishedBookCard extends Component {
                     </Card.Content>
                 }
             </Card>
-        )
-    }
-}
+        );
+    };
+};
 
 const mapStateToProps = state => {
     return {
         auth: state.auth
-    }
-}
+    };
+};
 
-export default connect(mapStateToProps, { addWishBook })(AddWishedBookCard)
+export default connect(mapStateToProps, { addWishBook })(AddWishedBookCard);

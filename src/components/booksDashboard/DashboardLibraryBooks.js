@@ -1,48 +1,50 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import DashboardLibraryBookCard from './DashboardLibraryBookCard'
-import { Grid, Segment, Pagination } from 'semantic-ui-react'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import DashboardLibraryBookCard from './DashboardLibraryBookCard';
+import { Grid, Segment, Pagination } from 'semantic-ui-react';
 
 export class DashboardLibraryBooks extends Component {
 
     state = { 
         activePage: 1 
-    }
+    };
 
     handlePaginationChange = (e, { activePage }) => {
         this.setState({ 
             activePage 
-        })
-    }
+        });
+    };
 
     cardCount = () => {
-        return this.props.userDash ? 5 : 8
-    }
+        return this.props.userDash ? 5 : 8;
+    };
 
     indexCount = () => {
-        return Math.ceil(this.libraryBooks().length / this.cardCount())
-    }
+        return Math.ceil(this.libraryBooks().length / this.cardCount());
+    };
 
     currentStartIndex = () => {
         if (this.state.activePage === 1) {
-            return this.state.activePage - 1
-        }
-        return (this.state.activePage - 1) * this.cardCount()
-    }
+            return this.state.activePage - 1;
+        };
+        return (this.state.activePage - 1) * this.cardCount();
+    };
 
     currentEndIndex = () => {
-        return this.currentStartIndex() + this.cardCount()
-    }
+        return this.currentStartIndex() + this.cardCount();
+    };
 
     wishedBooks = () => {
-        return this.props.allWishedBooks.filter(book => book[1].id === this.props.auth.id)
-    }
+        return this.props.allWishedBooks.filter(book => book[1].id === this.props.auth.id);
+    };
 
     libraryBooks = () => {
-        return this.props.books.filter(book => book[1].id !== this.props.auth.id)
-    }
+        const reservedBooks = this.props.reservedBooks.filter(r => r.delivered === true)
+        return this.props.books.filter(book => book[1].id !== this.props.auth.id && !reservedBooks.find(r => r.user_lib_book_id === book[2]));
+    };
     
     render() {
+        const reservedBooks = this.props.reservedBooks
         if (this.props.pub) {
             return (
                 <div>
@@ -53,7 +55,7 @@ export class DashboardLibraryBooks extends Component {
                                 {/* <Card.Group itemsPerRow={3} centered inverted> */}
                                 <br/><div className='ui eight centered cards'>
                                     {this.props.books.slice(this.currentStartIndex(), this.currentEndIndex()).map((book, i) => {
-                                        if (this.wishedBooks().find(b => b[0].id === book[0].id)) {
+                                        if (this.wishedBooks().find(b => b[0].id === book[0].id && !reservedBooks.find(r => r.user_lib_book_id === book[2]))) {
                                             return <DashboardLibraryBookCard key={i} book={book[0]} user={book[1]} userBookId={book[2]} pub={true} match={true}/>
                                         } else {
                                             return <DashboardLibraryBookCard key={i} book={book[0]} user={book[1]} userBookId={book[2]} pub={true}/>
@@ -100,17 +102,17 @@ export class DashboardLibraryBooks extends Component {
                         <Grid.Row></Grid.Row>
                     </Grid>
                 </div>
-            )
-        }
-
-    }
-}
+            );
+        };
+    };
+};
 
 const mapStateToProps = state => {
     return {
         allWishedBooks: state.allWishedBooks,
+        reservedBooks: state.reservedBooks,
         auth: state.auth
-    }
-}
+    };
+};
 
-export default connect(mapStateToProps, null)(DashboardLibraryBooks)
+export default connect(mapStateToProps, null)(DashboardLibraryBooks);

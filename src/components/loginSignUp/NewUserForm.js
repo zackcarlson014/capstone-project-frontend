@@ -12,23 +12,21 @@ export class NewUserForm extends Component {
         password:'',
         image: '',
         bio: ''
-    }
+    };
 
     handleInputChange = (e) => {
         this.setState({
             [e.target.name]: e.target.value
-        })
-    }
+        });
+    };
 
     handleSubmit = () => {
-
         const newUser = {
             username: this.state.username,
             password: this.state.password,
             prof_pic_url: this.state.image,
             bio: this.state.bio
-        }
-
+        };
         const reqObj = {
             method: 'POST',
             headers: {
@@ -36,15 +34,13 @@ export class NewUserForm extends Component {
                 'Accept': 'application/json'
             },
             body: JSON.stringify(newUser)
-        }
-        
+        };
         fetch('http://localhost:3000/api/v1/users', reqObj)
         .then(resp => resp.json())
         .then(user => {
-            this.props.history.push('/login')
-        })
-        
-    }
+            this.props.history.push('/login');
+        }); 
+    };
 
     render() {
         return (
@@ -98,8 +94,8 @@ export class NewUserForm extends Component {
                 </Grid>
                 <Footer/>
           </div>
-        )
-    }
-}
+        );
+    };
+};
 
-export default connect()(NewUserForm)
+export default connect()(NewUserForm);

@@ -1,41 +1,41 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
-import { deleteMessage } from '../../actions/index.js'
-import { Comment, Icon } from 'semantic-ui-react'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { deleteMessage } from '../../actions/index.js';
+import { Comment, Icon } from 'semantic-ui-react';
 
 export class ReservedMessage extends Component {
 
     //delete message from frontend and backend
     handleDeleteMessage = (e) => {
-        e.preventDefault()
+        e.preventDefault();
         fetch(`http://localhost:3000/api/v1/reserved_messages/${this.props.message.id}`, {method: 'DELETE'})
             .then(resp => resp.json())
             .then(data => {
-                this.props.deleteMessage(data.id)
-            })
-    }
+                this.props.deleteMessage(data.id);
+            });
+    };
 
     //parse and format date/time 
     dateTime = () => {
-        let period = 'am'
-        let hour = this.props.message.created_at.slice(11, 13) 
+        let period = 'am';
+        let hour = this.props.message.created_at.slice(11, 13); 
         if (parseInt(hour) > 12) {
-            hour = String(parseInt(hour) - 12)
-            period = 'pm'
-        }
-        let minutes = this.props.message.created_at.slice(14,16)
-        let month = this.props.message.created_at.slice(5, 7)
+            hour = String(parseInt(hour) - 12);
+            period = 'pm';
+        };
+        let minutes = this.props.message.created_at.slice(14,16);
+        let month = this.props.message.created_at.slice(5, 7);
         if (month[0] === '0') {
-            month = month[1]
-        } 
-        let day = this.props.message.created_at.slice(8, 10)
+            month = month[1];
+        };
+        let day = this.props.message.created_at.slice(8, 10);
         if (day[0] === '0') {
-            day = day[1]
-        } 
-        let year = this.props.message.created_at.slice(2,4)
-        return `${hour}:${minutes} ${period} ${month}/${day}/${year}`
-    }
+            day = day[1];
+        };
+        let year = this.props.message.created_at.slice(2,4);
+        return `${hour}:${minutes} ${period} ${month}/${day}/${year}`;
+    };
 
     render() {
         return (
@@ -58,9 +58,9 @@ export class ReservedMessage extends Component {
                     </Comment.Content>
                 </Comment>
             </div>
-        )
-    }
-}
+        );
+    };
+};
 
 const mapStateToProps = state => {
     return {
@@ -68,4 +68,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, { deleteMessage })(ReservedMessage)
+export default connect(mapStateToProps, { deleteMessage })(ReservedMessage);

@@ -6,8 +6,8 @@ import { Card, Image, Button, Icon, Header } from 'semantic-ui-react'
 export class DashboardWishedBookCard extends Component {
 
     reservedBook = () => {
-        return this.props.reservedBooks.find(b => b.user_lib_book_id === this.props.match[2])
-    }
+        return this.props.reservedBooks.find(b => b.user_lib_book_id === this.props.match[2]);
+    };
 
     render() {
         return (
@@ -52,14 +52,14 @@ export class DashboardWishedBookCard extends Component {
                 }
                 </Card.Content>
             </Card>
-        )
-    }
-}
+        );
+    };
+};
 
 const mapStateToProps = state => {
     return {
         reservedBooks: state.reservedBooks
-    }
-}
+    };
+};
 
-export default connect(mapStateToProps, null)(DashboardWishedBookCard)
+export default connect(mapStateToProps, null)(DashboardWishedBookCard);

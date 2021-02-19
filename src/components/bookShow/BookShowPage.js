@@ -1,47 +1,44 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
-import { showUser, showBook, removeShowBook, addReservedBook, deleteWishBook, bookComments } from '../../actions/index'
-import NavBar from '../NavBar'
-import UserCarousel from '../carousels/UserCarousel'
-import Comments from './Comments'
-import Footer from '../Footer'
-import { Grid, Segment, Header, Image, Button, Icon, Loader } from 'semantic-ui-react'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { showUser, showBook, removeShowBook, addReservedBook, deleteWishBook, bookComments } from '../../actions/index';
+import NavBar from '../NavBar';
+import UserCarousel from '../carousels/UserCarousel';
+import Comments from './Comments';
+import Footer from '../Footer';
+import { Grid, Segment, Header, Image, Button, Icon, Loader } from 'semantic-ui-react';
 
 
 export class BookShowPage extends Component {
 
     state = {
         book: null
-    }
+    };
 
     componentWillMount() {
-        const id = this.props.location.pathname.slice(7)
-
+        const id = this.props.location.pathname.slice(7);
         fetch(`http://localhost:3000/api/v1/books/${id}`)
         .then(resp => resp.json())
         .then(book => {
-            const comments = book.comments.filter(c => c[0].book_id === parseInt(id))
-            this.props.showBook(book.book, comments)
-        }) 
-    }
+            const comments = book.comments.filter(c => c[0].book_id === parseInt(id));
+            this.props.showBook(book.book, comments);
+        }) ;
+    };
 
     componentDidMount() {
-        window.scrollTo(0, 0)
-    }
+        window.scrollTo(0, 0);
+    };
 
     componentWillUnmount() {
-        this.props.removeShowBook()
-    }
+        this.props.removeShowBook();
+    };
 
     handleAddReservedBook = (book, libBookId) => {
-
         const newReservedBook = {
             user_id: this.props.auth.id,
             user_lib_book_id: libBookId,
             delivered: false,
-        }
-
+        };
         const reqObj = {
             method: 'POST',
             headers: {
@@ -49,41 +46,39 @@ export class BookShowPage extends Component {
                 'Accept': 'application/json'
             },
             body: JSON.stringify(newReservedBook)
-        }
-
+        };
         fetch('http://localhost:3000/api/v1/reserved_books', reqObj)
-            .then(resp => resp.json())
-            .then(newReservedBook => {
-                this.props.addReservedBook(newReservedBook)
-            })
-        
+        .then(resp => resp.json())
+        .then(newReservedBook => {
+            this.props.addReservedBook(newReservedBook)
+        });
+
         if (this.props.allWishedBooks.find(b => b[0].id === book.id && b[1].id === this.props.auth.id)) {
-            const wishBook = this.props.allWishedBooks.find(b => b[0].id === book.id && b[1].id === this.props.auth.id)
+            const wishBook = this.props.allWishedBooks.find(b => b[0].id === book.id && b[1].id === this.props.auth.id);
             return fetch(`http://localhost:3000/api/v1/user_wish_books/${wishBook[2]}`, {method: 'DELETE'})
             .then(resp => resp.json)
             .then(book => {
-                this.props.deleteWishBook(wishBook[2])
-            })
-        }
-
-        this.props.history.push('/reserved_books')
-    }
+                this.props.deleteWishBook(wishBook[2]);
+            });
+        };
+        this.props.history.push('/reserved_books');
+    };
 
     libraryUsers = () => {
-        return this.props.allLibraryBooks.filter(b => b[0].id === this.props.book.id && b[1].id !== this.props.auth.id)
-    }
+        return this.props.allLibraryBooks.filter(b => b[0].id === this.props.book.id && b[1].id !== this.props.auth.id);
+    };
 
     myBook = () => {
-        return this.props.allLibraryBooks.find(b => b[0].id === this.props.book.id && b[1].id === this.props.auth.id)
-    }
+        return this.props.allLibraryBooks.find(b => b[0].id === this.props.book.id && b[1].id === this.props.auth.id);
+    };
 
     myReservedBook = () => {
-       return this.props.reservedBooks.find(book => (this.libraryUsers().map(b => b[2])).find(i => i === book.user_lib_book_id) && book.user_id === this.props.auth.id)
-    }
+       return this.props.reservedBooks.find(book => (this.libraryUsers().map(b => b[2])).find(i => i === book.user_lib_book_id) && book.user_id === this.props.auth.id);
+    };
 
     render() {
         if (!this.props.book) {
-            return <Grid style={{ height: '99vh' }}><Loader active /></Grid>
+            return <Grid style={{ height: '99vh' }}><Loader active /></Grid>;
         } else {
             return (
                 <div className='App'>
@@ -174,10 +169,10 @@ export class BookShowPage extends Component {
                     </Grid>
                     <Footer/>
                 </div>
-            )
-        }
-    }
-}
+            );
+        };
+    };
+};
 
 
 const mapStateToProps = state => {
@@ -188,7 +183,7 @@ const mapStateToProps = state => {
         reservedBooks: state.reservedBooks,
         allComments: state.allComments,
         auth: state.auth
-    }
-}
+    };
+};
 
-export default connect(mapStateToProps, { showUser, showBook, removeShowBook, addReservedBook, deleteWishBook, bookComments })(BookShowPage)
+export default connect(mapStateToProps, { showUser, showBook, removeShowBook, addReservedBook, deleteWishBook, bookComments })(BookShowPage);

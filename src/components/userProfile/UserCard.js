@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
-import { Card, Image, Icon, Button, Placeholder } from 'semantic-ui-react'
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { Card, Image, Icon, Button, Placeholder } from 'semantic-ui-react';
 
 export class UserCard extends Component {
 
@@ -32,10 +32,8 @@ export class UserCard extends Component {
                     </Card.Content>
                 </Card>
             </div>
-        )
-    }
-}
+        );
+    };
+};
 
-
-
-export default UserCard
+export default UserCard;

@@ -11,22 +11,43 @@ import { Grid, Header, Icon, Button } from 'semantic-ui-react'
 export class ReservedBooks extends Component {
 
     deliveredBooks = () => {
-        return this.props.reservedBooks.filter(b => b.user_id === this.props.auth.id && b.delivered === true)
-    }
+        return this.props.reservedBooks.filter(b => 
+            b.user_id === this.props.auth.id 
+            && 
+            b.delivered === true
+        );
+    };
 
     reservedBooks = () => {
-        return this.props.reservedBooks.filter(b => b.user_id === this.props.auth.id && b.delivered === false)
-    }
+        return this.props.reservedBooks.filter(b => 
+            b.user_id === this.props.auth.id 
+            && 
+            b.delivered === false
+        );
+    };
 
     reservedFromMyLibrary = () => {
-        return this.props.allLibraryBooks.filter(book => book[1].id === this.props.auth.id && this.props.reservedBooks.find(b => b.user_lib_book_id === book[2] && b.delivered === false))
-    }
+        return this.props.allLibraryBooks.filter(book => 
+            book[1].id === this.props.auth.id 
+            && 
+            this.props.reservedBooks.find(b => 
+                b.user_lib_book_id === book[2] 
+                && 
+                b.delivered === false
+            )
+        );
+    };
 
     libraryBooks = () => {
-        return this.props.allLibraryBooks.filter(book => this.reservedBooks().find(b => b.user_lib_book_id === book[2]))
-    }
+        return this.props.allLibraryBooks.filter(book => 
+            this.reservedBooks().find(b => 
+                b.user_lib_book_id === book[2]
+            )
+        );
+    };
 
     render() {
+        debugger
         window.scrollTo(0, 0)
         return (
             <div className='App'>
@@ -43,7 +64,7 @@ export class ReservedBooks extends Component {
                             <br/><br/><div className='ui seven centered cards'>
                                 {this.libraryBooks().map((book, i) => {
                                     // if (this.reservedBooks().find(b => b.user_lib_book_id === book[2])){
-                                        return <DashboardLibraryBookCard key={i} book={book[0]} user={book[1]} userBookId={book[2]}/>
+                                        return <DashboardLibraryBookCard key={i} book={book[0]} user={book[1]} userBookId={book[2]} reserved={true}/>
                                     // }
                                 })}
                             </div><br/><br/><br/><br/>
@@ -99,16 +120,16 @@ export class ReservedBooks extends Component {
                 }
                 <Footer/>
             </div>
-        )
-    }
-}
+        );
+    };
+};
 
 const mapStateToProps = state => {
     return {
         allLibraryBooks: state.allLibraryBooks,
         reservedBooks: state.reservedBooks,
         auth: state.auth
-    }
-}
+    };
+};
 
-export default connect(mapStateToProps, { showBook })(ReservedBooks)
+export default connect(mapStateToProps, { showBook })(ReservedBooks);

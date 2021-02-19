@@ -1,8 +1,8 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
-import { addLibBook } from '../../actions/index'
-import { Card, Image, Button } from 'semantic-ui-react'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { addLibBook } from '../../actions/index';
+import { Card, Image, Button } from 'semantic-ui-react';
 
 
 export class AddLibraryBookCard extends Component {
@@ -12,8 +12,7 @@ export class AddLibraryBookCard extends Component {
             user_id: this.props.auth.id,
             book_id: book.id,
             original_user_id: this.props.auth.id
-        }
-
+        };
         const reqObj = {
             method: 'POST',
             headers: {
@@ -21,17 +20,16 @@ export class AddLibraryBookCard extends Component {
                 'Accept': 'application/json'
             },
             body: JSON.stringify(newLibraryBook)
-        }
+        };
         fetch('http://localhost:3000/api/v1/user_lib_books', reqObj)
         .then(resp => resp.json())
         .then(data => {
-            console.log(data)
-            this.props.addLibBook(book, this.props.auth, data.id, this.props.auth.id)
-        })
-    }
+            this.props.addLibBook(book, this.props.auth, data.id, this.props.auth.id);
+        });
+    };
 
     handleAddBook = (e) => {
-        e.preventDefault()
+        e.preventDefault();
         const newBook = {
             title: this.props.title,
             author: this.props.author[0],
@@ -40,8 +38,9 @@ export class AddLibraryBookCard extends Component {
             description: this.props.description,
             average_rating: this.props.averageRating,
             ratings_count: this.props.ratingsCount,
-            preview_link: this.props.previewLink
-        }
+            preview_link: this.props.previewLink,
+            google_id: this.props.googleID
+        };
         const reqObj = {
             method: 'POST',
             headers: {
@@ -49,14 +48,13 @@ export class AddLibraryBookCard extends Component {
                 'Accept': 'application/json'
             },
             body: JSON.stringify(newBook)
-        }
+        };
         fetch('http://localhost:3000/api/v1/books', reqObj)
             .then(resp => resp.json())
             .then(newLibBook => {
-                console.log(newLibBook)
-                this.handleAddLibraryBook(newLibBook)
-            })
-    }
+                this.handleAddLibraryBook(newLibBook);
+            });
+    };
 
     render() {
         return (
@@ -97,15 +95,15 @@ export class AddLibraryBookCard extends Component {
                     </Card.Content>
                 }
             </Card>
-        )
-    }
-}
+        );
+    };
+};
 
 const mapStateToProps = state => {
     return {
         auth: state.auth
-    }
-}
+    };
+};
 
 
-export default connect(mapStateToProps, { addLibBook })(AddLibraryBookCard)
+export default connect(mapStateToProps, { addLibBook })(AddLibraryBookCard);

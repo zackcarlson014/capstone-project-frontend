@@ -1,61 +1,79 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
-import { clearSearch } from '../../actions/index'
-import NavBar from '../NavBar'
-import UserCard from './UserCard'
-import CurrentlyReadingCarousel from '../carousels/CurrentlyReadingCarousel'
-import LibraryBooks from './LibraryBooks'
-import WishedBooks from './WishedBooks'
-import Footer from '../Footer'
-import { Grid, Button, Header, Icon, Loader } from 'semantic-ui-react'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { clearSearch } from '../../actions/index';
+import NavBar from '../NavBar';
+import UserCard from './UserCard';
+import CurrentlyReadingCarousel from '../carousels/CurrentlyReadingCarousel';
+import LibraryBooks from './LibraryBooks';
+import WishedBooks from './WishedBooks';
+import Footer from '../Footer';
+import { Grid, Button, Header, Icon, Loader } from 'semantic-ui-react';
 
 
 export class Profile extends Component {
 
     //clear store state serachField before navigating away from component
     componentWillUnmount() {
-        this.props.clearSearch()
-    }
+        if (this.props.searchField) {
+            return this.props.clearSearch();
+        };
+    };
 
     //list of all Library Books, searchField conditional results
     libraryBooks = () => {
         if (this.props.searchField)  {
-            return this.props.allLibraryBooks.filter(b => b[0].title.toLowerCase().includes(this.props.searchField.toLowerCase()) || b[0].author.toLowerCase().includes(this.props.searchField.toLowerCase()))
+            return this.props.allLibraryBooks.filter(b => 
+                b[0].title.toLowerCase().includes(this.props.searchField.toLowerCase()) 
+                || 
+                b[0].author.toLowerCase().includes(this.props.searchField.toLowerCase())
+            );
         } else {
-            return this.props.allLibraryBooks
-        }   
-    }
+            return this.props.allLibraryBooks;
+        };   
+    };
 
     //list of all WishList Books, searchField conditional results
     wishedBooks = () => {
         if (this.props.searchField)  {
-            return this.props.allWishedBooks.filter(b => b[0].title.toLowerCase().includes(this.props.searchField.toLowerCase()) || b[0].author.toLowerCase().includes(this.props.searchField.toLowerCase()))
+            return this.props.allWishedBooks.filter(b => 
+                b[0].title.toLowerCase().includes(this.props.searchField.toLowerCase()) 
+                || 
+                b[0].author.toLowerCase().includes(this.props.searchField.toLowerCase())
+            );
         } else {
-            return this.props.allWishedBooks
-        }   
-    }
+            return this.props.allWishedBooks;
+        };   
+    };
 
     //number of my Library Books - prop for UserCard component
     bookCount = () => {
-        let books = []
-        books = this.props.allLibraryBooks.filter(book => book[1].id === this.props.auth.id)
-        return books.length
-    }
+        let books = [];
+        books = this.props.allLibraryBooks.filter(book => 
+            book[1].id === this.props.auth.id
+        );
+        return books.length;
+    };
 
     //my reserved books that have been delivered to me - prop for CurrentlyReadingCarousel component
     deliveredBooks = () => {
-        const books = this.props.reservedBooks.filter(b => b.user_id === this.props.auth.id && b.delivered === true)
+        const books = this.props.reservedBooks.filter(b => 
+            b.user_id === this.props.auth.id 
+            && 
+            b.delivered === true
+        );
         const libBooks = books.map(b => {
-            return this.props.allLibraryBooks.find(book => book[2] === b.user_lib_book_id )
-        })
-        return libBooks.map(b => b[0])
-    }
+            return this.props.allLibraryBooks.find(book => 
+                book[2] === b.user_lib_book_id 
+            );
+        });
+        return libBooks.map(b => b[0]);
+    };
 
     render() {
-        window.scrollTo(0, 0)
+        window.scrollTo(0, 0);
         if (!this.props.auth) {
-            return <Grid style={{ height: '99vh' }}><Loader active /></Grid>
+            return <Grid style={{ height: '99vh' }}><Loader active /></Grid>;
          } else {
             return (
                 <div className='App'>
@@ -123,10 +141,10 @@ export class Profile extends Component {
                     <WishedBooks books={this.wishedBooks()}/><br/>
                     <Footer/>
                 </div>
-            )
-        }
-    }
-}
+            );
+        };
+    };
+};
 
 const mapStateToProps = state => {
     return {
@@ -135,7 +153,7 @@ const mapStateToProps = state => {
         allLibraryBooks: state.allLibraryBooks,
         allWishedBooks: state.allWishedBooks,
         searchField: state.searchField
-    }
-}
+    };
+};
 
-export default connect(mapStateToProps, { clearSearch })(Profile)
+export default connect(mapStateToProps, { clearSearch })(Profile);

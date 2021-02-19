@@ -32,7 +32,7 @@ const BookSearch = (props) => {
                 </Form.Field>
             </Form><br/>
         </div>
-    )
-}
+    );
+};
 
 export default BookSearch;

@@ -1,89 +1,95 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { showUser, removeShowUser } from '../../actions/index'
-import NavBar from '../NavBar'
-import CurrentlyReadingCarousel from '../carousels/CurrentlyReadingCarousel'
-import DashboardLibraryBooks from '../booksDashboard/DashboardLibraryBooks'
-import DashboardWishedBooks from '../booksDashboard/DashboardWishedBooks'
-import Footer from '../Footer'
-import { Grid, Header, Icon, Segment, Image, Loader } from 'semantic-ui-react'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { showUser, removeShowUser } from '../../actions/index';
+import NavBar from '../NavBar';
+import CurrentlyReadingCarousel from '../carousels/CurrentlyReadingCarousel';
+import DashboardLibraryBooks from '../booksDashboard/DashboardLibraryBooks';
+import DashboardWishedBooks from '../booksDashboard/DashboardWishedBooks';
+import Footer from '../Footer';
+import { Grid, Header, Icon, Segment, Image, Loader } from 'semantic-ui-react';
 
 export class PublicProfile extends Component {
 
     //set showUser store state
     componentWillMount() {
-        const id = this.props.location.pathname.slice(7)
+        const id = this.props.location.pathname.slice(7);
         fetch(`http://localhost:3000/api/v1/users/${id}`)
         .then(resp => resp.json())
         .then(user => this.props.showUser(user))
-    }
+    };
 
     //remove showUser store state
     componentWillUnmount() {
-        this.props.removeShowUser()
-    }
+        this.props.removeShowUser();
+    };
 
     //list of all Library Books, searchField conditional results
     libraryBooks = () => {
         if (this.props.searchField)  {
-            const books = this.props.allLibraryBooks.filter(b => b[0].title.toLowerCase().includes(this.props.searchField.toLowerCase()) || b[0].author.toLowerCase().includes(this.props.searchField.toLowerCase()))
+            const books = this.props.allLibraryBooks.filter(b => 
+                b[0].title.toLowerCase().includes(this.props.searchField.toLowerCase()) 
+                || 
+                b[0].author.toLowerCase().includes(this.props.searchField.toLowerCase()));
             if (books.length !== 0) {
-                return books
+                return books;
             } else {
-                return this.props.allLibraryBooks
-            } 
+                return this.props.allLibraryBooks;
+            };
         } else {
-            return this.props.allLibraryBooks
-        }   
-    }
+            return this.props.allLibraryBooks;
+        };
+    };
 
     //list of all Wish List Books, searchField conditional results
     wishedBooks = () => {
         if (this.props.searchField)  {
-            const books = this.props.allWishedBooks.filter(b => b[0].title.toLowerCase().includes(this.props.searchField.toLowerCase()) || b[0].author.toLowerCase().includes(this.props.searchField.toLowerCase()))
+            const books = this.props.allWishedBooks.filter(b => 
+                b[0].title.toLowerCase().includes(this.props.searchField.toLowerCase()) 
+                || 
+                b[0].author.toLowerCase().includes(this.props.searchField.toLowerCase()));
             if (books.length !== 0) {
-                return books
+                return books;
             } else {
-                return this.props.allWishedBooks
-            } 
+                return this.props.allWishedBooks;
+            };
         } else {
-            return this.props.allWishedBooks
-        }   
-    }
+            return this.props.allWishedBooks;
+        };
+    };
     
     //Library books that belong to Profile User
     userLibraryBooks = () => {
-        return this.libraryBooks().filter(book => book[1].id === this.props.user.id)
-    }
+        return this.libraryBooks().filter(book => book[1].id === this.props.user.id);
+    };
 
     //Wish List books that belong to Profile User
     userWishedBooks = () => {
-        return this.wishedBooks().filter(book => book[1].id === this.props.user.id)
-    }
+        return this.wishedBooks().filter(book => book[1].id === this.props.user.id);
+    };
 
     //Library books that belong to Current User
     myLibraryBooks = () => {
-        return this.props.allLibraryBooks.filter(book => book[1].id === this.props.auth.id)
-    }
+        return this.props.allLibraryBooks.filter(book => book[1].id === this.props.auth.id);
+    };
 
     //Wish List books that belong to Current User
     myWishedBooks = () => {
-        return this.props.allWishedBooks.filter(book => book[1].id === this.props.auth.id)
-    }
+        return this.props.allWishedBooks.filter(book => book[1].id === this.props.auth.id);
+    };
 
     //Library books on Profile User's Currently Reading list
     currentlyReading = () => {
-        const books = this.props.reservedBooks.filter(b => b.user_id === this.props.user.id && b.delivered === true)
+        const books = this.props.reservedBooks.filter(b => b.user_id === this.props.user.id && b.delivered === true);
         const libBooks = books.map(b => {
-            return this.props.allLibraryBooks.find(book => book[2] === b.user_lib_book_id )
-        })
-        return libBooks.map(b => b[0])
-    }
+            return this.props.allLibraryBooks.find(book => book[2] === b.user_lib_book_id);
+        });
+        return libBooks.map(b => b[0]);
+    };
 
     render() {
-        window.scrollTo(0, 0)
+        window.scrollTo(0, 0);
         if (!this.props.user) {
-            return <Grid style={{ height: '99vh' }}><Loader active /></Grid>
+            return <Grid style={{ height: '99vh' }}><Loader active /></Grid>;
         } else {
             return (
                 <div className='App'>
@@ -146,10 +152,10 @@ export class PublicProfile extends Component {
                     <DashboardWishedBooks books={this.userWishedBooks()} pub={true}/>
                     <Footer/>
                 </div>
-            )
-        }
-    }
-}
+            );
+        };
+    };
+};
 
 const mapStateToProps = state => {
     return {
@@ -159,7 +165,7 @@ const mapStateToProps = state => {
         allLibraryBooks: state.allLibraryBooks,
         allWishedBooks: state.allWishedBooks,
         searchField: state.searchField
-    }
-}
+    };
+};
 
-export default connect(mapStateToProps, { showUser, removeShowUser })(PublicProfile)
+export default connect(mapStateToProps, { showUser, removeShowUser })(PublicProfile);

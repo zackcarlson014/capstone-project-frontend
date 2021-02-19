@@ -7,32 +7,32 @@ export class DashboardWishedBooks extends Component {
 
     state = { 
         activePage: 1 
-    }
+    };
 
     handlePaginationChange = (e, { activePage }) => {
         this.setState({ 
             activePage 
-        })
-    }
+        });
+    };
 
     wishedBooks = () => {
-        return this.props.books.filter(book => book[1].id !== this.props.auth.id)
-    }
+        return this.props.books.filter(book => book[1].id !== this.props.auth.id);
+    };
 
     libraryBooks = () => {
-        return this.props.allLibraryBooks.filter(book => book[1].id === this.props.auth.id)
-    }
+        return this.props.allLibraryBooks.filter(book => book[1].id === this.props.auth.id);
+    };
 
     indexCount = () => {
-        return Math.ceil(this.wishedBooks().length / 8)
-    }
+        return Math.ceil(this.wishedBooks().length / 8);
+    };
 
     bookIndex = () => {
         if (this.state.activePage === 1) {
-            return this.state.activePage - 1
-        }
-        return (this.state.activePage - 1) * 8
-    }
+            return this.state.activePage - 1;
+        };
+        return (this.state.activePage - 1) * 8;
+    };
 
     render() {
         return (
@@ -43,7 +43,7 @@ export class DashboardWishedBooks extends Component {
                         <Grid.Column width='14'>
                             <br/><div className='ui eight centered cards'>
                                 {this.wishedBooks().slice(this.bookIndex(), this.bookIndex() + 8).map((book, i) => {
-                                    if (this.libraryBooks().find(b => b[0].id === book[0].id)) {
+                                    if (this.libraryBooks().find(b => b[0].title === book[0].title && b[0].author === book[0].author)) {
                                         return <DashboardWishedBookCard key={i} book={book[0]} user={book[1]} userBookId={book[2]} match={this.libraryBooks().find(b => b[0].id === book[0].id)}/>
                                     } else {
                                         return <DashboardWishedBookCard key={i} book={book[0]} user={book[1]} userBookId={book[2]}/>
@@ -65,16 +65,16 @@ export class DashboardWishedBooks extends Component {
                     </Grid.Row>
                 </Grid><br/>
             </div>
-        )
-    }
-}
+        );
+    };
+};
 
 const mapStateToProps = state => {
     return {
         allWishedBooks: state.allWishedBooks,
         allLibraryBooks: state.allLibraryBooks,
         auth: state.auth
-    }
-}
+    };
+};
 
-export default connect(mapStateToProps, null)(DashboardWishedBooks)
+export default connect(mapStateToProps, null)(DashboardWishedBooks);

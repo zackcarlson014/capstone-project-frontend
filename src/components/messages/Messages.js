@@ -1,9 +1,9 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import NavBar from '../NavBar'
-import MessageItem from './MessageItem'
-import Footer from '../Footer'
-import { Grid, Header, Icon, Button, Loader } from 'semantic-ui-react'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import NavBar from '../NavBar';
+import MessageItem from './MessageItem';
+import Footer from '../Footer';
+import { Grid, Header, Icon, Button, Loader } from 'semantic-ui-react';
 
 export class Messages extends Component {
 
@@ -17,8 +17,8 @@ export class Messages extends Component {
         .then(messages => {
             this.setState({
                 messages
-            })
-        })
+            });
+        });
     };
 
     myMessagesGrouped = () => {
@@ -42,13 +42,13 @@ export class Messages extends Component {
                 a[1][a[1].length - 1]['created_at'].slice(14,16) +
                 a[1][a[1].length - 1]['created_at'].slice(17,19)
             }`
-        )
+        );
     };
 
 
     myMessages = () => {
-        return this.state.messages.filter(m => m.user_id === this.props.auth.id || m.recipient_id === this.props.auth.id)
-    }
+        return this.state.messages.filter(m => m.user_id === this.props.auth.id || m.recipient_id === this.props.auth.id);
+    };
 
 
     render() {
@@ -85,15 +85,15 @@ export class Messages extends Component {
                     </Grid><br/>
                     <Footer/>
                 </div>
-            )
-        }    
-    }
-}
+            );
+        };  
+    };
+};
 
 const mapStateToProps = state => {
     return {
         auth: state.auth
-    }
-}
+    };
+};
 
-export default connect(mapStateToProps, null)(Messages)
+export default connect(mapStateToProps, null)(Messages);

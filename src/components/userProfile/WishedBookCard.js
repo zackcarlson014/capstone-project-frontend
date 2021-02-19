@@ -1,39 +1,41 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { deleteWishBook } from '../../actions/index'
-import { Card, Image, Button, Icon, Header, Modal } from 'semantic-ui-react'
+import { deleteWishBook } from '../../actions/index';
+import { Card, Image, Button, Icon, Header, Modal } from 'semantic-ui-react';
 
 export class WishedBookCard extends Component {
 
     state = {
         open: false
-    }
+    };
 
     //toggle state open value to control view of 'delete wish list book' modal
     setOpen = (bool) => {
         this.setState({
             open: bool
-        })
-    }
+        });
+    };
 
     //delete Wish List book from back-end and front-end
     handleDeleteWishedBook = (e) => {
-        e.preventDefault()
+        e.preventDefault();
         //make delete reqest to back end with Wish List book ID passed from WishedBooks props
         fetch(`http://localhost:3000/api/v1/user_wish_books/${this.props.userBookId}`, {method: 'DELETE'})
             .then(resp => resp.json())
             .then(wishBook => {
-                this.props.deleteWishBook(wishBook.id)
-                this.props.deleteBookIndex()
-            })
-        this.setOpen(false)
-    }
+                this.props.deleteWishBook(wishBook.id);
+                this.props.deleteBookIndex();
+            });
+        this.setOpen(false);
+    };
 
     
     reservedBook = () => {
-        return this.props.reservedBooks.find(b => b.user_lib_book_id === this.props.match[0][2])
-    }
+        return this.props.reservedBooks.find(b => 
+            b.user_lib_book_id === this.props.match[0][2]
+        );
+    };
 
     render() {
         return (
@@ -109,7 +111,7 @@ export class WishedBookCard extends Component {
 const mapStateToProps = state => {
     return {
         reservedBooks: state.reservedBooks
-    }
-}
+    };
+};
 
-export default connect(mapStateToProps, { deleteWishBook })(WishedBookCard)
+export default connect(mapStateToProps, { deleteWishBook })(WishedBookCard);

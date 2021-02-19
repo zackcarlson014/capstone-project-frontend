@@ -1,49 +1,49 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { clearSearch } from '../../actions/index'
-import NavBar from '../NavBar'
-import DashboardLibraryBooks from './DashboardLibraryBooks'
-import DashboardWishedBooks from './DashboardWishedBooks'
-import Footer from '../Footer'
-import { Header, Icon } from 'semantic-ui-react'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { clearSearch } from '../../actions/index';
+import NavBar from '../NavBar';
+import DashboardLibraryBooks from './DashboardLibraryBooks';
+import DashboardWishedBooks from './DashboardWishedBooks';
+import Footer from '../Footer';
+import { Header, Icon } from 'semantic-ui-react';
 
 
 export class BooksDashboard extends Component {
 
     componentWillUnmount() {
-        this.props.clearSearch()
-    }
+        this.props.clearSearch();
+    };
 
     libraryBooks = () => {
-        let matchedBooks = []
+        let matchedBooks = [];
         if (this.props.searchField)  {
-            const books = this.props.allLibraryBooks.filter(b => b[0].title.toLowerCase().includes(this.props.searchField.toLowerCase()) || b[0].author.toLowerCase().includes(this.props.searchField.toLowerCase()))
+            const books = this.props.allLibraryBooks.filter(b => b[0].title.toLowerCase().includes(this.props.searchField.toLowerCase()) || b[0].author.toLowerCase().includes(this.props.searchField.toLowerCase()));
             if (books.length !== 0) {
-                matchedBooks = books
+                matchedBooks = books;
             } else {
-                matchedBooks = this.props.allLibraryBooks
-            } 
+                matchedBooks = this.props.allLibraryBooks;
+            };
         } else {
-            matchedBooks = this.props.allLibraryBooks
-        }
-        return matchedBooks
-    }
+            matchedBooks = this.props.allLibraryBooks;
+        };
+        return matchedBooks;
+    };
 
     wishedBooks = () => {
         if (this.props.searchField)  {
-            const books = this.props.allWishedBooks.filter(b => b[0].title.toLowerCase().includes(this.props.searchField.toLowerCase()) || b[0].author.toLowerCase().includes(this.props.searchField.toLowerCase()))
+            const books = this.props.allWishedBooks.filter(b => b[0].title.toLowerCase().includes(this.props.searchField.toLowerCase()) || b[0].author.toLowerCase().includes(this.props.searchField.toLowerCase()));
             if (books.length !== 0) {
-                return books
+                return books;
             } else {
-                return this.props.allWishedBooks
-            } 
+                return this.props.allWishedBooks;
+            };
         } else {
-            return this.props.allWishedBooks
-        }   
+            return this.props.allWishedBooks;
+        };   
     }
 
     render() {
-        window.scrollTo(0, 0)
+        window.scrollTo(0, 0);
         return (
             <div className='App'>
                 <NavBar />
@@ -70,7 +70,7 @@ const mapStateToProps = state => {
         allLibraryBooks: state.allLibraryBooks,
         allWishedBooks: state.allWishedBooks,
         searchField: state.searchField
-    }
-}
+    };
+};
 
-export default connect(mapStateToProps, { clearSearch })(BooksDashboard)
+export default connect(mapStateToProps, { clearSearch })(BooksDashboard);

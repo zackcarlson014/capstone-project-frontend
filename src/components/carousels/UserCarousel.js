@@ -1,9 +1,9 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
-import { showUser } from '../../actions/index'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { showUser } from '../../actions/index';
 import Carousel from 'semantic-ui-carousel-react';
-import { Image, Button, Icon, Header } from  'semantic-ui-react'
+import { Image, Button, Icon, Header } from  'semantic-ui-react';
 
 export class UserCarousel extends Component {
     
@@ -20,13 +20,12 @@ export class UserCarousel extends Component {
                     {this.props.users.length !== 1 ? <br/> : null}
                 </div>
             );
-          }
-        }
-    })}
+        }};
+    })};
 
     handleShowUser = (user) => {
-        this.props.showUser(user)
-    }
+        this.props.showUser(user);
+    };
 
     render() {
         return (
@@ -39,9 +38,8 @@ export class UserCarousel extends Component {
                     showIndicators  = {this.props.users.length !== 1 ? true : false}
                 />
             </div>
-        )
-    
-    }
-}
+        );
+    };
+};
 
 export default connect(null, { showUser })(UserCarousel);

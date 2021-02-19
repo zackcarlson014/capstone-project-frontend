@@ -4,37 +4,32 @@ import { Grid, Message, Header, Icon } from 'semantic-ui-react'
 export class MessageItem extends Component {
 
     dateTime = () => {
-        let period = 'am'
-        let hour = this.props.messageItem[1][this.props.messageItem[1].length - 1].created_at.slice(11, 13) 
+        let period = 'am';
+        let hour = this.props.messageItem[1][this.props.messageItem[1].length - 1].created_at.slice(11, 13);
         if (parseInt(hour) > 12) {
-            hour = String(parseInt(hour) - 12)
-            period = 'pm'
-        }
-
-        let minutes = this.props.messageItem[1][this.props.messageItem[1].length - 1].created_at.slice(14,16)
-
-        let month = this.props.messageItem[1][this.props.messageItem[1].length - 1].created_at.slice(5, 7)
+            hour = String(parseInt(hour) - 12);
+            period = 'pm';
+        };
+        let minutes = this.props.messageItem[1][this.props.messageItem[1].length - 1].created_at.slice(14,16);
+        let month = this.props.messageItem[1][this.props.messageItem[1].length - 1].created_at.slice(5, 7);
         if (month[0] === '0') {
-            month = month[1]
-        } 
-
-        let day = this.props.messageItem[1][this.props.messageItem[1].length - 1].created_at.slice(8, 10)
+            month = month[1];
+        };
+        let day = this.props.messageItem[1][this.props.messageItem[1].length - 1].created_at.slice(8, 10);
         if (day[0] === '0') {
-            day = day[1]
-        } 
-
-        let year = this.props.messageItem[1][this.props.messageItem[1].length - 1].created_at.slice(2,4)
-
-        return `${hour}:${minutes} ${period} ${month}/${day}/${year}`
-    }
+            day = day[1];
+        };
+        let year = this.props.messageItem[1][this.props.messageItem[1].length - 1].created_at.slice(2,4);
+        return `${hour}:${minutes} ${period} ${month}/${day}/${year}`;
+    };
     
     receivedMessage = () => {
-        return this.props.messageItem[1][this.props.messageItem[1].length - 1].recipient_id === this.props.currentUserId
-    }
+        return this.props.messageItem[1][this.props.messageItem[1].length - 1].recipient_id === this.props.currentUserId;
+    };
 
     render() {
         if (!this.props.messageItem) {
-            return null
+            return null;
         } else {
             return (
                 <div>
@@ -62,9 +57,9 @@ export class MessageItem extends Component {
                         </Grid>
                     </Message><br/>
                 </div>
-            )
-        }
-    }
-}
+            );
+        };
+    };
+};
 
-export default MessageItem
+export default MessageItem;

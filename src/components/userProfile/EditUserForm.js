@@ -12,22 +12,20 @@ export class EditUserForm extends Component {
         username: this.props.auth.username,
         image: this.props.auth.prof_pic_url,
         bio: this.props.auth.bio
-    }
+    };
 
     handleInputChange = (e) => {
         this.setState({
             [e.target.name]: e.target.value
-        })
-    }
+        });
+    };
 
     handleSubmit = () => {
-
         const editUser = {
             username: this.state.username,
             prof_pic_url: this.state.image,
             bio: this.state.bio
-        }
-
+        };
         const reqObj = {
             method: 'PATCH',
             headers: {
@@ -35,15 +33,14 @@ export class EditUserForm extends Component {
                 'Accept': 'application/json'
             },
             body: JSON.stringify(editUser)
-        }
-        
+        };
         fetch(`http://localhost:3000/api/v1/users/${this.props.auth.id}`, reqObj)
         .then(resp => resp.json())
         .then(user => {
-            this.props.updateUser(user)
-            this.props.history.push('/profile')
-        })   
-    }
+            this.props.updateUser(user);
+            this.props.history.push('/profile');
+        });
+    };
 
     render() {
         return (
@@ -86,14 +83,14 @@ export class EditUserForm extends Component {
                 </Grid>
                 <Footer/>
           </div>
-        )
-    }
-}
+        );
+    };
+};
 
 const mapStateToProps = state => {
     return {
         auth: state.auth
-    }
-}
+    };
+};
 
-export default connect(mapStateToProps, { updateUser })(EditUserForm)
+export default connect(mapStateToProps, { updateUser })(EditUserForm);

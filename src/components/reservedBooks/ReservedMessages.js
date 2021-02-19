@@ -1,23 +1,23 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { addMessage } from '../../actions/index.js'
-import ReservedMessage from './ReservedMessage.js'
-import { Button, Comment, Form, Header } from 'semantic-ui-react'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { addMessage } from '../../actions/index.js';
+import ReservedMessage from './ReservedMessage.js';
+import { Button, Comment, Form, Header } from 'semantic-ui-react';
 
 export class ReservedMessages extends Component {
 
     state = {
         content: ''
-    }
+    };
 
     handleInputChange = (e) => {
         this.setState({
             [e.target.name]: e.target.value
-        })
-    }
+        });
+    };
 
     handleSubmit = (e) => {
-        e.preventDefault()
+        e.preventDefault();
         const newReservedMessage = {
             user_id: this.props.auth.id,
             reserved_book_id: this.props.resBookId,
@@ -59,7 +59,7 @@ export class ReservedMessages extends Component {
                 content: ''
             })
         });
-    }
+    };
 
     render() {
         return (
@@ -85,14 +85,14 @@ export class ReservedMessages extends Component {
                     </Form>
                 </Comment.Group>
             </div>
-        )
-    }
-}
+        );
+    };
+};
 
 const mapStateToProps = state => {
     return {
         auth: state.auth
-    }
-}
+    };
+};
 
-export default connect(mapStateToProps, { addMessage })(ReservedMessages)
+export default connect(mapStateToProps, { addMessage })(ReservedMessages);

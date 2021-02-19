@@ -1,18 +1,21 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
-import { showBook, addWishBook, deleteReservedBook } from '../../actions/index'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { showBook, addWishBook, deleteReservedBook } from '../../actions/index';
 import Carousel from 'semantic-ui-carousel-react';
-import { Grid, Header, Image, Button, Icon } from  'semantic-ui-react'
+import { Grid, Header, Image, Button, Icon } from  'semantic-ui-react';
 
 export class CurrentlyReadingCarousel extends Component {
+    
+    componentDidMount() {
+        console.log('mounting Carousel')
+    }
 
     handleAddWishedBook = (book) => {
         const newWishedBook = {
             user_id: this.props.auth.id,
             book_id: book.id
-        }
-
+        };
         const reqObj = {
             method: 'POST',
             headers: {
@@ -20,34 +23,33 @@ export class CurrentlyReadingCarousel extends Component {
                 'Accept': 'application/json'
             },
             body: JSON.stringify(newWishedBook)
-        }
-
+        };
         fetch('http://localhost:3000/api/v1/user_wish_books', reqObj)
         .then(resp => resp.json())
         .then(newWishBook => {
-            this.props.addWishBook(book, this.props.auth, newWishBook.id)
-        })
-    }
+            this.props.addWishBook(book, this.props.auth, newWishBook.id);
+        });
+    };
 
     handleAddToLibrary = (id) => {
         fetch(`http://localhost:3000/api/v1/reserved_books/${id}`, {method: 'DELETE'})
-            .then(resp => resp.json())
-            .then(reservedBook => {
-                this.props.deleteReservedBook(reservedBook.id)
-            })
-    }
+        .then(resp => resp.json())
+        .then(reservedBook => {
+            this.props.deleteReservedBook(reservedBook.id);
+        });
+    };
 
     isWishedBook = (b) => {
-        return this.props.allWishedBooks.find(book => book[0].id === b.id && book[1].id === this.props.auth.id)
-    }
+        return this.props.allWishedBooks.find(book => book[0].id === b.id && book[1].id === this.props.auth.id);
+    };
     
     reservedBookId = (b) => {
-        const libBook = this.props.allLibraryBooks.find(book => book[1].id === this.props.auth.id && book[0].id === b.id)
+        const libBook = this.props.allLibraryBooks.find(book => book[0].id === b.id);
         if (libBook) {
-            const resBook = this.props.reservedBooks.find(book => book.user_id === this.props.auth.id && book.user_lib_book_id === libBook[2])
-            return resBook.id
-        }
-    }
+            const resBook = this.props.reservedBooks.find(book => book.user_id === this.props.auth.id && book.user_lib_book_id === libBook[2]);
+            return resBook.id;
+        };
+    };
 
     findElements = () => {
         return this.props.books.map(b => {
@@ -81,12 +83,12 @@ export class CurrentlyReadingCarousel extends Component {
                         {this.props.books.length !== 1 ? <br/> : null}
                     </Grid.Column>
                 );
-            }
-            }
-        })
-    }
+            }};
+        });
+    };
 
     render() {
+        if (this.reservedBookId)
         return (
             <div style={{textAlign: 'center'}}>
                 <Carousel
@@ -97,10 +99,9 @@ export class CurrentlyReadingCarousel extends Component {
                     showIndicators  = {this.props.books.length !== 1 ? true : false}
                 />
             </div>
-        )
-    
-    }
-}
+        );
+    };
+};
 
 const mapStateToProps = state => {
     return {
@@ -108,7 +109,7 @@ const mapStateToProps = state => {
         allLibraryBooks: state.allLibraryBooks,
         allWishedBooks: state.allWishedBooks,
         reservedBooks: state.reservedBooks
-    }
-}
+    };
+};
 
 export default connect(mapStateToProps, { showBook, addWishBook, deleteReservedBook })(CurrentlyReadingCarousel);

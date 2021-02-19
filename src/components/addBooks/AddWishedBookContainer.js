@@ -1,13 +1,13 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
-import NavBar from '../NavBar'
-import BookSearch from './BookSearch'
-import AddWishedBookList from './AddWishedBookList'
-import WishedBooks from '../userProfile/WishedBooks'
-import Footer from '../Footer'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import NavBar from '../NavBar';
+import BookSearch from './BookSearch';
+import AddWishedBookList from './AddWishedBookList';
+import WishedBooks from '../userProfile/WishedBooks';
+import Footer from '../Footer';
 import request from 'superagent';
-import { Grid, Button, Header, Icon, Loader } from 'semantic-ui-react'
+import { Grid, Button, Header, Icon, Loader } from 'semantic-ui-react';
 
 
 export class AddWishedBookContainer extends Component {
@@ -19,7 +19,7 @@ export class AddWishedBookContainer extends Component {
             searchField: ''
         }
         this.bookSearch = React.createRef()
-    }
+    };
 
     //request books from Google Books API based on searchField parameters
     searchBook = (e) => {
@@ -29,32 +29,31 @@ export class AddWishedBookContainer extends Component {
             .query({ q: this.state.searchField})
             .query({ maxResults: '24' })
             .then(data => {
-                console.log(data)
-                this.setState({ books: [...data.body.items]})
-            })
-    }
+                this.setState({ books: [...data.body.items]});
+            });
+    };
 
     //update state based on user input
     handleSearch = (e) => {
         this.setState({
             searchField: e.target.value
-        })
-    }
+        });
+    };
 
     searchAuthor = (author) => {
         this.setState({
             searchField: author
-        })
-        this.bookSearch.current.getWrappedInstance().submit()
-    }
+        });
+        // this.bookSearch.current.getWrappedInstance().submit();
+    };
 
     //list of Current User's WishList books ({book, user, id})
     myWishedBooks = () => {
-        return this.props.allWishedBooks.filter(book => book[1].id === this.props.auth.id)
-    }
+        return this.props.allWishedBooks.filter(book => book[1].id === this.props.auth.id);
+    };
 
     render() {
-        window.scrollTo(0, 0)
+        window.scrollTo(0, 0);
         if (!this.props.auth) {
             return <Grid style={{ height: '99vh' }}><Loader active /></Grid>
         } else {
@@ -107,16 +106,16 @@ export class AddWishedBookContainer extends Component {
                          */}
                     <Footer/>
                 </div>
-            )
-        }
-    }
-}
+            );
+        };
+    };
+};
 
 const mapStateToProps = state => {
     return {
         allWishedBooks: state.allWishedBooks,
         auth: state.auth
-    }
-}
+    };
+};
 
-export default connect(mapStateToProps, null)(AddWishedBookContainer)
+export default connect(mapStateToProps, null)(AddWishedBookContainer);
