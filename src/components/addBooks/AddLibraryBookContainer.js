@@ -51,7 +51,7 @@ export class AddLibraryBookContainer extends Component {
             return (
                 <div className='App'>
                     <NavBar/><br/>
-                    <Grid textAlign="center">
+                    <Grid textAlign="center" style={{ minHeight: '99vh' }}>
                         <Grid.Row></Grid.Row>
                         <Grid.Row></Grid.Row>
                         <Grid.Row>

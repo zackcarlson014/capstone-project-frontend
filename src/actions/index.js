@@ -107,17 +107,17 @@ export const deleteLike = (like, likes) => {
     }
 }
 
-export const addMessage = (message, user) => {
+export const addReservedMessage = (message, user) => {
     return {
-        type: 'ADD_MESSAGE',
+        type: 'ADD_RESERVED_MESSAGE',
         message,
         user
     }
 }
 
-export const deleteMessage = (id) => {
+export const deleteReservedMessage = (id) => {
     return {
-        type: 'DELETE_MESSAGE',
+        type: 'DELETE_RESERVED_MESSAGE',
         id
     }
 }
@@ -200,4 +200,9 @@ export const clearSearch = () => {
     }
 }
 
+export const markMessagesSeen = () => {
+    return {
+        type: 'MARK_MESSAGES_SEEN'
+    }
+}
 

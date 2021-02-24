@@ -8,7 +8,8 @@ import { Grid, Header, Icon, Button, Loader } from 'semantic-ui-react';
 export class Messages extends Component {
 
     state = {
-        messages: []
+        messages: [],
+        users: []
     };
 
     componentDidMount() {
@@ -19,6 +20,51 @@ export class Messages extends Component {
                 messages
             });
         });
+        fetch('http://localhost:3000/api/v1/users')
+        .then(resp => resp.json())
+        .then(users => {
+            this.setState({
+                users
+            });
+        });
+    };
+
+    componentWillUnmount() {
+        debugger
+        this.markMessagesSeen(this.state.messages)
+    };
+
+    markMessagesSeen = (messages) => {
+        messages.filter(m => 
+            m.seen === false
+        ).map(m => {
+            return this.markMessageSeen(m); 
+        });
+    };
+
+    markMessageSeen = (msg) => {
+        const updatedMessage = {
+            seen: true
+        };
+        const reqObj = {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(updatedMessage)
+        };
+        fetch(`http://localhost:3000/api/v1/messages/${msg.id}`, reqObj)
+        .then(resp => resp.json())
+        .then(message => console.log(message))
+    };
+
+    myMessages = () => {
+        return this.state.messages.filter(m => 
+            m.user_id === this.props.auth.id 
+            || 
+            m.recipient_id === this.props.auth.id
+        );
     };
 
     myMessagesGrouped = () => {
@@ -45,17 +91,18 @@ export class Messages extends Component {
         );
     };
 
-
-    myMessages = () => {
-        return this.state.messages.filter(m => m.user_id === this.props.auth.id || m.recipient_id === this.props.auth.id);
-    };
-
+    messageUser = (i) => {
+        return this.state.users.find(u => u.id === i)
+    }
 
     render() {
-        debugger
-        window.scrollTo(0, 0)
-        if (!this.props.auth || !this.myMessages) {
-            return <Grid style={{ height: '99vh' }}><Loader active /></Grid>
+        window.scrollTo(0, 0);
+        if (!this.props.auth || !this.state.users || !this.myMessages) {
+            return (
+                <Grid style={{ height: '99vh' }}>
+                    <Loader active />
+                </Grid>
+            );
         } else {
             return (
                 <div className='App'>
@@ -72,13 +119,21 @@ export class Messages extends Component {
                                     </Header.Content>
                                 </Header>
                             </Grid.Column>
-                            <Grid.Column width='7' textAlign='center'><Button icon='mail' content='new' color='blue'/></Grid.Column>
+                            <Grid.Column width='7' textAlign='center'>
+                                <Button icon='mail' content='new' color='blue'/>
+                            </Grid.Column>
                         </Grid.Row>
                         <Grid.Row>
                             <Grid.Column width='2'></Grid.Column>
                             <Grid.Column width='12'>
-                                {this.myMessagesGrouped().map(m => {
-                                    return <MessageItem messageItem={m} currentUserId={this.props.auth.id}/>
+                                {this.myMessagesGrouped().map((m, i) => {
+                                    const userId = m[1][0].user_id === this.props.auth.id ? m[1][0].recipient_id : m[1][0].user_id
+                                    return <MessageItem 
+                                        key={i} 
+                                        messageItem={m[1]} 
+                                        authId={this.props.auth.id} 
+                                        user={this.messageUser(userId)}
+                                    />
                                 })}
                             </Grid.Column>
                         </Grid.Row>

@@ -11,16 +11,18 @@ import reservedBooks from './reservedBooks.js'
 import myLikes from './myLikes.js'
 import allComments from './allComments.js'
 import allReservedMessages from './allReservedMessages.js'
+import allMessages from './allMessages.js'
 import searchField from './searchField.js'
 
 export default combineReducers({
     auth,
-    showBook,
-    showReservedBook,
-    showUser,
     allLibraryBooks,
     allWishedBooks,
     reservedBooks,
+    allMessages,
+    showBook,
+    showReservedBook,
+    showUser,
     myLikes,
     allComments,
     allReservedMessages,

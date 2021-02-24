@@ -60,7 +60,7 @@ export class AddWishedBookContainer extends Component {
             return (
                 <div className='App'>
                     <NavBar/><br/>
-                    <Grid textAlign="center">
+                    <Grid textAlign="center" style={{ minHeight: '75vh' }}>
                         <Grid.Row></Grid.Row>
                         <Grid.Row></Grid.Row>
                         <Grid.Row>
@@ -72,7 +72,7 @@ export class AddWishedBookContainer extends Component {
                             </Grid.Column>
                             <Grid.Column width='13'></Grid.Column>
                         </Grid.Row>
-                        <Grid.Row></Grid.Row>
+
                         <Grid.Row>
                             <Header as='h3' icon style={{color: 'white'}}>
                                 <Icon name='book' circular />

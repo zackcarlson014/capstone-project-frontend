@@ -1,11 +1,11 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
-import { showReservedBook, removeShowReservedBook, updateLibBook, updateReservedBook } from '../../actions/index'
-import NavBar from '../NavBar'
-import ReservedMessages from './ReservedMessages'
-import Footer from '../Footer'
-import { Grid, Container, Header, Segment, Image, Button, Icon, Loader, Modal} from 'semantic-ui-react'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { showReservedBook, removeShowReservedBook, updateLibBook, updateReservedBook } from '../../actions/index';
+import NavBar from '../NavBar';
+import ReservedMessages from './ReservedMessages';
+import Footer from '../Footer';
+import { Grid, Container, Header, Segment, Image, Button, Icon, Loader, Modal} from 'semantic-ui-react';
 
 export class ReservedBookShowPage extends Component {
 
@@ -24,7 +24,13 @@ export class ReservedBookShowPage extends Component {
         fetch(`http://localhost:3000/api/v1/reserved_books/${id}`)
         .then(resp => resp.json())
         .then(data => {
-            this.props.showReservedBook(data.reserved_book.book, data.reserved_book.user, data.reserved_book.user_lib_book, data.reserved_book.id, data.messages);
+            this.props.showReservedBook(
+                data.reserved_book.book, 
+                data.reserved_book.user, 
+                data.reserved_book.user_lib_book, 
+                data.reserved_book.id, 
+                data.messages
+            );
         });
     };
 
@@ -94,7 +100,11 @@ export class ReservedBookShowPage extends Component {
     render() {
         window.scrollTo(0, 0);
         if (!this.props.book || !this.props.auth) {
-           return <Grid style={{ height: '99vh' }}><Loader active /></Grid>;
+           return (
+                <Grid style={{ height: '99vh' }}>
+                    <Loader active />
+                </Grid>
+           );
         } else {
             return (
                 <div className='App'>

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { logoutUser } from '../actions/auth';
 import { searchField } from '../actions/index';
-import { Dropdown, Icon, Menu, Input } from 'semantic-ui-react';
+import { Dropdown, Icon, Menu, Label, Input } from 'semantic-ui-react';
 
 export class NavBar extends Component {
 
@@ -19,6 +19,15 @@ export class NavBar extends Component {
         localStorage.removeItem('my_app_token');
         this.props.logoutUser();
     };
+
+    newMessages = () => {
+        return this.props.messages.filter(m =>
+            m.recipient_id === this.props.auth.id 
+            && 
+            m.seen === false
+        ).length;
+    }; 
+ 
 
     // handleItemClick = (e, { name }) => {
     //   this.setState({
@@ -77,7 +86,14 @@ export class NavBar extends Component {
                     // active={activeItem === 'home'}
                     // onClick={this.handleItemClick}
                 >
-                    <Icon name='coffee'/>
+                    <Icon name='mail'/>
+                    {this.props.messages && this.newMessages() !== 0  ?
+                        <Label color='red' size='mini' circular={true} textAlign='center'>
+                          {this.newMessages()}
+                        </Label>
+                        : 
+                        null
+                    }
                 </Menu.Item>
                 <Menu.Menu position='right'>
                     <Menu.Item>
@@ -112,7 +128,8 @@ export class NavBar extends Component {
 
 const mapStateToProps = state => {
     return {
-        auth: state.auth
+        auth: state.auth,
+        messages: state.allMessages
     };
 };
 

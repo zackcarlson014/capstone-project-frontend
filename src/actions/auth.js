@@ -1,4 +1,4 @@
-export const loginSuccess = ({user, all_lib_books, all_wish_books, comments, reserved_books, my_likes}) => {
+export const loginSuccess = ({user, all_lib_books, all_wish_books, comments, reserved_books, messages, my_likes}) => {
     return {
       type: 'LOGIN_SUCCESS',
       user,
@@ -6,11 +6,12 @@ export const loginSuccess = ({user, all_lib_books, all_wish_books, comments, res
       all_wish_books,
       comments,
       reserved_books,
+      messages,
       my_likes
     }
   }
 
-  export const currentUser = ({user, all_lib_books, all_wish_books, comments, reserved_books, my_likes}) => {
+  export const currentUser = ({user, all_lib_books, all_wish_books, comments, reserved_books, messages, my_likes}) => {
     return {
       type: 'CURRENT_USER',
       user,
@@ -18,6 +19,7 @@ export const loginSuccess = ({user, all_lib_books, all_wish_books, comments, res
       all_wish_books,
       comments,
       reserved_books,
+      messages,
       my_likes
     }
   }

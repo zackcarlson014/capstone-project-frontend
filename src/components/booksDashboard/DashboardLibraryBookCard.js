@@ -79,7 +79,12 @@ export class DashboardLibraryBookCard extends Component {
                         </Card.Header>
                         <Card.Meta>
                             <span className='date'>
-                                Published in {this.props.book.published_date ? this.props.book.published_date : 2020}
+                                Avg Rating: {this.props.book.averageRating ? this.props.book.averageRating : 'N/A'}
+                            </span>
+                        </Card.Meta>
+                        <Card.Meta>
+                            <span className='date'>
+                                # of Ratings: {this.props.book.ratingCount ? this.props.book.ratingCount : 'N/A'}
                             </span>
                         </Card.Meta>
                         <Card.Description>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { deleteMessage } from '../../actions/index.js';
+import { deleteReservedMessage } from '../../actions/index.js';
 import { Comment, Icon } from 'semantic-ui-react';
 
 export class ReservedMessage extends Component {
@@ -10,10 +10,10 @@ export class ReservedMessage extends Component {
     handleDeleteMessage = (e) => {
         e.preventDefault();
         fetch(`http://localhost:3000/api/v1/reserved_messages/${this.props.message.id}`, {method: 'DELETE'})
-            .then(resp => resp.json())
-            .then(data => {
-                this.props.deleteMessage(data.id);
-            });
+        .then(resp => resp.json())
+        .then(data => {
+            this.props.deleteReservedMessage(data.id);
+        });
     };
 
     //parse and format date/time 
@@ -68,4 +68,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, { deleteMessage })(ReservedMessage);
+export default connect(mapStateToProps, { deleteReservedMessage })(ReservedMessage);

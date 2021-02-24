@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addMessage } from '../../actions/index.js';
+import { addReservedMessage } from '../../actions/index.js';
 import ReservedMessage from './ReservedMessage.js';
 import { Button, Comment, Form, Header } from 'semantic-ui-react';
 
@@ -34,7 +34,7 @@ export class ReservedMessages extends Component {
         fetch('http://localhost:3000/api/v1/reserved_messages', reqObj)
         .then(resp => resp.json())
         .then(data => {
-            this.props.addMessage(data, this.props.auth)
+            this.props.addReservedMessage(data, this.props.auth)
         });
         const newMessage = {
             user_id: this.props.auth.id,
@@ -95,4 +95,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps, { addMessage })(ReservedMessages);
+export default connect(mapStateToProps, { addReservedMessage })(ReservedMessages);

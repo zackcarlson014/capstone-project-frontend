@@ -24,7 +24,12 @@ export class AddLibraryBookCard extends Component {
         fetch('http://localhost:3000/api/v1/user_lib_books', reqObj)
         .then(resp => resp.json())
         .then(data => {
-            this.props.addLibBook(book, this.props.auth, data.id, this.props.auth.id);
+            this.props.addLibBook(
+                book, 
+                this.props.auth, 
+                data.id, 
+                this.props.auth.id
+            );
         });
     };
 
@@ -50,10 +55,10 @@ export class AddLibraryBookCard extends Component {
             body: JSON.stringify(newBook)
         };
         fetch('http://localhost:3000/api/v1/books', reqObj)
-            .then(resp => resp.json())
-            .then(newLibBook => {
-                this.handleAddLibraryBook(newLibBook);
-            });
+        .then(resp => resp.json())
+        .then(newLibBook => {
+            this.handleAddLibraryBook(newLibBook);
+        });
     };
 
     render() {
@@ -83,13 +88,23 @@ export class AddLibraryBookCard extends Component {
                 </Card.Content>
                 {this.props.match ? 
                     <Card.Content extra>
-                        <Button as={ Link } exact='true' to={`/books/${this.props.match[0].id}`} fluid color='green'>
+                        <Button 
+                            as={ Link } 
+                            exact='true' 
+                            to={`/books/${this.props.match[0].id}`} 
+                            fluid={true}
+                            color='green'
+                        >
                             View Book
                         </Button>
                     </Card.Content>
                     :
                     <Card.Content extra>
-                        <Button fluid color='blue' onClick={this.handleAddBook}>
+                        <Button 
+                            onClick={this.handleAddBook} 
+                            fluid={true}
+                            color='blue' 
+                        >
                             +Library
                         </Button>
                     </Card.Content>
