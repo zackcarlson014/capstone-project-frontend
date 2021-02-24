@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { markMessagesSeen } from '../../actions/index';
 import NavBar from '../NavBar';
 import MessageItem from './MessageItem';
 import Footer from '../Footer';
@@ -8,18 +9,10 @@ import { Grid, Header, Icon, Button, Loader } from 'semantic-ui-react';
 export class Messages extends Component {
 
     state = {
-        messages: [],
         users: []
     };
 
     componentDidMount() {
-        fetch('http://localhost:3000/api/v1/messages')
-        .then(resp => resp.json())
-        .then(messages => {
-            this.setState({
-                messages
-            });
-        });
         fetch('http://localhost:3000/api/v1/users')
         .then(resp => resp.json())
         .then(users => {
@@ -30,8 +23,8 @@ export class Messages extends Component {
     };
 
     componentWillUnmount() {
-        debugger
-        this.markMessagesSeen(this.state.messages)
+        this.props.markMessagesSeen()
+        this.markMessagesSeen(this.props.messages)
     };
 
     markMessagesSeen = (messages) => {
@@ -56,19 +49,10 @@ export class Messages extends Component {
         };
         fetch(`http://localhost:3000/api/v1/messages/${msg.id}`, reqObj)
         .then(resp => resp.json())
-        .then(message => console.log(message))
-    };
-
-    myMessages = () => {
-        return this.state.messages.filter(m => 
-            m.user_id === this.props.auth.id 
-            || 
-            m.recipient_id === this.props.auth.id
-        );
     };
 
     myMessagesGrouped = () => {
-        return Object.entries(this.myMessages().reduce((rv, i) => {
+        return Object.entries(this.props.messages.reduce((rv, i) => {
             (rv[i['res_book']] = rv[i['res_book']] || []).push(i);
             return rv;
         }, {})).sort((a, b) => 
@@ -97,7 +81,7 @@ export class Messages extends Component {
 
     render() {
         window.scrollTo(0, 0);
-        if (!this.props.auth || !this.state.users || !this.myMessages) {
+        if (!this.props.auth || !this.state.users || !this.props.messages) {
             return (
                 <Grid style={{ height: '99vh' }}>
                     <Loader active />
@@ -131,6 +115,7 @@ export class Messages extends Component {
                                     return <MessageItem 
                                         key={i} 
                                         messageItem={m[1]} 
+                                        resBookId={m[0]}
                                         authId={this.props.auth.id} 
                                         user={this.messageUser(userId)}
                                     />
@@ -147,8 +132,9 @@ export class Messages extends Component {
 
 const mapStateToProps = state => {
     return {
-        auth: state.auth
+        auth: state.auth,
+        messages: state.allMessages
     };
 };
 
-export default connect(mapStateToProps, null)(Messages);
+export default connect(mapStateToProps, { markMessagesSeen })(Messages);

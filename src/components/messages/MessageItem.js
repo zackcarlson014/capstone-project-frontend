@@ -1,6 +1,8 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Grid, Message, Header, Icon } from 'semantic-ui-react'
+import { markMessagesRead } from '../../actions/index';
+import { Grid, Message, Header, Icon } from 'semantic-ui-react';
 
 export class MessageItem extends Component {
 
@@ -29,6 +31,8 @@ export class MessageItem extends Component {
     };
 
     markMessagesRead = (messages) => {
+        const resBookId = parseInt(this.props.resBookId)
+        this.props.markMessagesRead(resBookId)
         messages.filter(m => 
             m.read === false
         ).map(m => {
@@ -50,7 +54,6 @@ export class MessageItem extends Component {
         };
         fetch(`http://localhost:3000/api/v1/messages/${msg.id}`, reqObj)
         .then(resp => resp.json())
-        .then(message => console.log(message))
     };
 
     render() {
@@ -83,12 +86,7 @@ export class MessageItem extends Component {
                                             </Header>
                                         </Grid.Row>
                                         <Grid.Row>
-                                            <Header 
-                                                as='a'
-                                                href={`/users/${this.props.user.id}`} 
-                                                textAlign='center' 
-                                                color='blue'
-                                            >
+                                            <Header textAlign='center' color='blue'>
                                                 {this.props.user.username}
                                             </Header>
                                         </Grid.Row>
@@ -151,4 +149,4 @@ export class MessageItem extends Component {
     };
 };
 
-export default MessageItem;
+export default connect(null, { markMessagesRead })(MessageItem);

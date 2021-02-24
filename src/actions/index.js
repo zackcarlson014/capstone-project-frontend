@@ -200,9 +200,22 @@ export const clearSearch = () => {
     }
 }
 
+export const addMessage = (msg) => {
+    return {
+        type: 'ADD_MESSAGE',
+        msg
+    }
+}
+
 export const markMessagesSeen = () => {
     return {
         type: 'MARK_MESSAGES_SEEN'
     }
 }
 
+export const markMessagesRead = (id) => {
+    return {
+        type: 'MARK_MESSAGES_READ',
+        id
+    }
+}

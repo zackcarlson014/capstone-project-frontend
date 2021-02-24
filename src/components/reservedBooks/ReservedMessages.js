@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addReservedMessage } from '../../actions/index.js';
+import { addReservedMessage, addMessage } from '../../actions/index.js';
 import ReservedMessage from './ReservedMessage.js';
 import { Button, Comment, Form, Header } from 'semantic-ui-react';
 
@@ -55,6 +55,7 @@ export class ReservedMessages extends Component {
         fetch('http://localhost:3000/api/v1/messages', reqObj2)
         .then(resp => resp.json())
         .then(data => {
+            this.props.addMessage(data)
             this.setState({
                 content: ''
             })
@@ -95,4 +96,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps, { addReservedMessage })(ReservedMessages);
+export default connect(mapStateToProps, { addReservedMessage, addMessage })(ReservedMessages);
