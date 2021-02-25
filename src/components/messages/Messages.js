@@ -3,13 +3,15 @@ import { connect } from 'react-redux';
 import { markMessagesSeen } from '../../actions/index';
 import NavBar from '../NavBar';
 import MessageItem from './MessageItem';
+import MessageGroup from './MessageGroup';
 import Footer from '../Footer';
-import { Grid, Header, Icon, Button, Loader } from 'semantic-ui-react';
+import { Grid, Header, Segment, Icon, Button, Loader } from 'semantic-ui-react';
 
 export class Messages extends Component {
 
     state = {
-        users: []
+        users: [],
+        messageGroup: null
     };
 
     componentDidMount() {
@@ -23,13 +25,55 @@ export class Messages extends Component {
     };
 
     componentWillUnmount() {
-        this.props.markMessagesSeen()
+        const user = this.props.auth.id
+        this.props.markMessagesSeen(user)
         this.markMessagesSeen(this.props.messages)
     };
 
+    setMessageGroupView = (groupId) => {
+        this.setState({
+            messageGroup: groupId
+        });
+    };
+
+    setMessageGroupUser = () => {
+        const user = this.props.messages.find(message => 
+           message.res_book === this.state.messageGroup
+           &&
+           message.user_id !== this.props.auth.id
+        )
+        return this.state.users.find(u => u.id === user.user_id)
+    }
+
+    setMessageGroup = (groupId) => {
+        return this.props.messages.filter(message => 
+            message.res_book === groupId).sort((a, b) => 
+            `${
+                b.created_at.slice(0,4) + 
+                b.created_at.slice(5,7) + 
+                b.created_at.slice(8,10) + 
+                b.created_at.slice(11,13) + 
+                b.created_at.slice(14,16) +
+                b.created_at.slice(17,19)
+            }` 
+            - 
+            `${
+                a.created_at.slice(0,4) + 
+                a.created_at.slice(5,7) + 
+                a.created_at.slice(8,10) + 
+                a.created_at.slice(11,13) + 
+                a.created_at.slice(14,16) +
+                a.created_at.slice(17,19)
+            }`
+        );
+    };
+
     markMessagesSeen = (messages) => {
+        const user = this.props.auth.id
         messages.filter(m => 
             m.seen === false
+            &&
+            m.recipient_id === user
         ).map(m => {
             return this.markMessageSeen(m); 
         });
@@ -55,29 +99,48 @@ export class Messages extends Component {
         return Object.entries(this.props.messages.reduce((rv, i) => {
             (rv[i['res_book']] = rv[i['res_book']] || []).push(i);
             return rv;
-        }, {})).sort((a, b) => 
+        }, {})).map(m => m[1].sort((a, b) => 
             `${
-                b[1][b[1].length - 1]['created_at'].slice(0,4) + 
-                b[1][b[1].length - 1]['created_at'].slice(5,7) + 
-                b[1][b[1].length - 1]['created_at'].slice(8,10) + 
-                b[1][b[1].length - 1]['created_at'].slice(11,13) + 
-                b[1][b[1].length - 1]['created_at'].slice(14,16) +
-                b[1][b[1].length - 1]['created_at'].slice(17,19)
-            }` - 
+                b.created_at.slice(0,4) + 
+                b.created_at.slice(5,7) + 
+                b.created_at.slice(8,10) + 
+                b.created_at.slice(11,13) + 
+                b.created_at.slice(14,16) +
+                b.created_at.slice(17,19)
+            }` 
+            - 
             `${
-                a[1][a[1].length - 1]['created_at'].slice(0,4) + 
-                a[1][a[1].length - 1]['created_at'].slice(5,7) + 
-                a[1][a[1].length - 1]['created_at'].slice(8,10) + 
-                a[1][a[1].length - 1]['created_at'].slice(11,13) + 
-                a[1][a[1].length - 1]['created_at'].slice(14,16) +
-                a[1][a[1].length - 1]['created_at'].slice(17,19)
+                a.created_at.slice(0,4) + 
+                a.created_at.slice(5,7) + 
+                a.created_at.slice(8,10) + 
+                a.created_at.slice(11,13) + 
+                a.created_at.slice(14,16) +
+                a.created_at.slice(17,19)
+            }`
+        )).sort((a, b) => 
+            `${
+                b[0]['created_at'].slice(0,4) + 
+                b[0]['created_at'].slice(5,7) + 
+                b[0]['created_at'].slice(8,10) + 
+                b[0]['created_at'].slice(11,13) + 
+                b[0]['created_at'].slice(14,16) +
+                b[0]['created_at'].slice(17,19)
+            }` 
+            -
+            `${
+                a[0]['created_at'].slice(0,4) + 
+                a[0]['created_at'].slice(5,7) + 
+                a[0]['created_at'].slice(8,10) + 
+                a[0]['created_at'].slice(11,13) + 
+                a[0]['created_at'].slice(14,16) +
+                a[0]['created_at'].slice(17,19)
             }`
         );
     };
 
-    messageUser = (i) => {
-        return this.state.users.find(u => u.id === i)
-    }
+    messageUser = (userId) => {
+        return this.state.users.find(u => u.id === userId);
+    };
 
     render() {
         window.scrollTo(0, 0);
@@ -94,7 +157,13 @@ export class Messages extends Component {
                     <Grid style={{ minHeight: '99vh' }}>
                         <Grid.Row></Grid.Row>
                         <Grid.Row verticalAlign='middle'>
-                            <Grid.Column width='7'></Grid.Column>
+                            <Grid.Column width='7' textAlign='center'>
+                                {this.state.messageGroup ? 
+                                <Button icon='list' content='Messages' color='blue' onClick={() => this.setMessageGroupView(null)}/> 
+                                : 
+                                null
+                                }
+                            </Grid.Column>
                             <Grid.Column width='2'>
                                 <Header as='h2' icon style={{color: 'white'}} textAlign="center">
                                     <Icon name='mail' circular />
@@ -107,21 +176,38 @@ export class Messages extends Component {
                                 <Button icon='mail' content='new' color='blue'/>
                             </Grid.Column>
                         </Grid.Row>
-                        <Grid.Row>
-                            <Grid.Column width='2'></Grid.Column>
-                            <Grid.Column width='12'>
-                                {this.myMessagesGrouped().map((m, i) => {
-                                    const userId = m[1][0].user_id === this.props.auth.id ? m[1][0].recipient_id : m[1][0].user_id
-                                    return <MessageItem 
-                                        key={i} 
-                                        messageItem={m[1]} 
-                                        resBookId={m[0]}
-                                        authId={this.props.auth.id} 
-                                        user={this.messageUser(userId)}
-                                    />
-                                })}
-                            </Grid.Column>
-                        </Grid.Row>
+                        {this.state.messageGroup ? 
+                            <Grid.Row>
+                                <Grid.Column width='3'></Grid.Column>
+                                <Grid.Column width='10'>
+                                    <Segment>
+                                        <MessageGroup 
+                                            messageGroup={this.setMessageGroup(this.state.messageGroup)}
+                                            groupUser={this.setMessageGroupUser()}
+                                        />
+                                    </Segment>
+                                </Grid.Column>
+                                <Grid.Column width='3'></Grid.Column>
+                            </Grid.Row>
+                            :
+                            <Grid.Row>
+                                <Grid.Column width='2'></Grid.Column>
+                                <Grid.Column width='12' >
+                                    {this.myMessagesGrouped().map((m, i) => {
+                                        const userId = m[0].user_id === this.props.auth.id ? m[0].recipient_id : m[0].user_id
+                                        return <MessageItem 
+                                            key={i} 
+                                            messageItem={m} 
+                                            resBookId={m[0].res_book}
+                                            authId={this.props.auth.id} 
+                                            user={this.messageUser(userId)}
+                                            setMessageGroupView={this.setMessageGroupView}
+                                        />
+                                    })}
+                                </Grid.Column>
+                                <Grid.Column width='2'></Grid.Column>
+                            </Grid.Row>
+                        }
                     </Grid><br/>
                     <Footer/>
                 </div>

@@ -207,15 +207,17 @@ export const addMessage = (msg) => {
     }
 }
 
-export const markMessagesSeen = () => {
+export const markMessagesSeen = (user) => {
     return {
-        type: 'MARK_MESSAGES_SEEN'
+        type: 'MARK_MESSAGES_SEEN',
+        user
     }
 }
 
-export const markMessagesRead = (id) => {
+export const markMessagesRead = (id, user) => {
     return {
         type: 'MARK_MESSAGES_READ',
-        id
+        id,
+        user
     }
 }

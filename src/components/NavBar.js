@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { logoutUser } from '../actions/auth';
 import { searchField } from '../actions/index';
 import { Dropdown, Icon, Menu, Label, Input } from 'semantic-ui-react';
@@ -46,7 +46,7 @@ export class NavBar extends Component {
             <Menu fluid inverted color='black' style={style}>
                 <Menu.Item
                     header
-                    as={NavLink}
+                    as={Link}
                     to='/profile'
                     // name='home'
                     // active={activeItem === 'home'}
@@ -56,21 +56,21 @@ export class NavBar extends Component {
                 </Menu.Item>
                 <Dropdown item icon='book' simple>
                     <Dropdown.Menu>
-                        <Dropdown.Item as={ NavLink } to='/books'>Public Bookshelf</Dropdown.Item>
-                        <Dropdown.Item as={ NavLink } to='/reserved_books'>My Reserved Books</Dropdown.Item>
+                        <Dropdown.Item as={ Link } to='/books'>Public Bookshelf</Dropdown.Item>
+                        <Dropdown.Item as={ Link } to='/reserved_books'>My Reserved Books</Dropdown.Item>
                         <Dropdown.Item>
                             <Icon name='book' />
                             <span className='text'>Add</span>
                             <Dropdown.Menu>
-                                <Dropdown.Item as={ NavLink } to='/user_lib_books/new'>Library Books</Dropdown.Item>
-                                <Dropdown.Item as={ NavLink } to='/user_wish_books/new'>WishList Books</Dropdown.Item>
+                                <Dropdown.Item as={ Link } to='/user_lib_books/new'>Library Books</Dropdown.Item>
+                                <Dropdown.Item as={ Link } to='/user_wish_books/new'>WishList Books</Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown.Item>
                     </Dropdown.Menu>
                 </Dropdown>
                 <Menu.Item
                     header
-                    as={NavLink}
+                    as={Link}
                     to='/users'
                     // name='home'
                     // active={activeItem === 'home'}
@@ -80,7 +80,7 @@ export class NavBar extends Component {
                 </Menu.Item>
                 <Menu.Item
                     header
-                    as={NavLink}
+                    as={Link}
                     to='/messages'
                     // name='home'
                     // active={activeItem === 'home'}
@@ -102,7 +102,7 @@ export class NavBar extends Component {
                 </Menu.Menu>
                 {this.props.auth ? 
                     <Menu.Item
-                        as={NavLink}
+                        as={Link}
                         to='/login'
                         name='logout'
                         active={activeItem === 'logout'}
@@ -112,7 +112,7 @@ export class NavBar extends Component {
                     </Menu.Item>
                     :
                     <Menu.Item
-                        as={NavLink}
+                        as={Link}
                         to='/login'
                         name='login'
                         active={activeItem === 'login'}

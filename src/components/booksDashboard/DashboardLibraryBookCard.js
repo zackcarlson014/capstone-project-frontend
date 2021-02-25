@@ -116,6 +116,25 @@ export class DashboardLibraryBookCard extends Component {
                     : 
                     null
                 }
+                {this.props.userDash ?
+                <Card.Content extra>
+                    <Button 
+                        as={ Link } 
+                        exact='true' 
+                        to={this.myReservedBook() ? `/reserved_books/${this.myReservedBook().id}` : `/books/${this.props.book.id}`} 
+                        animated='fade' 
+                        icon='eye' 
+                        color='blue'
+                    >
+                        <Button.Content visible>
+                            <Icon name='eye'/>
+                        </Button.Content>
+                        <Button.Content hidden>
+                            View
+                        </Button.Content>
+                    </Button>
+                </Card.Content>
+                :
                 <Card.Content extra>
                     <Button.Group widths='2' >
                         {this.props.pub && !this.reservedBook() ? 
@@ -202,6 +221,7 @@ export class DashboardLibraryBookCard extends Component {
                         </Button>
                     </Button.Group>
                 </Card.Content>
+                }
             </Card>
         );
     };
