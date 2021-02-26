@@ -79,7 +79,13 @@ export class PublicProfile extends Component {
 
     //Library books on Profile User's Currently Reading list
     currentlyReading = () => {
-        const books = this.props.reservedBooks.filter(b => b.user_id === this.props.user.id && b.delivered === true);
+        const books = this.props.reservedBooks.filter(b => 
+            b.user_id === this.props.user.id 
+            && 
+            b.delivered
+            &&
+            !b.completed
+        );
         const libBooks = books.map(b => {
             return this.props.allLibraryBooks.find(book => book[2] === b.user_lib_book_id);
         });

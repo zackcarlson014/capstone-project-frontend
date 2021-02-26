@@ -52,10 +52,10 @@ export const updateReservedBook = (book) => {
     }
 }
 
-export const deleteReservedBook = (id) => {
+export const completeReservedBook = (book) => {
     return {
-        type: 'DELETE_RESERVED_BOOK',
-        id
+        type: 'COMPLETE_RESERVED_BOOK',
+        book
     }
 }
 

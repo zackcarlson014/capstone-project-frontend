@@ -29,26 +29,30 @@ export class MessageGroupItem extends Component {
     render() {
         return (
             <div>
-            <Comment>
-                <Comment.Avatar src={this.props.user.prof_pic_url}/>
-                <Comment.Content>
-                    <Comment.Author 
-                        as={ Link } 
-                        exact='true' 
-                        to={this.props.user.id !== this.props.auth.id ? 
-                            `/users/${this.props.user.id}` 
-                            : 
-                            '/profile'
-                        }
-                    >
-                        {this.props.user.username}
-                    </Comment.Author>
-                    <Comment.Metadata>
-                        <div>{this.dateTime()}</div>
-                    </Comment.Metadata>
-                    <Comment.Text>{this.props.message.content}</Comment.Text>
-                </Comment.Content>
-            </Comment>
+                <Comment>
+                    <Comment.Avatar src={this.props.user.prof_pic_url}/>
+                    <Comment.Content>
+                        <Comment.Author 
+                            as={ Link } 
+                            exact='true' 
+                            to={this.props.user.id !== this.props.auth.id ? 
+                                `/users/${this.props.user.id}` 
+                                : 
+                                '/profile'
+                            }
+                        >
+                            {this.props.user.username}
+                        </Comment.Author>
+                        <Comment.Metadata>
+                            <div>
+                                {this.dateTime()}
+                            </div>
+                        </Comment.Metadata>
+                        <Comment.Text>
+                            {this.props.message.content}
+                        </Comment.Text>
+                    </Comment.Content>
+                </Comment>
             </div>
         );
     };
@@ -57,7 +61,7 @@ export class MessageGroupItem extends Component {
 const mapStateToProps = state => {
     return {
         auth: state.auth
-    }
-}
+    };
+};
 
 export default connect(mapStateToProps, null)(MessageGroupItem);

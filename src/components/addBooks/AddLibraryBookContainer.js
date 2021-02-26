@@ -17,6 +17,7 @@ export class AddLibraryBookContainer extends Component {
             books: [],
             searchField: ''
         }
+        this.bookSearch2 = React.createRef()
     };
 
     //request books from Google Books API based on searchField parameters
@@ -36,6 +37,13 @@ export class AddLibraryBookContainer extends Component {
         this.setState({
             searchField: e.target.value
         });
+    };
+
+    searchAuthor = (author) => {
+        this.setState({
+            searchField: author
+        });
+        // this.bookSearch.current.getWrappedInstance().submit();
     };
 
     //list of Current User's Library books ({book, user, id})
@@ -73,10 +81,10 @@ export class AddLibraryBookContainer extends Component {
                             </Header>
                         </Grid.Row>
                         <Grid.Row>
-                            <BookSearch searchBook={this.searchBook} handleSearch={this.handleSearch}/>
+                            <BookSearch ref={this.bookSearch2} searchField={this.state.searchField} searchBook={this.searchBook} handleSearch={this.handleSearch}/>
                         </Grid.Row>
                         <Grid.Row>
-                            <AddLibraryBookList books={this.state.books} />
+                            <AddLibraryBookList books={this.state.books} searchAuthor={this.searchAuthor}/>
                         </Grid.Row>
                         <Grid.Row>
                             <Header as='h3' icon style={{color: 'white'}} textAlign="center">

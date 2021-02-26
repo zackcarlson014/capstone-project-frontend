@@ -60,7 +60,9 @@ export class Profile extends Component {
         const books = this.props.reservedBooks.filter(b => 
             b.user_id === this.props.auth.id 
             && 
-            b.delivered === true
+            b.delivered
+            &&
+            !b.completed
         );
         const libBooks = books.map(b => {
             return this.props.allLibraryBooks.find(book => 
@@ -72,7 +74,7 @@ export class Profile extends Component {
 
     render() {
         window.scrollTo(0, 0);
-        if (!this.props.auth) {
+        if (!this.props.auth || this.props.reservedBooks === []) {
             return <Grid style={{ height: '99vh' }}><Loader active /></Grid>;
          } else {
             return (

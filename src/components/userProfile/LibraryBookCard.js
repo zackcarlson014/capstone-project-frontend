@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { deleteLibBook, deleteReservedBook } from '../../actions/index';
+import { deleteLibBook, completeReservedBook } from '../../actions/index';
 import { Card, Image, Button, Icon, Header, Modal } from 'semantic-ui-react';
 
 
@@ -31,14 +31,24 @@ export class LibraryBookCard extends Component {
         this.setOpen(false);
     };
 
-    //delete Reserved book from back-end and front-end to remove from currently reading list and add to Library
-    handleAddToLibrary = (e) => {
-        e.preventDefault();
-        fetch(`http://localhost:3000/api/v1/reserved_books/${this.currentlyReadingBook().id}`, {method: 'DELETE'})
-            .then(resp => resp.json())
-            .then(data => {
-                this.props.deleteReservedBook(data.id);
-            });
+    handleCompleted = () => {
+        const reservedBookId = this.currentlyReadingBook().id;
+        const completedBook = {
+            completed: true
+        };
+        const reqObj = {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(completedBook)
+        };
+        fetch(`http://localhost:3000/api/v1/reserved_books/${reservedBookId}`, reqObj)
+        .then(resp => resp.json())
+        .then(resBook => {
+            this.props.completeReservedBook(resBook);
+        });
     };
 
     //determine if Library book is reserved by another User and return Reserved book instance if true
@@ -47,6 +57,8 @@ export class LibraryBookCard extends Component {
             b.user_lib_book_id === this.props.userBookId 
             && 
             b.user_id !== this.props.auth.id
+            && 
+            !b.completed
         );
     };
 
@@ -64,6 +76,8 @@ export class LibraryBookCard extends Component {
             b.user_lib_book_id === this.props.userBookId 
             && 
             b.user_id === this.props.auth.id
+            &&
+            !b.completed
         );
     };
 
@@ -81,7 +95,11 @@ export class LibraryBookCard extends Component {
                     height='300px'
                 />
                 <Card.Content>
-                    <Card.Header>
+                    <Card.Header
+                        as={ Link } 
+                        exact='true' 
+                        to={`/books/${this.props.book.id}`} 
+                    >
                         {this.props.book.title}
                     </Card.Header>
                     <Card.Meta>
@@ -152,7 +170,7 @@ export class LibraryBookCard extends Component {
                                         View
                                     </Button.Content>
                                 </Button>
-                                <Button animated='fade' icon='trash alternate outline' color='green' onClick={this.handleAddToLibrary}>
+                                <Button animated='fade' icon='trash alternate outline' color='green' onClick={this.handleCompleted}>
                                     <Button.Content visible>
                                         <Icon name='book'/>
                                     </Button.Content>
@@ -230,4 +248,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps, { deleteLibBook, deleteReservedBook })(LibraryBookCard);
+export default connect(mapStateToProps, { deleteLibBook, completeReservedBook })(LibraryBookCard);

@@ -82,7 +82,7 @@ export class AddLibraryBookCard extends Component {
                             Published in {this.props.published ? this.props.published.split("-")[0] : '???'}
                         </span>
                     </Card.Meta>
-                    <Card.Description>
+                    <Card.Description as='a' onClick={this.props.author ? () => this.props.searchAuthor(this.props.author[0]) : null}>
                         By: {this.props.author ? this.props.author[0] : 'unknown'}
                     </Card.Description>
                 </Card.Content>

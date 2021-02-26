@@ -38,6 +38,7 @@ export class BookShowPage extends Component {
             user_id: this.props.auth.id,
             user_lib_book_id: libBookId,
             delivered: false,
+            completed: false
         };
         const reqObj = {
             method: 'POST',
@@ -103,8 +104,16 @@ export class BookShowPage extends Component {
                         <Grid.Row>
                             <Grid.Column width='2'></Grid.Column>
                             <Grid.Column width='8'>
-                                <Segment compact>
-                                    <Image src={this.props.book.image} alt='' size='medium'/>
+                                <Segment 
+                                    compact
+                                    as='a' 
+                                    onClick={()=> window.open(this.props.book.previewLink, "_blank")}
+                                >
+                                    <Image 
+                                        src={this.props.book.image} 
+                                        alt='' 
+                                        size='medium'
+                                    />
                                 </Segment><br/>
                             </Grid.Column>
                             {this.libraryUsers().length !== 0 ?

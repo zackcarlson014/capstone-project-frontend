@@ -5,7 +5,7 @@ import NavBar from '../NavBar';
 import MessageItem from './MessageItem';
 import MessageGroup from './MessageGroup';
 import Footer from '../Footer';
-import { Grid, Header, Segment, Icon, Button, Loader } from 'semantic-ui-react';
+import { Grid, Header, Segment, Icon, Image, Button, Loader } from 'semantic-ui-react';
 
 export class Messages extends Component {
 
@@ -13,6 +13,22 @@ export class Messages extends Component {
         users: [],
         messageGroup: null
     };
+
+    searchableMessages = () => {
+        let matchedMessages = [];
+        if (this.props.searchField) {
+            const messages = this.props.messages.filter(m => 
+                m.content.toLowerCase().includes(this.props.searchField.toLowerCase()))
+            if (messages.length !== 0) {
+                matchedMessages = messages
+            } else {
+                matchedMessages = this.props.messages
+            }
+        } else {
+            matchedMessages = this.props.messages
+        }
+        return matchedMessages
+    }
 
     componentDidMount() {
         fetch('http://localhost:3000/api/v1/users')
@@ -31,6 +47,7 @@ export class Messages extends Component {
     };
 
     setMessageGroupView = (groupId) => {
+        this.markMessagesSeen(this.props.messages)
         this.setState({
             messageGroup: groupId
         });
@@ -49,21 +66,21 @@ export class Messages extends Component {
         return this.props.messages.filter(message => 
             message.res_book === groupId).sort((a, b) => 
             `${
-                b.created_at.slice(0,4) + 
-                b.created_at.slice(5,7) + 
-                b.created_at.slice(8,10) + 
-                b.created_at.slice(11,13) + 
-                b.created_at.slice(14,16) +
-                b.created_at.slice(17,19)
-            }` 
-            - 
-            `${
                 a.created_at.slice(0,4) + 
                 a.created_at.slice(5,7) + 
                 a.created_at.slice(8,10) + 
                 a.created_at.slice(11,13) + 
                 a.created_at.slice(14,16) +
                 a.created_at.slice(17,19)
+            }` 
+            - 
+            `${
+                b.created_at.slice(0,4) + 
+                b.created_at.slice(5,7) + 
+                b.created_at.slice(8,10) + 
+                b.created_at.slice(11,13) + 
+                b.created_at.slice(14,16) +
+                b.created_at.slice(17,19)
             }`
         );
     };
@@ -96,7 +113,7 @@ export class Messages extends Component {
     };
 
     myMessagesGrouped = () => {
-        return Object.entries(this.props.messages.reduce((rv, i) => {
+        return Object.entries(this.searchableMessages().reduce((rv, i) => {
             (rv[i['res_book']] = rv[i['res_book']] || []).push(i);
             return rv;
         }, {})).map(m => m[1].sort((a, b) => 
@@ -142,9 +159,18 @@ export class Messages extends Component {
         return this.state.users.find(u => u.id === userId);
     };
 
+    reservedBook = () => {
+        const resBook = this.props.reservedBooks.find(b => 
+            b.id === this.state.messageGroup
+        );
+        return this.props.allLibraryBooks.find(b => 
+            b[2] === resBook.user_lib_book_id
+        )
+    };
+
     render() {
         window.scrollTo(0, 0);
-        if (!this.props.auth || !this.state.users || !this.props.messages) {
+        if (!this.props.auth || !this.state.users || !this.props.messages ) {
             return (
                 <Grid style={{ height: '99vh' }}>
                     <Loader active />
@@ -159,22 +185,53 @@ export class Messages extends Component {
                         <Grid.Row verticalAlign='middle'>
                             <Grid.Column width='7' textAlign='center'>
                                 {this.state.messageGroup ? 
-                                <Button icon='list' content='Messages' color='blue' onClick={() => this.setMessageGroupView(null)}/> 
-                                : 
-                                null
+                                    <Button 
+                                        icon='list' 
+                                        content='Messages' 
+                                        color='blue' 
+                                        onClick={() => this.setMessageGroupView(null)}
+                                    /> 
+                                    : 
+                                    null
                                 }
                             </Grid.Column>
                             <Grid.Column width='2'>
-                                <Header as='h2' icon style={{color: 'white'}} textAlign="center">
+                                <Header 
+                                    as='h2' 
+                                    icon 
+                                    style={{color: 'white'}} 
+                                    textAlign="center"
+                                >
                                     <Icon name='mail' circular />
                                     <Header.Content>
-                                        Your Messages
+                                        {this.state.messageGroup ? 
+                                            `Reserved Book (${this.state.messageGroup}): Delivered` 
+                                            : 
+                                            'Your Messages'
+                                        }
                                     </Header.Content>
                                 </Header>
                             </Grid.Column>
-                            <Grid.Column width='7' textAlign='center'>
-                                <Button icon='mail' content='new' color='blue'/>
-                            </Grid.Column>
+                            {this.state.messageGroup ?
+                                <Grid.Column width='7' textAlign='center'>
+                                    <Grid.Row>
+                                        <Image 
+                                            src={this.reservedBook()[0].image} 
+                                            centered 
+                                            size='tiny'
+                                        />
+                                    </Grid.Row><br/>
+                                    <Grid.Row>
+                                        <Header style={{color: 'white'}}>
+                                            {this.reservedBook()[0].title}
+                                        </Header>
+                                        </Grid.Row>
+                                </Grid.Column>
+                                :
+                                <Grid.Column width='7' textAlign='center'>
+                                    <Button icon='mail' content='new' color='blue'/>   
+                                </Grid.Column>
+                            }
                         </Grid.Row>
                         {this.state.messageGroup ? 
                             <Grid.Row>
@@ -184,6 +241,7 @@ export class Messages extends Component {
                                         <MessageGroup 
                                             messageGroup={this.setMessageGroup(this.state.messageGroup)}
                                             groupUser={this.setMessageGroupUser()}
+                                            groupId={this.state.messageGroup}
                                         />
                                     </Segment>
                                 </Grid.Column>
@@ -219,7 +277,10 @@ export class Messages extends Component {
 const mapStateToProps = state => {
     return {
         auth: state.auth,
-        messages: state.allMessages
+        messages: state.allMessages,
+        allLibraryBooks: state.allLibraryBooks,
+        reservedBooks: state.reservedBooks,
+        searchField: state.searchField
     };
 };
 

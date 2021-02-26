@@ -41,7 +41,8 @@ export class ReservedBookShowPage extends Component {
     addLibraryBookHistory = () => {
         const newLibraryHistoryItem = {
             user_id: this.props.book[2].user.id,
-            user_lib_book_id: this.props.book[2].id
+            user_lib_book_id: this.props.book[2].id,
+            res_book: this.props.book[3]
         };
         const reqObj = {
             method: 'POST',

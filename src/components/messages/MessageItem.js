@@ -82,11 +82,34 @@ export class MessageItem extends Component {
         const resBookId = this.props.resBookId
         return this.props.reservedBooks.find(book => 
             book.id === resBookId
+            &&
+            book.completed === false
+        );
+    };
+
+    libraryReservedBook = () => {
+        return this.props.allLibraryBooks.find(b => 
+            b[2] === this.reservedBook().user_lib_book_id
+        );
+    };
+
+    completedReservedBook = () => {
+        const resBookId = this.props.resBookId
+        return this.props.reservedBooks.find(book => 
+            book.id === resBookId
+            &&
+            book.completed === true
+        );
+    };
+
+    completedLibraryReservedBook = () => {
+        return this.props.allLibraryBooks.find(b => 
+            b[2] === this.completedReservedBook().user_lib_book_id
         );
     };
 
     render() {
-        if (!this.props.messageItem || !this.props.user) {
+        if (!this.props.messageItem || !this.props.user || !this.props.auth) {
             return null;
         } else {
             return (
@@ -94,10 +117,26 @@ export class MessageItem extends Component {
                     <Message>
                         <Grid 
                             verticalAlign='middle'
-                            as={this.reservedBook() ? Link : null} 
-                            exact={this.reservedBook() ? true : null} 
-                            to={this.reservedBook() ? `/reserved_books/${this.props.messageItem[0].res_book}` : null}
-                            onClick={this.reservedBook() ? () => this.markMessagesRead(this.props.messageItem) : () => this.props.setMessageGroupView(this.props.resBookId)}   
+                            as={this.reservedBook() ? 
+                                Link 
+                                : 
+                                null
+                            } 
+                            exact={this.reservedBook() ? 
+                                true 
+                                : 
+                                null
+                            } 
+                            to={this.reservedBook() ? 
+                                `/reserved_books/${this.props.messageItem[0].res_book}` 
+                                : 
+                                null
+                            }
+                            onClick={this.reservedBook() ? 
+                                () => this.markMessagesRead(this.props.messageItem) 
+                                : 
+                                () => this.props.setMessageGroupView(this.props.resBookId)
+                            }   
                         >
                             {this.receivedMessage() ?
                                 <Grid.Row>
@@ -123,17 +162,69 @@ export class MessageItem extends Component {
                                     <Grid.Column width='2'>
                                         <Icon name='arrow circle right' color='blue'/>
                                     </Grid.Column>
-                                    <Grid.Column width={this.reservedBook() ? '8' : '9'}>
-                                        <Header as='h4' textAlign='left'>
-                                            {this.props.messageItem[0].content}
-                                        </Header>
+                                    <Grid.Column width='6'>
+                                        <Grid.Row>
+                                            <Header as='h5' textAlign='left' color='light grey'>
+                                               latest message
+                                            </Header>
+                                        </Grid.Row><br/>
+                                        <Grid.Row>
+                                            <Header as='h4' textAlign='left'>
+                                                {this.props.messageItem[0].content}
+                                            </Header>
+                                        </Grid.Row>
                                     </Grid.Column>
-                                    {this.reservedBook() ? <Grid.Column><Image src={this.reservedBook().image}/></Grid.Column> : null}
-                                    <Grid.Column width='2'>
-                                        <Header color='grey'>
-                                            {this.dateTime()}
-                                        </Header>
-                                    </Grid.Column>
+                                    {this.reservedBook() ? 
+                                        <Grid.Column width='3' textAlign='center'>
+                                            <Grid.Row>
+                                                <Image 
+                                                    centered={true} 
+                                                    src={this.libraryReservedBook()[0].image} 
+                                                    size='tiny'
+                                                />
+                                            </Grid.Row><br/>
+                                            <Grid.Row>
+                                                <Header as='h5' textAlign='center'>
+                                                    {this.libraryReservedBook()[0].title}
+                                                </Header>
+                                            </Grid.Row>
+                                        </Grid.Column> 
+                                        : 
+                                        <Grid.Column width='3' textAlign='center'>
+                                            <Grid.Row>
+                                                <Image 
+                                                    centered={true} 
+                                                    src={this.completedLibraryReservedBook()[0].image} 
+                                                    size='tiny'
+                                                />
+                                            </Grid.Row><br/>
+                                            <Grid.Row>
+                                                <Header as='h5' textAlign='center'>
+                                                    {this.completedLibraryReservedBook()[0].title}
+                                                </Header>
+                                            </Grid.Row>
+                                        </Grid.Column> 
+                                    }
+                                    {this.reservedBook() ?
+                                        <Grid.Column width='2'>
+                                            <Header color='grey' textAlign='center'>
+                                                {this.dateTime()}
+                                            </Header>
+                                        </Grid.Column>
+                                        :
+                                        <Grid.Column width='2'>
+                                            <Grid.Row>
+                                                <Header color='grey' textAlign='center'>
+                                                    {this.dateTime()}
+                                                </Header>
+                                            </Grid.Row>
+                                            <Grid.Row>
+                                                <Header color='red' textAlign='center'>
+                                                    delivered book
+                                                </Header>
+                                            </Grid.Row>
+                                        </Grid.Column>
+                                    }
                                 </Grid.Row>
                                 :
                                 <Grid.Row>
@@ -155,18 +246,59 @@ export class MessageItem extends Component {
                                         </Grid.Row>
                                     </Grid.Column>
                                     <Grid.Column width='2'>
-                                        <Icon name='arrow left' color='grey'/>
+                                        <Icon name='arrow circle left' color='grey'/>
                                     </Grid.Column>
-                                    <Grid.Column width='9'>
-                                        <Header as='h4' textAlign='left'>
-                                            {this.props.messageItem[0].content}
-                                        </Header>
+                                    <Grid.Column width='6'>
+                                        <Grid.Row>
+                                            <Header as='h5' textAlign='left' color='light grey'>
+                                               latest message
+                                            </Header>
+                                        </Grid.Row><br/>
+                                        <Grid.Row>
+                                            <Header as='h4' textAlign='left'>
+                                                {this.props.messageItem[0].content}
+                                            </Header>
+                                        </Grid.Row>
                                     </Grid.Column>
-                                    <Grid.Column width='2'>
-                                        <Header color='grey'>
-                                            {this.dateTime()}
-                                        </Header>
-                                    </Grid.Column>
+                                    {this.reservedBook() ? 
+                                        <Grid.Column width='3' textAlign='center'>
+                                            <Grid.Row>
+                                                <Image centered={true} src={this.libraryReservedBook()[0].image} size='tiny'/>
+                                            </Grid.Row><br/>
+                                            <Grid.Row>
+                                                <Header as='h5' textAlign='center'>{this.libraryReservedBook()[0].title}</Header>
+                                            </Grid.Row>
+                                        </Grid.Column> 
+                                        : 
+                                        <Grid.Column width='3' textAlign='center'>
+                                            <Grid.Row>
+                                                <Image centered={true} src={this.completedLibraryReservedBook()[0].image} size='tiny'/>
+                                            </Grid.Row><br/>
+                                            <Grid.Row>
+                                                <Header as='h5' textAlign='center'>{this.completedLibraryReservedBook()[0].title}</Header>
+                                            </Grid.Row>
+                                        </Grid.Column> 
+                                    }
+                                    {this.reservedBook() ?
+                                        <Grid.Column width='2'>
+                                            <Header color='grey' textAlign='center'>
+                                                {this.dateTime()}
+                                            </Header>
+                                        </Grid.Column>
+                                        :
+                                        <Grid.Column width='2'>
+                                            <Grid.Row>
+                                                <Header color='grey' textAlign='center'>
+                                                    {this.dateTime()}
+                                                </Header>
+                                            </Grid.Row><br/>
+                                            <Grid.Row>
+                                                <Header color='red' textAlign='center'>
+                                                    delivered book
+                                                </Header>
+                                            </Grid.Row>
+                                        </Grid.Column>
+                                    }
                                 </Grid.Row>
                             }      
                         </Grid>
@@ -180,7 +312,8 @@ export class MessageItem extends Component {
 const mapStateToProps = state => {
     return {
         auth: state.auth,
-        reservedBooks: state.reservedBooks
+        reservedBooks: state.reservedBooks,
+        allLibraryBooks: state.allLibraryBooks
     }
 }
 

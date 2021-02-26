@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { showBook, addWishBook, deleteReservedBook } from '../../actions/index';
+import { showBook, addWishBook, completeReservedBook } from '../../actions/index';
 import Carousel from 'semantic-ui-carousel-react';
 import { Grid, Header, Image, Button, Icon } from  'semantic-ui-react';
 
@@ -31,11 +31,23 @@ export class CurrentlyReadingCarousel extends Component {
         });
     };
 
-    handleAddToLibrary = (id) => {
-        fetch(`http://localhost:3000/api/v1/reserved_books/${id}`, {method: 'DELETE'})
+    handleCompleted = (resBookId) => {
+        const reservedBookId = resBookId;
+        const completedBook = {
+            completed: true
+        };
+        const reqObj = {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(completedBook)
+        };
+        fetch(`http://localhost:3000/api/v1/reserved_books/${reservedBookId}`, reqObj)
         .then(resp => resp.json())
-        .then(reservedBook => {
-            this.props.deleteReservedBook(reservedBook.id);
+        .then(resBook => {
+            this.props.completeReservedBook(resBook);
         });
     };
 
@@ -64,7 +76,7 @@ export class CurrentlyReadingCarousel extends Component {
                                 <Button.Content hidden>View</Button.Content>
                         </Button>
                         {!this.props.pub ? 
-                            <Button fluid animated='fade' icon='book' color='green' onClick={() => this.handleAddToLibrary(this.reservedBookId(b))}>
+                            <Button fluid animated='fade' icon='book' color='green' onClick={() => this.handleCompleted(this.reservedBookId(b))}>
                                 <Button.Content visible><Icon name='book'/></Button.Content>
                                 <Button.Content hidden>+Library</Button.Content>
                             </Button>
@@ -112,4 +124,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps, { showBook, addWishBook, deleteReservedBook })(CurrentlyReadingCarousel);
+export default connect(mapStateToProps, { showBook, addWishBook, completeReservedBook })(CurrentlyReadingCarousel);

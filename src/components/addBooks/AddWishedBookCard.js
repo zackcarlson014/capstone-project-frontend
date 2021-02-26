@@ -72,7 +72,7 @@ export class AddWishedBookCard extends Component {
                     </Card.Header>
                     <Card.Meta>
                         <span className='date'>
-                            Published in {this.props.published ? this.props.published : '???'}
+                            Avg Rating: {this.props.averageRating ? this.props.averageRating : '???'}
                         </span>
                     </Card.Meta>
                     <Card.Description as='a' onClick={this.props.author ? () => this.props.searchAuthor(this.props.author[0]) : null}>

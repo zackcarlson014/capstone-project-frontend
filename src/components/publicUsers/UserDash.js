@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import DashboardLibraryBooks from '../booksDashboard/DashboardLibraryBooks';
 import { Grid, Header, Button, Icon, Popup, Image } from 'semantic-ui-react';
 
@@ -10,16 +11,35 @@ export class UserDash extends Component {
                 <Grid.Row> 
                     <Grid.Column width='1'></Grid.Column>
                     <Grid.Column width='4' verticalAlign='middle'>
-                        <Grid.Row>
-                        <Popup
-                            content={this.props.user.bio}
-                            key={this.props.user.username}
-                            header={this.props.user.username}
-                            trigger={<Image src={this.props.user.prof_pic_url} avatar size='large'/>}
-                        />
-                        </Grid.Row><br/>
-                        <Grid.Row>
-                            <Header as='h3' style={{color: 'white'}}>{this.props.user.username}</Header>
+                        <Grid.Row
+                            as={ Link } 
+                            exact='true' 
+                            to={`/users/${this.props.user.id}`} 
+                        >
+                            <Popup
+                                content={this.props.user.bio}
+                                key={this.props.user.username}
+                                header={this.props.user.username}
+                                trigger={
+                                    <Image  
+                                        src={this.props.user.prof_pic_url} 
+                                        avatar 
+                                        size='large'
+                                    />
+                                }
+                            />
+                        </Grid.Row><br/><br/>
+                        <Grid.Row
+                            as={ Link } 
+                            exact='true' 
+                            to={`/users/${this.props.user.id}`} 
+                        >
+                            <Header 
+                                as='h3' 
+                                style={{color: 'white'}}
+                            >
+                                {this.props.user.username}
+                            </Header>
                         </Grid.Row><br/>
                         <Grid.Row>
                             <Button color='purple'><Icon name='heart'/>Friend</Button>

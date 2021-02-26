@@ -8,13 +8,22 @@ export const reservedBooks = (state=[], action) => {
         case 'ADD_RESERVED_BOOK':
             return [...state, action.newReservedBook]
         case 'UPDATE_RESERVED_BOOK':
-        updatedBooks = state.map(b => {
-            if (b.id === action.book.id) {
-                return action.book
-            } else {
-                return b
-            }
-        })
+            updatedBooks = state.map(b => {
+                if (b.id === action.book.id) {
+                    return action.book
+                } else {
+                    return b
+                }
+            })
+            return updatedBooks
+        case 'COMPLETE_RESERVED_BOOK':
+            updatedBooks = state.map(b => {
+                if (b.id === action.book.id) {
+                    return action.book
+                } else {
+                    return b
+                }
+            })
             return updatedBooks
         case 'DELETE_RESERVED_BOOK':
             updatedBooks = state.filter(b => b.id !== action.id)

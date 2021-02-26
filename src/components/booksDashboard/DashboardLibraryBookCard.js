@@ -11,6 +11,7 @@ export class DashboardLibraryBookCard extends Component {
             user_id: this.props.auth.id,
             user_lib_book_id: this.props.userBookId,
             delivered: false,
+            completed: false
         };
         const reqObj = {
             method: 'POST',
@@ -34,7 +35,14 @@ export class DashboardLibraryBookCard extends Component {
     };
 
     reservedBook = () => {
-        return this.props.reservedBooks.find(b => b.user_lib_book_id === this.props.userBookId && b.user_id !== this.props.user.id);
+        return this.props.reservedBooks.find(b => 
+            b.user_lib_book_id === this.props.userBookId 
+            && 
+            b.user_id !== this.props.user.id
+            &&
+            !b.completed 
+
+        );
     };
 
     reservedBookUser = () => {

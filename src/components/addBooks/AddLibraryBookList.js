@@ -16,6 +16,7 @@ export class AddLibraryBookList extends Component {
                                 if (this.props.allLibraryBooks.find(book => book[0].title === b.volumeInfo.title && book[1].id === this.props.auth.id)) {
                                     return <AddLibraryBookCard 
                                         key={i} 
+                                        searchAuthor={this.props.searchAuthor} 
                                         image={b.volumeInfo.imageLinks ? 
                                             b.volumeInfo.imageLinks.thumbnail 
                                             : 
@@ -38,6 +39,7 @@ export class AddLibraryBookList extends Component {
                                 } else {
                                     return <AddLibraryBookCard 
                                         key={i} 
+                                        searchAuthor={this.props.searchAuthor} 
                                         image={b.volumeInfo.imageLinks ? 
                                             b.volumeInfo.imageLinks.thumbnail 
                                             : 
