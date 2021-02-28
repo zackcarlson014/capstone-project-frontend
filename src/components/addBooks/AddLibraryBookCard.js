@@ -57,9 +57,20 @@ export class AddLibraryBookCard extends Component {
         fetch('http://localhost:3000/api/v1/books', reqObj)
         .then(resp => resp.json())
         .then(newLibBook => {
+            console.log(newLibBook)
             this.handleAddLibraryBook(newLibBook);
         });
     };
+
+    bookMatch = () => {
+        return this.props.allLibraryBooks.filter(b => 
+            b[1].id === this.props.auth.id
+        ).find(b => {
+            return b[0].title === this.props.title
+            &&
+            b[0].author === this.props.author[0]
+        })
+    }
 
     render() {
         return (
@@ -86,12 +97,12 @@ export class AddLibraryBookCard extends Component {
                         By: {this.props.author ? this.props.author[0] : 'unknown'}
                     </Card.Description>
                 </Card.Content>
-                {this.props.match ? 
+                {this.bookMatch() ? 
                     <Card.Content extra>
                         <Button 
                             as={ Link } 
                             exact='true' 
-                            to={`/books/${this.props.match[0].id}`} 
+                            to={`/books/${this.bookMatch()[0].id}`} 
                             fluid={true}
                             color='green'
                         >
@@ -116,7 +127,8 @@ export class AddLibraryBookCard extends Component {
 
 const mapStateToProps = state => {
     return {
-        auth: state.auth
+        auth: state.auth,
+        allLibraryBooks: state.allLibraryBooks
     };
 };
 

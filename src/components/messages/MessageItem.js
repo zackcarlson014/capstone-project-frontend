@@ -83,7 +83,7 @@ export class MessageItem extends Component {
         return this.props.reservedBooks.find(book => 
             book.id === resBookId
             &&
-            book.completed === false
+            book.delivered === false
         );
     };
 
@@ -98,7 +98,7 @@ export class MessageItem extends Component {
         return this.props.reservedBooks.find(book => 
             book.id === resBookId
             &&
-            book.completed === true
+            book.delivered === true
         );
     };
 

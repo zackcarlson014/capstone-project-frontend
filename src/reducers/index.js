@@ -12,6 +12,7 @@ import myLikes from './myLikes.js'
 import allComments from './allComments.js'
 import allReservedMessages from './allReservedMessages.js'
 import allMessages from './allMessages.js'
+import friends from './friends.js'
 import searchField from './searchField.js'
 
 export default combineReducers({
@@ -26,5 +27,6 @@ export default combineReducers({
     myLikes,
     allComments,
     allReservedMessages,
+    friends,
     searchField
 })

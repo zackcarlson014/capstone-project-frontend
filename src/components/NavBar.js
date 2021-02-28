@@ -11,6 +11,22 @@ export class NavBar extends Component {
         activeItem: ''
     };
 
+    userDropdownTrigger = () => {
+        return (
+            <span>
+                <Icon name='user' style={{color: 'white'}}/> 
+                {this.props.friends && this.pendingFriendRequests() !== 0  ?
+                    <Label color='red' size='mini' circular={true} textAlign='center'>
+                        {this.pendingFriendRequests()}
+                    </Label>
+                    : 
+                    null
+                }
+            </span>
+        )
+    }
+
+
     handleSearch = (e) => {
         this.props.searchField(e.target.value);
     };
@@ -27,6 +43,14 @@ export class NavBar extends Component {
             m.seen === false
         ).length;
     }; 
+
+    pendingFriendRequests = () => {
+        return this.props.friends.filter(f => 
+            f.pending === true 
+            && 
+            f.invitee_id === this.props.auth.id
+        ).length;
+    }
  
 
     // handleItemClick = (e, { name }) => {
@@ -54,7 +78,7 @@ export class NavBar extends Component {
                 >
                     <Icon name='home' />MyBrary
                 </Menu.Item>
-                <Dropdown item icon='book' simple>
+                <Dropdown item icon='book' simple >
                     <Dropdown.Menu>
                         <Dropdown.Item as={ Link } to='/books'>Public Bookshelf</Dropdown.Item>
                         <Dropdown.Item as={ Link } to='/reserved_books'>My Reserved Books</Dropdown.Item>
@@ -68,7 +92,7 @@ export class NavBar extends Component {
                         </Dropdown.Item>
                     </Dropdown.Menu>
                 </Dropdown>
-                <Menu.Item
+                {/* <Menu.Item
                     header
                     as={Link}
                     to='/users'
@@ -77,7 +101,37 @@ export class NavBar extends Component {
                     // onClick={this.handleItemClick}
                 >
                     <Icon name='user'/>
-                </Menu.Item>
+                    {this.props.friends && this.pendingFriendRequests() !== 0  ?
+                        <Label color='red' size='mini' circular={true} textAlign='center'>
+                          {this.pendingFriendRequests()}
+                        </Label>
+                        : 
+                        null
+                    }
+                </Menu.Item> */}
+                <Dropdown item simple icon trigger={this.userDropdownTrigger()}>
+                    <Dropdown.Menu>
+                        <Dropdown.Item 
+                            as={ Link } 
+                            to='/users'
+                        >
+                            MrBrarian Dashboard
+                        </Dropdown.Item>
+                        <Dropdown.Item 
+                            as={ Link } 
+                            to='/friends'
+                        >
+                            {'Friends '}
+                            {this.props.friends && this.pendingFriendRequests() !== 0  ?
+                                <Label color='red' size='mini' circular={true} textAlign='center'>
+                                    {this.pendingFriendRequests()}
+                                </Label>
+                                : 
+                                null
+                            }                
+                        </Dropdown.Item>
+                    </Dropdown.Menu>
+                </Dropdown>
                 <Menu.Item
                     header
                     as={Link}
@@ -97,7 +151,14 @@ export class NavBar extends Component {
                 </Menu.Item>
                 <Menu.Menu position='right'>
                     <Menu.Item>
-                        <Input style={{color: 'white'}} onChange={this.handleSearch} className='nav' transparent icon='search' placeholder='Search...' />
+                        <Input 
+                            style={{color: 'white'}} 
+                            onChange={this.handleSearch} 
+                            className='nav' 
+                            transparent 
+                            icon='search' 
+                            placeholder='Search...' 
+                        />
                     </Menu.Item>
                 </Menu.Menu>
                 {this.props.auth ? 
@@ -129,7 +190,8 @@ export class NavBar extends Component {
 const mapStateToProps = state => {
     return {
         auth: state.auth,
-        messages: state.allMessages
+        messages: state.allMessages,
+        friends: state.friends
     };
 };
 

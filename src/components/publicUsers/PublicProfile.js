@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { showUser, removeShowUser } from '../../actions/index';
+import { showUser, removeShowUser, approveFriendRequest } from '../../actions/index';
 import NavBar from '../NavBar';
 import CurrentlyReadingCarousel from '../carousels/CurrentlyReadingCarousel';
 import DashboardLibraryBooks from '../booksDashboard/DashboardLibraryBooks';
 import DashboardWishedBooks from '../booksDashboard/DashboardWishedBooks';
 import Footer from '../Footer';
-import { Grid, Header, Icon, Segment, Image, Loader } from 'semantic-ui-react';
+import { Grid, Header, Icon, Segment, Button, Image, Loader } from 'semantic-ui-react';
 
 export class PublicProfile extends Component {
 
@@ -23,6 +23,27 @@ export class PublicProfile extends Component {
         this.props.removeShowUser();
     };
 
+    approveFriend = () => {
+        const requestId = this.currentUserFriend().id
+        const approvedRequest = {
+            pending: false
+        };
+        const reqObj = {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(approvedRequest)
+        };
+        fetch(`http://localhost:3000/api/v1/friends/${requestId}`, reqObj)
+        .then(resp => resp.json())
+        .then(friendReq => {
+            console.log(friendReq)
+            this.props.approveFriendRequest(friendReq.id)
+        });
+    };
+    
     //list of all Library Books, searchField conditional results
     libraryBooks = () => {
         if (this.props.searchField)  {
@@ -59,7 +80,12 @@ export class PublicProfile extends Component {
     
     //Library books that belong to Profile User
     userLibraryBooks = () => {
-        return this.libraryBooks().filter(book => book[1].id === this.props.user.id);
+        const currentlyReadingIds = this.currentlyReading().map(b => b.id)
+        return this.libraryBooks().filter(book => 
+            book[1].id === this.props.user.id
+            &&
+            !currentlyReadingIds.includes(book[0].id)
+        );
     };
 
     //Wish List books that belong to Profile User
@@ -92,6 +118,39 @@ export class PublicProfile extends Component {
         return libBooks.map(b => b[0]);
     };
 
+    //determine if pending friend request exists between currentUser and this user
+    currentUserFriendRequest = () => {
+        const userId = this.props.user.id;
+        return this.props.friends.find(f => 
+            f.inviter_id === userId
+            && 
+            f.pending === true
+        );
+    };
+
+    //determine if user and currentUser are friends
+    currentUserFriend = () => {
+        const userId = this.props.user.id;
+        return this.props.friends.find(f =>
+            (
+                f.inviter_id === userId
+                ||
+                f.invitee_id === userId
+            )
+            && 
+            f.pending === false
+        );
+    }
+
+    friendRequested = () => {
+        const userId = this.props.user.id;
+        return this.props.friends.find(f => 
+            f.invitee_id === userId
+            && 
+            f.pending === true
+        );
+    }
+
     render() {
         window.scrollTo(0, 0);
         if (!this.props.user) {
@@ -106,7 +165,7 @@ export class PublicProfile extends Component {
                         <Grid.Row>
                             <Grid.Column width='1'></Grid.Column>
                             <Grid.Column width='5'>
-                                <Grid textAlign='centered'>
+                                <Grid textAlign='center'>
                                     <Grid.Row>
                                         <Header as='h1' style={{color: 'white'}}>
                                             {this.props.user.username}
@@ -115,6 +174,72 @@ export class PublicProfile extends Component {
                                     <Grid.Row>
                                         <Image avatar src={this.props.user.prof_pic_url} alt='' size='large'/>
                                     </Grid.Row>
+                                    {this.currentUserFriendRequest() ?
+                                        <Grid.Row>
+                                            <Grid.Column width='4'></Grid.Column>
+                                            <Grid.Column width='8'>
+                                            <Button fluid color='purple' animated='fade'>
+                                                <Button.Content visible>
+                                                    <Icon name='heart'/>
+                                                    Accept
+                                                </Button.Content>
+                                                <Button.Content hidden>
+                                                    Pending Request
+                                                </Button.Content>
+                                            </Button>
+                                            </Grid.Column>
+                                            <Grid.Column width='4'></Grid.Column>
+                                        </Grid.Row>
+                                        :
+                                        null
+                                    }
+                                    {this.currentUserFriend() ?
+                                        <Grid.Row textAlign='center'>
+                                            <Grid.Column width='4'></Grid.Column>
+                                            <Grid.Column width='8'>
+                                                <Button fluid disabled color='purple'>
+                                                    <Icon name='heart' style={{color: 'white'}}/>
+                                                    Friends
+                                                </Button>
+                                            </Grid.Column>
+                                            <Grid.Column width='4'></Grid.Column>
+                                        </Grid.Row>
+                                        :
+                                        null
+                                    }
+                                    {this.friendRequested() ?
+                                        <Grid.Row textAlign='center'>
+                                            <Grid.Column width='4'></Grid.Column>
+                                            <Grid.Column width='8'>
+                                                <Button fluid disabled color='purple'>
+                                                    <Icon name='heart' style={{color: 'white'}}/>
+                                                    Friends
+                                                </Button>
+                                            </Grid.Column>
+                                            <Grid.Column width='4'></Grid.Column>
+                                        </Grid.Row>
+                                        :
+                                        null
+                                    }
+                                    {!this.currentUserFriendRequest() && !this.currentUserFriend() && !this.friendRequested() ?
+                                        <Grid.Row>
+                                            <Grid.Column width='4'></Grid.Column>
+                                            <Grid.Column width='8'>
+                                            <Button fluid color='purple' animated='fade'>
+                                                <Button.Content visible>
+                                                    <Icon name='heart'/>
+                                                    Friend
+                                                </Button.Content>
+                                                <Button.Content hidden>
+                                                    Send Request
+                                                </Button.Content>
+                                            </Button>
+                                            </Grid.Column>
+                                            <Grid.Column width='4'></Grid.Column>
+                                        </Grid.Row>
+                                        :
+                                        null
+                                    }
                                     <Grid.Row>
                                         <Segment color='blue' textAlign="center" compact>
                                             {this.props.user.bio}
@@ -170,8 +295,9 @@ const mapStateToProps = state => {
         reservedBooks: state.reservedBooks,
         allLibraryBooks: state.allLibraryBooks,
         allWishedBooks: state.allWishedBooks,
+        friends: state.friends,
         searchField: state.searchField
     };
 };
 
-export default connect(mapStateToProps, { showUser, removeShowUser })(PublicProfile);
+export default connect(mapStateToProps, { showUser, removeShowUser, approveFriendRequest })(PublicProfile);

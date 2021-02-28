@@ -17,6 +17,11 @@ p {
   color: white !important;
 }
 
+.nav > input::selection {
+  color: white;
+  background: grey;
+}
+
 .ui.container {
   overflow: auto;
   white-space: nowrap;

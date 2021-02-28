@@ -16,6 +16,7 @@ import AddWishedBookContainer from './components/addBooks/AddWishedBookContainer
 import ReservedBooks from './components/reservedBooks/ReservedBooks.js'
 import ReservedBookShowPage from './components/reservedBooks/ReservedBookShowPage.js'
 import Messages from './components/messages/Messages.js'
+import Friends from './components/friends/Friends.js'
 import './App.css';
 
 export class App extends Component {
@@ -31,7 +32,6 @@ export class App extends Component {
               Authorization: `Bearer ${token}`
           }
       }
-
       fetch('http://localhost:3000/api/v1/current_user', reqObj)
       .then(resp => resp.json())
       .then(data => {
@@ -58,6 +58,7 @@ export class App extends Component {
           <Route exact path='/reserved_books/:id' component={ReservedBookShowPage}/>
           <Route exact path='/reserved_books' component={ReservedBooks}/>
           <Route exact path='/messages' component={Messages}/>
+          <Route exact path='/friends' component={Friends}/>
         </Switch>
       </div>
 

@@ -221,3 +221,17 @@ export const markMessagesRead = (id, user) => {
         user
     }
 }
+
+export const addFriendRequest = (friendReq) => {
+    return {
+        type: 'ADD_FRIEND_REQUEST',
+        friendReq
+    }
+}
+
+export const approveFriendRequest = (id) => {
+    return {
+        type: 'APPROVE_FRIEND_REQUEST',
+        id
+    }
+}

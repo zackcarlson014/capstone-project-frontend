@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { clearSearch } from '../../actions/index';
 import NavBar from '../NavBar';
 import UserDash from './UserDash';
 import Footer from '../Footer';
@@ -8,7 +9,8 @@ import { Grid, Loader, Header, Icon } from 'semantic-ui-react';
 export class UsersDashboard extends Component {
 
     state = {
-        users: []
+        users: [],
+        noMatch: false
     };
 
     componentWillMount() {
@@ -20,20 +22,60 @@ export class UsersDashboard extends Component {
             });
         });
     };
+    
+    componentWillUnmount() {
+        this.props.clearSearch()
+    }
 
     fellowMyBrarians = () => {
         let matchedUsers = [];
-        const allUsers = this.state.users.filter(u => u.id !== this.props.auth.id);
+        let allSortedUsers = [];
+        let userRequestIds = [];
+        let friendIds = [];
+        let allUserRequests = [];
+        let allFriends = [];
+        let allOtherUsers = [];
+        const users = this.state.users.filter(u => u.id !== this.props.auth.id)
+        userRequestIds = this.props.friends.filter(f => 
+            f.inviter_id !== this.props.auth.id && f.pending === true
+        ).map(f => 
+            f.inviter_id
+        );
+        friendIds = this.props.friends.filter(f => 
+           f.pending === false 
+        ).map(f => {
+            return f.inviter_id === this.props.auth.id ? f.invitee_id : f.inviter_id;
+        });
+        allUserRequests = users.filter(u => {
+            return userRequestIds.includes(u.id)
+        });
+        allFriends = users.filter(u => {
+            return friendIds.includes(u.id)
+        });
+        allOtherUsers = users.filter(u => 
+            !userRequestIds.includes(u.id) && !friendIds.includes(u.id)
+        );
+        allSortedUsers.push(...allUserRequests, ...allFriends, ...allOtherUsers)
         if (this.props.searchField)  {
-            const users = this.state.users.filter(u => 
-                u.username.toLowerCase().includes(this.props.searchField.toLowerCase()));
-            if (users.length !== 0) {
-                matchedUsers = users;
+            let sortedUsers = []
+            const userRequests = users.filter(u => 
+                u.username.toLowerCase().includes(this.props.searchField.toLowerCase())
+                &&
+                userRequestIds.includes(u.id)
+            );
+            const otherUsers = users.filter(u => 
+                u.username.toLowerCase().includes(this.props.searchField.toLowerCase())
+                &&
+                !userRequestIds.includes(u.id)
+            );
+            sortedUsers.push(...userRequests, ...otherUsers)
+            if (sortedUsers.length !== 0) {
+                matchedUsers = sortedUsers;
             } else {
-                matchedUsers = allUsers;
+                matchedUsers = allSortedUsers;
             }; 
         } else {
-            matchedUsers = allUsers;
+            matchedUsers = allSortedUsers;
         };
         return matchedUsers;
     };
@@ -43,7 +85,7 @@ export class UsersDashboard extends Component {
     };
 
     render() {
-        if (!this.props.auth) {
+        if (!this.props.auth && !this.state.users) {
             return <Grid style={{ height: '99vh' }}><Loader active /></Grid>;
         } else {
             return (
@@ -61,6 +103,15 @@ export class UsersDashboard extends Component {
                             </Header>
                         </Grid.Row>
                         <Grid.Row></Grid.Row>
+                        {this.state.noMatch ?
+                            <Grid.Row>
+                                <Header as='h3' color='red' textAlign='center'>
+                                    No MyBrarians match your search
+                                </Header>
+                            </Grid.Row>
+                            :
+                            null
+                        }
                     </Grid>
                     {this.fellowMyBrarians().map(u =>
                         <UserDash user={u} myBrarianLibraryBooks={this.myBrarianLibraryBooks}/>   
@@ -76,8 +127,9 @@ const mapStateToProps = state => {
     return {
         auth: state.auth,
         allLibraryBooks: state.allLibraryBooks,
+        friends: state.friends,
         searchField: state.searchField
     };
 };
 
-export default connect(mapStateToProps, null)(UsersDashboard);
+export default connect(mapStateToProps, { clearSearch })(UsersDashboard);
