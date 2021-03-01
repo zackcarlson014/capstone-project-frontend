@@ -28,7 +28,7 @@ export class FriendRequestItem extends Component {
     };
 
     render() {
-        if (!this.props.user) {
+        if (!this.props.requestObjects && !this.props.user) {
             return <Grid style={{ height: '99vh' }}><Loader active /></Grid>;
         } else {
             return (

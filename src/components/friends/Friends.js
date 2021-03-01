@@ -45,15 +45,20 @@ export class Friends extends Component {
     };
 
     currentUserFriends = () => {
-        const userIds = this.props.friends.map(f => {
+        let friends = [];
+        let friendIds = [];
+        friendIds = this.props.friends.filter(f => 
+            f.pending === false
+        ).map(f => {
             return f.inviter_id === this.props.auth.id ? f.invitee_id : f.inviter_id;
         });
-        return this.searchableUsers().filter(u => userIds.includes(u.id))
+        friends = this.searchableUsers().filter(u => friendIds.includes(u.id));
+        return friends;
     };
 
     friendLibraryBooks = (id) => {
         return this.props.allLibraryBooks.filter(b => b[1].id === id);
-    }
+    };
 
     pendingFriendRequestObjects = () => {
         return this.props.friends.filter(f => 
@@ -64,7 +69,7 @@ export class Friends extends Component {
             return {
                 request: f,
                 user: this.state.users.find(u => u.id === f.inviter_id)
-            }
+            };
         });
     };
 
@@ -80,32 +85,36 @@ export class Friends extends Component {
     render() {
         window.scrollTo(0, 0);
         if (!this.props.auth) {
-            return <Grid style={{ height: '99vh' }}><Loader active /></Grid>;
+            return <Grid style={{ height: '80vh' }}><Loader active /></Grid>;
         } else {
             return (
                 <div className='App'>
                     <NavBar/><br/>
-                    <Grid textAlign='center' style={{ minHeight: '99vh' }}>
+                    <Grid textAlign='center' style={this.pendingFriendRequestObjects().length !== 0 ? { minHeight: '99vh' } : null}>
                         <Grid.Row></Grid.Row>
                         <Grid.Row></Grid.Row>
-                        <Grid.Row>
-                            <Header as='h1' icon style={{color: 'white'}} textAlign='center'>
-                                <Icon name='user' circular />
-                                <Header.Content>
-                                    Pending Requests
-                                </Header.Content>
-                            </Header>
-                        </Grid.Row>
-                        <Grid.Row></Grid.Row>
-                        <Grid.Row>
-                            {this.pendingFriendRequestObjects().length !== 0 ?
-                                <FriendRequests requestObjects={this.pendingFriendRequestObjects()}/>
-                                :
-                                null
-                            } 
-                        </Grid.Row><br/>
-                        <Grid.Row></Grid.Row>
-                        <Grid.Row></Grid.Row>
+                        {this.pendingFriendRequestObjects().length !== 0 ?
+                            <Grid.Row>
+                                <Grid.Column width='10'>
+                                    <Grid.Row></Grid.Row>
+                                    <Grid.Row>
+                                        <Header as='h1' icon style={{color: 'white'}} textAlign='center'>
+                                            <Icon name='user' circular />
+                                            <Header.Content>
+                                                Pending Requests
+                                            </Header.Content>
+                                        </Header><br/>
+                                    </Grid.Row>
+                                    <Grid.Row></Grid.Row>
+                                    <Grid.Row>
+                                        <FriendRequests requestObjects={this.pendingFriendRequestObjects()}/><br/>
+                                    </Grid.Row>  
+                                    <Grid.Row></Grid.Row>
+                                </Grid.Column>
+                            </Grid.Row>
+                            :
+                            null
+                        }
                         <Grid.Row>
                             <Header as='h1' icon style={{color: 'white'}} textAlign='center'>
                                 <Icon name='user' circular />
