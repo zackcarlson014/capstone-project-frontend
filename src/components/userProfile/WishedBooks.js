@@ -9,6 +9,13 @@ export class WishedBooks extends Component {
         activePage: 1 
     };
 
+    //matching serach returns initial activePage state value
+    componentDidMount() {
+        this.setState({ 
+            activePage: 1
+        });
+    }
+
     //set state's activePage to integer of page clicked
     handlePaginationChange = (e, { activePage }) => {
         this.setState({ 
@@ -33,8 +40,17 @@ export class WishedBooks extends Component {
 
     //all Wish List books that belong to current user
     myWishedBooks = () => {
-        return this.props.books.filter(book => 
+        const myBooks = this.props.allWishedBooks.filter(book => 
             book[1].id === this.props.auth.id);
+        if (this.props.searchField)  {
+            return myBooks.filter(b => 
+                b[0].title.toLowerCase().includes(this.props.searchField.toLowerCase()) 
+                || 
+                b[0].author.toLowerCase().includes(this.props.searchField.toLowerCase())
+            );
+        } else {
+            return myBooks;
+        }; 
     };
 
     //all Library books that belong to users other than current user
@@ -68,9 +84,26 @@ export class WishedBooks extends Component {
                                 <div className='ui eight centered cards'>
                                     {this.myWishedBooks().slice(this.bookIndex(), this.bookIndex() + 8).map((wishBook, i) => {
                                         if (this.libraryBooks().find(b => b[0].id === wishBook[0].id)) {
-                                            return <WishedBookCard key={i} book={wishBook[0]} user={wishBook[1]} userBookId={wishBook[2]} deleteBookIndex={this.deleteBookIndex} match={this.libraryMatch(wishBook)}/>
+                                            return (
+                                                <WishedBookCard 
+                                                    key={i} 
+                                                    book={wishBook[0]} 
+                                                    user={wishBook[1]} 
+                                                    userBookId={wishBook[2]} 
+                                                    deleteBookIndex={this.deleteBookIndex} 
+                                                    match={this.libraryMatch(wishBook)}
+                                                />
+                                            )
                                         } else {
-                                            return <WishedBookCard key={i} book={wishBook[0]} user={wishBook[1]} userBookId={wishBook[2]} deleteBookIndex={this.deleteBookIndex}/>
+                                            return (
+                                                <WishedBookCard 
+                                                    key={i} 
+                                                    book={wishBook[0]} 
+                                                    user={wishBook[1]} 
+                                                    userBookId={wishBook[2]} 
+                                                    deleteBookIndex={this.deleteBookIndex}
+                                                />
+                                            )
                                         }
                                     })}
                                 </div>
@@ -82,7 +115,11 @@ export class WishedBooks extends Component {
                         <Grid.Row>
                             <Grid.Column>
                                 <Header as='h3' style={{color: 'white'}} textAlign="center">
-                                    {this.props.searchField ? "No Books Match Your Search" : "Your WishList Bookshelf is Current Empty"}
+                                    {this.props.searchField ? 
+                                        "No Books Match Your Search" 
+                                        : 
+                                        "Your WishList Bookshelf is Current Empty"
+                                    }
                                 </Header>
                                 {this.props.searchField ? 
                                     null 
@@ -115,9 +152,9 @@ export class WishedBooks extends Component {
 
 const mapStateToProps = state => {
     return {
+        auth: state.auth,
         allWishedBooks: state.allWishedBooks,
         allLibraryBooks: state.allLibraryBooks,
-        auth: state.auth,
         searchField: state.searchField
     };
 };

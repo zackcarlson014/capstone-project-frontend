@@ -10,6 +10,13 @@ export class LibraryBooks extends Component {
         activePage: 1 
     };
 
+    //matching serach returns initial activePage state value
+    componentDidMount() {
+        this.setState({ 
+            activePage: 1
+        });
+    }
+
     //set state's activePage to integer of page clicked
     handlePaginationChange = (e, { activePage }) => {
         this.setState({ 
@@ -42,9 +49,18 @@ export class LibraryBooks extends Component {
 
     //all Library books that belong to current user
     myLibraryBooks = () => {
-        return this.props.books.filter(book => 
+        const myBooks = this.props.allLibraryBooks.filter(book => 
             book[1].id === this.props.auth.id
         );
+        if (this.props.searchField)  {
+            return myBooks.filter(b => 
+                b[0].title.toLowerCase().includes(this.props.searchField.toLowerCase()) 
+                || 
+                b[0].author.toLowerCase().includes(this.props.searchField.toLowerCase())
+            );
+        } else {
+            return myBooks;
+        };  
     };
 
     //all Wish List books that belong to users other than current user
@@ -65,10 +81,29 @@ export class LibraryBooks extends Component {
                                 <div className='ui eight centered cards'>
                                     {this.myLibraryBooks().slice(this.bookIndex(), this.bookIndex() + 8).map((libBook, i) => {
                                         if (this.wishedBooks().find(b => b[0].id === libBook[0].id)) {
-                                            return <LibraryBookCard key={i} book={libBook[0]} user={libBook[1]} userBookId={libBook[2]} originalUser={libBook[3]} deleteBookIndex={this.deleteBookIndex} match={true}/>
+                                            return (
+                                                <LibraryBookCard 
+                                                    key={i} 
+                                                    book={libBook[0]} 
+                                                    user={libBook[1]} 
+                                                    userBookId={libBook[2]} 
+                                                    originalUser={libBook[3]} 
+                                                    deleteBookIndex={this.deleteBookIndex} 
+                                                    match={true}
+                                                />
+                                            );
                                         } else {
-                                            return <LibraryBookCard key={i} book={libBook[0]} user={libBook[1]} userBookId={libBook[2]} originalUser={libBook[3]} deleteBookIndex={this.deleteBookIndex}/>
-                                        }
+                                            return (
+                                                <LibraryBookCard 
+                                                    key={i} 
+                                                    book={libBook[0]} 
+                                                    user={libBook[1]} 
+                                                    userBookId={libBook[2]} 
+                                                    originalUser={libBook[3]} 
+                                                    deleteBookIndex={this.deleteBookIndex}
+                                                />
+                                            );
+                                        };
                                     })}
                                 </div>
                             </Grid.Column>
@@ -88,7 +123,8 @@ export class LibraryBooks extends Component {
                             : 
                             <Grid.Row>
                                 <Header as='h4' style={{color: 'white'}} textAlign="center">
-                                    <Icon name='heart'/>Search for Books You'd Like to Donate
+                                    <Icon name='heart'/>
+                                    Search for Books You'd Like to Donate
                                 </Header>
                             </Grid.Row>
                         }
@@ -97,7 +133,12 @@ export class LibraryBooks extends Component {
                 <Grid textAlign='center'>
                     <Grid.Row>
                         <Segment color='blue' compact={true}>
-                            <Pagination color='blue' activePage={this.state.activePage} onPageChange={this.handlePaginationChange} totalPages={this.paginationCount()}/>
+                            <Pagination 
+                                color='blue' 
+                                activePage={this.state.activePage} 
+                                onPageChange={this.handlePaginationChange} 
+                                totalPages={this.paginationCount()}
+                            />
                         </Segment>
                     </Grid.Row>
                     <Grid.Row></Grid.Row>
@@ -110,9 +151,9 @@ export class LibraryBooks extends Component {
 
 const mapStateToProps = state => {
     return {
+        auth: state.auth,
         allLibraryBooks: state.allLibraryBooks,
         allWishedBooks: state.allWishedBooks,
-        auth: state.auth,
         searchField: state.searchField
     };
 };

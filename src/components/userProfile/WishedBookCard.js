@@ -42,14 +42,23 @@ export class WishedBookCard extends Component {
             <Card color='blue'>
                 <Image as={ Link } exact='true' to={`/books/${this.props.book.id}`} src={this.props.book.image ? this.props.book.image : 'https://www.pngfind.com/pngs/m/216-2160526_jpg-royalty-free-library-3-books-clipart-book.png'} wrapped ui={false} width='300px' height='300px'/>
                 <Card.Content>
-                    <Card.Header as={ Link } exact='true' to={`/books/${this.props.book.id}`}>{this.props.book.title}</Card.Header>
+                    <Card.Header 
+                        as={ Link } 
+                        exact='true' 
+                        to={`/books/${this.props.book.id}`}>{this.props.book.title}
+                    </Card.Header>
                     <Card.Meta>
-                        <span className='date'>Published in {this.props.book.published_date ? this.props.book.published_date : 2020}</span>
+                        <span className='date'>
+                            Published in {this.props.book.published_date ? 
+                                this.props.book.published_date 
+                                : 
+                                2020
+                            }
+                        </span>
                     </Card.Meta>
                     <Card.Description>
                         {this.props.book.author}
                     </Card.Description>
-
                 </Card.Content>
                 {this.props.match && !this.reservedBook() ? 
                     <Card.Content extra textAlign="center">
@@ -68,15 +77,15 @@ export class WishedBookCard extends Component {
                             <Button.Content hidden>View</Button.Content>
                         </Button>
                         <Modal
-                        onClose={() => this.setOpen(false)}
-                        onOpen={() => this.setOpen(true)}
-                        open={this.state.open}
-                        trigger={
-                            <Button animated='fade' icon='trash alternate outline' color='red'>
-                                <Button.Content visible><Icon name='trash alternate outline'/></Button.Content>
-                                <Button.Content hidden>Delete</Button.Content>
-                            </Button>
-                        }
+                            onClose={() => this.setOpen(false)}
+                            onOpen={() => this.setOpen(true)}
+                            open={this.state.open}
+                            trigger={
+                                <Button animated='fade' icon='trash alternate outline' color='red'>
+                                    <Button.Content visible><Icon name='trash alternate outline'/></Button.Content>
+                                    <Button.Content hidden>Delete</Button.Content>
+                                </Button>
+                            }
                         >
                             <Modal.Header>{this.props.book.title} - {this.props.book.author}</Modal.Header>
                             <Modal.Content image>
@@ -104,9 +113,9 @@ export class WishedBookCard extends Component {
                     </Button.Group>
                 </Card.Content>
             </Card>
-        )
-    }
-}
+        );
+    };
+};
 
 const mapStateToProps = state => {
     return {

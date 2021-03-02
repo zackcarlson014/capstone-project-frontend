@@ -21,30 +21,30 @@ export class Profile extends Component {
     };
 
     //list of all Library Books, searchField conditional results
-    libraryBooks = () => {
-        if (this.props.searchField)  {
-            return this.props.allLibraryBooks.filter(b => 
-                b[0].title.toLowerCase().includes(this.props.searchField.toLowerCase()) 
-                || 
-                b[0].author.toLowerCase().includes(this.props.searchField.toLowerCase())
-            );
-        } else {
-            return this.props.allLibraryBooks;
-        };   
-    };
+    // libraryBooks = () => {
+    //     if (this.props.searchField)  {
+    //         return this.props.allLibraryBooks.filter(b => 
+    //             b[0].title.toLowerCase().includes(this.props.searchField.toLowerCase()) 
+    //             || 
+    //             b[0].author.toLowerCase().includes(this.props.searchField.toLowerCase())
+    //         );
+    //     } else {
+    //         return this.props.allLibraryBooks;
+    //     };   
+    // };
 
     //list of all WishList Books, searchField conditional results
-    wishedBooks = () => {
-        if (this.props.searchField)  {
-            return this.props.allWishedBooks.filter(b => 
-                b[0].title.toLowerCase().includes(this.props.searchField.toLowerCase()) 
-                || 
-                b[0].author.toLowerCase().includes(this.props.searchField.toLowerCase())
-            );
-        } else {
-            return this.props.allWishedBooks;
-        };   
-    };
+    // wishedBooks = () => {
+    //     if (this.props.searchField)  {
+    //         return this.props.allWishedBooks.filter(b => 
+    //             b[0].title.toLowerCase().includes(this.props.searchField.toLowerCase()) 
+    //             || 
+    //             b[0].author.toLowerCase().includes(this.props.searchField.toLowerCase())
+    //         );
+    //     } else {
+    //         return this.props.allWishedBooks;
+    //     };   
+    // };
 
     //number of my Library Books - prop for UserCard component
     bookCount = () => {
@@ -106,9 +106,17 @@ export class Profile extends Component {
                     <Grid>
                         <Grid.Row>
                             <Grid.Column textAlign="center">
-                                <Button as={ Link } exact='true' to={'/user_lib_books/new'} animated='fade' icon='book' color='blue'>
+                                <Button 
+                                    as={ Link } 
+                                    exact='true' 
+                                    to={'/user_lib_books/new'} 
+                                    animated='fade' 
+                                    icon='book' 
+                                    color='blue'
+                                >
                                     <Button.Content visible>
-                                        <Icon name='book'/> +Library
+                                        <Icon name='book'/> 
+                                        +Library
                                     </Button.Content>
                                     <Button.Content hidden>
                                         Search Books
@@ -118,7 +126,7 @@ export class Profile extends Component {
                         </Grid.Row>
                         <Grid.Row></Grid.Row>
                     </Grid>
-                    <LibraryBooks books={this.libraryBooks()}/><br/>
+                    <LibraryBooks/><br/>
                     <Header as='h2' icon style={{color: 'white'}} textAlign="center">
                         <Icon name='book' circular />
                         <Header.Content>
@@ -128,9 +136,17 @@ export class Profile extends Component {
                     <Grid>
                         <Grid.Row>
                             <Grid.Column textAlign="center">
-                                <Button as={ Link } exact='true' to={'/user_wish_books/new'} animated='fade' icon='book' color='blue'>
+                                <Button 
+                                    as={ Link } 
+                                    exact='true' 
+                                    to={'/user_wish_books/new'} 
+                                    animated='fade' 
+                                    icon='book' 
+                                    color='blue'
+                                >
                                     <Button.Content visible>
-                                        <Icon name='book'/> +WishList
+                                        <Icon name='book'/> 
+                                        +WishList
                                     </Button.Content>
                                     <Button.Content hidden>
                                         Search Books
@@ -140,7 +156,7 @@ export class Profile extends Component {
                         </Grid.Row>
                         <Grid.Row></Grid.Row>
                     </Grid>
-                    <WishedBooks books={this.wishedBooks()}/><br/>
+                    <WishedBooks/><br/>
                     <Footer/>
                 </div>
             );
@@ -153,8 +169,7 @@ const mapStateToProps = state => {
         auth: state.auth,
         reservedBooks: state.reservedBooks,
         allLibraryBooks: state.allLibraryBooks,
-        allWishedBooks: state.allWishedBooks,
-        searchField: state.searchField
+        allWishedBooks: state.allWishedBooks
     };
 };
 

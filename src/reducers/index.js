@@ -21,12 +21,12 @@ export default combineReducers({
     allWishedBooks,
     reservedBooks,
     allMessages,
+    friends,
+    myLikes,
     showBook,
     showReservedBook,
     showUser,
-    myLikes,
     allComments,
     allReservedMessages,
-    friends,
     searchField
 })
