@@ -56,9 +56,15 @@ export class CurrentlyReadingCarousel extends Component {
     };
     
     reservedBookId = (b) => {
-        const libBook = this.props.allLibraryBooks.find(book => book[0].id === b.id);
+        const libBook = this.props.allLibraryBooks.find(book => 
+            book[0].id === b.id
+        );
         if (libBook) {
-            const resBook = this.props.reservedBooks.find(book => book.user_id === this.props.auth.id && book.user_lib_book_id === libBook[2]);
+            const resBook = this.props.reservedBooks.find(book => 
+                book.user_id === this.props.auth.id 
+                && 
+                book.user_lib_book_id === libBook[2]
+            );
             return resBook.id;
         };
     };
@@ -68,31 +74,80 @@ export class CurrentlyReadingCarousel extends Component {
             return {render: () => {
                 return (
                     <Grid.Column width='2'>
-                        <Header textAlign='center' color='blue'><Icon name='book'/>Currently Reading</Header>
-                        <Image as={ Link } exact='true' to={`/books/${b.id}`} src={b.image} alt='' fluid/><br/>
+                        <Header 
+                            textAlign='center' 
+                            color='blue'
+                        >
+                            <Icon name='book'/>
+                            Currently Reading
+                        </Header>
+                        <Image 
+                            as={ Link } 
+                            exact='true' 
+                            to={`/books/${b.id}`} 
+                            src={b.image} 
+                            alt='' 
+                            fluid
+                        /><br/>
                         <Button.Group widths='2'>
-                        <Button as={ Link } exact='true' to={`/books/${b.id}`} fluid animated='fade' icon='eye' color='blue'>
-                                <Button.Content visible><Icon name='eye'/></Button.Content>
-                                <Button.Content hidden>View</Button.Content>
+                        <Button 
+                            as={ Link } 
+                            exact='true' 
+                            to={`/books/${b.id}`} 
+                            fluid 
+                            animated='fade' 
+                            icon={true} 
+                            color='blue'
+                        >
+                                <Button.Content visible>
+                                    <Icon name='eye'/>
+                                </Button.Content>
+                                <Button.Content hidden>
+                                    View
+                                </Button.Content>
                         </Button>
                         {!this.props.pub ? 
-                            <Button fluid animated='fade' icon='book' color='green' onClick={() => this.handleCompleted(this.reservedBookId(b))}>
-                                <Button.Content visible><Icon name='book'/></Button.Content>
-                                <Button.Content hidden>+Library</Button.Content>
+                            <Button 
+                                fluid 
+                                animated='fade' 
+                                icon={true} 
+                                color='green' 
+                                onClick={() => this.handleCompleted(this.reservedBookId(b))}
+                            >
+                                <Button.Content visible>
+                                    <Icon name='book'/>
+                                </Button.Content>
+                                <Button.Content hidden>
+                                    +Library
+                                </Button.Content>
                             </Button>
                             :
                             null
                         }
                         {this.props.pub && !this.isWishedBook(b) ?
-                        <Button fluid animated='fade' icon='book' color='green' onClick={() => this.handleAddWishedBook(b)}>
-                                <Button.Content visible><Icon name='book'/></Button.Content>
-                                <Button.Content hidden>+WishList</Button.Content>
-                        </Button>
-                        : 
-                        null
+                            <Button 
+                                fluid 
+                                animated='fade' 
+                                icon={true} 
+                                color='green' 
+                                onClick={() => this.handleAddWishedBook(b)}
+                            >
+                                    <Button.Content visible>
+                                        <Icon name='book'/>
+                                    </Button.Content>
+                                    <Button.Content hidden>
+                                        +WishList
+                                    </Button.Content>
+                            </Button>
+                            : 
+                            null
                         }
                         </Button.Group>
-                        {this.props.books.length !== 1 ? <br/> : null}
+                        {this.props.books.length !== 1 ? 
+                            <br/> 
+                            : 
+                            null
+                        }
                     </Grid.Column>
                 );
             }};
@@ -100,15 +155,23 @@ export class CurrentlyReadingCarousel extends Component {
     };
 
     render() {
-        if (this.reservedBookId)
+        // if (this.reservedBookId)
         return (
             <div style={{textAlign: 'center'}}>
                 <Carousel
-                    elements  =  {  this.findElements()  }
-                    duration  ={this.props.books.length !== 1 ? 10000 : null}
-                    animation  ='slide left'
-                    showNextPrev  =  {false}
-                    showIndicators  = {this.props.books.length !== 1 ? true : false}
+                    elements={this.findElements()}
+                    duration ={this.props.books.length !== 1 ? 
+                        10000 
+                        : 
+                        undefined
+                    }
+                    animation='slide left'
+                    showNextPrev={false}
+                    showIndicators={this.props.books.length !== 1 ? 
+                        true 
+                        : 
+                        undefined
+                    }
                 />
             </div>
         );

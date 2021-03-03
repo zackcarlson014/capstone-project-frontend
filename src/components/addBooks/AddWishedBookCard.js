@@ -75,19 +75,40 @@ export class AddWishedBookCard extends Component {
                             Avg Rating: {this.props.averageRating ? this.props.averageRating : '???'}
                         </span>
                     </Card.Meta>
-                    <Card.Description as='a' onClick={this.props.author ? () => this.props.searchAuthor(this.props.author[0]) : null}>
-                        By: {this.props.author ? this.props.author[0] : 'unknown'}
+                    <Card.Description 
+                        as='a' 
+                        onClick={this.props.author ? 
+                            () => this.props.searchAuthor(this.props.author[0]) 
+                            : 
+                            null
+                        }
+                    >
+                        By: {this.props.author ? 
+                            this.props.author[0] 
+                            : 
+                            'unknown'
+                        }
                     </Card.Description>
                 </Card.Content>
                 {this.props.match ?
                     <Card.Content extra>
-                        <Button as={ Link } exact='true' to={`/books/${this.props.match[0].id}`} fluid color='green'>
+                        <Button 
+                            as={ Link } 
+                            exact='true' 
+                            to={`/books/${this.props.match[0].id}`} 
+                            fluid 
+                            color='green'
+                        >
                             View Book
                         </Button>
                     </Card.Content>
                     :
                     <Card.Content extra>
-                        <Button fluid color='blue' onClick={this.handleAddBook}>
+                        <Button 
+                            fluid 
+                            color='blue' 
+                            onClick={this.handleAddBook}
+                        >
                             +WishList
                         </Button>
                     </Card.Content>

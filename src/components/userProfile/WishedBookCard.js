@@ -40,7 +40,20 @@ export class WishedBookCard extends Component {
     render() {
         return (
             <Card color='blue'>
-                <Image as={ Link } exact='true' to={`/books/${this.props.book.id}`} src={this.props.book.image ? this.props.book.image : 'https://www.pngfind.com/pngs/m/216-2160526_jpg-royalty-free-library-3-books-clipart-book.png'} wrapped ui={false} width='300px' height='300px'/>
+                <Image 
+                    as={ Link } 
+                    exact='true' 
+                    to={`/books/${this.props.book.id}`} 
+                    src={this.props.book.image ? 
+                        this.props.book.image 
+                        : 
+                        'https://www.pngfind.com/pngs/m/216-2160526_jpg-royalty-free-library-3-books-clipart-book.png'
+                    } 
+                    wrapped={true} 
+                    ui={false} 
+                    width='300px' 
+                    height='300px'
+                />
                 <Card.Content>
                     <Card.Header 
                         as={ Link } 
@@ -62,7 +75,12 @@ export class WishedBookCard extends Component {
                 </Card.Content>
                 {this.props.match && !this.reservedBook() ? 
                     <Card.Content extra textAlign="center">
-                        <Header as='h5' icon color='green' textAlign="center">
+                        <Header 
+                        as='h5' 
+                        icon={true}
+                        color='green' 
+                        textAlign='center'
+                        >
                             <Icon name='check' circular/>
                             <Header.Content>Match</Header.Content>
                         </Header>
@@ -72,18 +90,36 @@ export class WishedBookCard extends Component {
                 }
                 <Card.Content extra>
                     <Button.Group widths='2'>
-                        <Button as={ Link } exact='true' to={`/books/${this.props.book.id}`} animated='fade' color='blue'>
-                            <Button.Content visible><Icon name='eye'/></Button.Content>
-                            <Button.Content hidden>View</Button.Content>
+                        <Button 
+                            as={ Link } 
+                            exact='true' 
+                            to={`/books/${this.props.book.id}`} 
+                            animated='fade' 
+                            color='blue'
+                        >
+                            <Button.Content visible>
+                                <Icon name='eye'/>
+                            </Button.Content>
+                            <Button.Content hidden>
+                                View
+                            </Button.Content>
                         </Button>
                         <Modal
                             onClose={() => this.setOpen(false)}
                             onOpen={() => this.setOpen(true)}
                             open={this.state.open}
                             trigger={
-                                <Button animated='fade' icon='trash alternate outline' color='red'>
-                                    <Button.Content visible><Icon name='trash alternate outline'/></Button.Content>
-                                    <Button.Content hidden>Delete</Button.Content>
+                                <Button 
+                                    animated='fade' 
+                                    icon={true}
+                                    color='red'
+                                >
+                                    <Button.Content visible>
+                                        <Icon name='trash alternate outline'/>
+                                    </Button.Content>
+                                    <Button.Content hidden>
+                                        Delete
+                                    </Button.Content>
                                 </Button>
                             }
                         >

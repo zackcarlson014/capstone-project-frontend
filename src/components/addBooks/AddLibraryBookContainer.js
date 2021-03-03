@@ -81,10 +81,20 @@ export class AddLibraryBookContainer extends Component {
                             </Header>
                         </Grid.Row>
                         <Grid.Row>
-                            <BookSearch ref={this.bookSearch2} searchField={this.state.searchField} searchBook={this.searchBook} handleSearch={this.handleSearch}/>
+                            <BookSearch 
+                                key={1}
+                                ref={this.bookSearch2} 
+                                searchField={this.state.searchField} 
+                                searchBook={this.searchBook} 
+                                handleSearch={this.handleSearch}
+                            />
                         </Grid.Row>
                         <Grid.Row>
-                            <AddLibraryBookList books={this.state.books} searchAuthor={this.searchAuthor}/>
+                            <AddLibraryBookList 
+                                key={2}
+                                books={this.state.books} 
+                                searchAuthor={this.searchAuthor}
+                            />
                         </Grid.Row>
                         <Grid.Row>
                             <Header as='h3' icon style={{color: 'white'}} textAlign="center">
@@ -95,12 +105,10 @@ export class AddLibraryBookContainer extends Component {
                             </Header>
                         </Grid.Row>
                     </Grid>
-                    <LibraryBooks books={this.myLibraryBooks()}/><br/>
-
-                    {/* <Button as={ Link } to='/profile' color='blue'>
-                        Back to Profile
-                    </Button> */}
-                    
+                    <LibraryBooks
+                        key={3} 
+                        books={this.myLibraryBooks()}
+                    /><br/>            
                     <Footer/>
                 </div>
             );

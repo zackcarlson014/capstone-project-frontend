@@ -52,13 +52,30 @@ export class DashboardLibraryBooks extends Component {
                         <Grid.Row>
                             <Grid.Column width='1'></Grid.Column>
                             <Grid.Column width='14'>
-                                {/* <Card.Group itemsPerRow={3} centered inverted> */}
+                                {/* <Card.Group itemsPerRow={8} centered inverted> */}
                                 <br/><div className='ui eight centered cards'>
                                     {this.props.books.slice(this.currentStartIndex(), this.currentEndIndex()).map((book, i) => {
                                         if (this.wishedBooks().find(b => b[0].id === book[0].id && !reservedBooks.find(r => r.user_lib_book_id === book[2]))) {
-                                            return <DashboardLibraryBookCard key={i} book={book[0]} user={book[1]} userBookId={book[2]} pub={true} match={true}/>
+                                            return (
+                                                <DashboardLibraryBookCard 
+                                                    key={i} 
+                                                    book={book[0]} 
+                                                    user={book[1]} 
+                                                    userBookId={book[2]} 
+                                                    pub={true} 
+                                                    match={true}
+                                                />
+                                            )
                                         } else {
-                                            return <DashboardLibraryBookCard key={i} book={book[0]} user={book[1]} userBookId={book[2]} pub={true}/>
+                                            return (
+                                                <DashboardLibraryBookCard 
+                                                    key={i} 
+                                                    book={book[0]} 
+                                                    user={book[1]} 
+                                                    userBookId={book[2]} 
+                                                    pub={true}
+                                                />
+                                            )
                                         }
                                     })}
                                 </div>
@@ -67,8 +84,12 @@ export class DashboardLibraryBooks extends Component {
                     </Grid>
                     <Grid textAlign='center'>
                         <Grid.Row>
-                            <Segment compact='true' color='blue'>
-                                <Pagination activePage={this.state.activePage} onPageChange={this.handlePaginationChange} totalPages={this.indexCount()}/>
+                            <Segment compact={true} color='blue'>
+                                <Pagination 
+                                    activePage={this.state.activePage} 
+                                    onPageChange={this.handlePaginationChange} 
+                                    totalPages={this.indexCount()}
+                                />
                             </Segment>
                         </Grid.Row>
                     </Grid>
@@ -84,9 +105,29 @@ export class DashboardLibraryBooks extends Component {
                                 <br/><div className={this.props.userDash ? 'ui five centered cards' : 'ui eight centered cards'}>
                                     {this.libraryBooks().slice(this.currentStartIndex(), this.currentEndIndex()).map((book, i) => {
                                         if (this.wishedBooks().find(b => b[0].id === book[0].id)) {
-                                            return <DashboardLibraryBookCard key={i} book={book[0]} user={book[1]} userBookId={book[2]} userDash={this.props.userDash ? true : false} match={true}/>
+                                            return (
+                                                <DashboardLibraryBookCard 
+                                                    key={i} book={book[0]} 
+                                                    user={book[1]} 
+                                                    userBookId={book[2]} 
+                                                    userDash={this.props.userDash ? 
+                                                        true : false
+                                                    } 
+                                                    match={true}
+                                                />
+                                            )
                                         } else {
-                                            return <DashboardLibraryBookCard key={i} book={book[0]} user={book[1]} userBookId={book[2]} userDash={this.props.userDash ? true : false}/>
+                                            return (
+                                                <DashboardLibraryBookCard 
+                                                    key={i} 
+                                                    book={book[0]} 
+                                                    user={book[1]} 
+                                                    userBookId={book[2]} 
+                                                    userDash={this.props.userDash ? 
+                                                        true : false
+                                                    }
+                                                />
+                                            )
                                         }
                                     })}
                                 </div>
@@ -95,8 +136,12 @@ export class DashboardLibraryBooks extends Component {
                     </Grid>
                     <Grid textAlign='center'>
                         <Grid.Row>
-                            <Segment compact='true' color='blue'>
-                                <Pagination activePage={this.state.activePage} onPageChange={this.handlePaginationChange} totalPages={this.indexCount()}/>
+                            <Segment compact={true} color='blue'>
+                                <Pagination 
+                                    activePage={this.state.activePage} 
+                                    onPageChange={this.handlePaginationChange} 
+                                    totalPages={this.indexCount()}
+                                />
                             </Segment>
                         </Grid.Row>
                         <Grid.Row></Grid.Row>

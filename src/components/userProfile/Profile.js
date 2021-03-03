@@ -81,23 +81,28 @@ export class Profile extends Component {
                 <div className='App'>
                     <NavBar/><br/>
                     <Grid>
-                    <Grid.Row></Grid.Row>
-                    <Grid.Row>
-                        <Grid.Column width='1'></Grid.Column>
-                        <Grid.Column width='10'>
-                            <UserCard user={this.props.auth} bookCount={this.bookCount()}/><br/><br/>
-                        </Grid.Column>
-                        {this.deliveredBooks().length !== 0 ?
-                            <div>
-                                <br/><br/><br/><CurrentlyReadingCarousel books={this.deliveredBooks()}/>
-                            </div>
-                            :
-                            null
-                        }  
+                        <Grid.Row></Grid.Row>
+                        <Grid.Row>
+                            <Grid.Column width='1'></Grid.Column>
+                            <Grid.Column width='10'>
+                                <UserCard user={this.props.auth} bookCount={this.bookCount()}/><br/><br/>
+                            </Grid.Column>
+                                {this.deliveredBooks().length !== 0 ?
+                                    <div>
+                                        <br/><br/><br/><CurrentlyReadingCarousel books={this.deliveredBooks()}/>
+                                    </div>
+                                    :
+                                    null
+                                }  
                         </Grid.Row>
                         <Grid.Row></Grid.Row>
                     </Grid>
-                    <Header as='h2' icon style={{color: 'white'}} textAlign="center">
+                    <Header 
+                        as='h2' 
+                        icon={true}
+                        style={{color: 'white'}} 
+                        textAlign="center"
+                    >
                         <Icon name='book' circular />
                         <Header.Content>
                             Your Library Books
@@ -111,7 +116,7 @@ export class Profile extends Component {
                                     exact='true' 
                                     to={'/user_lib_books/new'} 
                                     animated='fade' 
-                                    icon='book' 
+                                    icon={true} 
                                     color='blue'
                                 >
                                     <Button.Content visible>
@@ -141,7 +146,7 @@ export class Profile extends Component {
                                     exact='true' 
                                     to={'/user_wish_books/new'} 
                                     animated='fade' 
-                                    icon='book' 
+                                    icon={true} 
                                     color='blue'
                                 >
                                     <Button.Content visible>

@@ -44,9 +44,24 @@ export class DashboardWishedBooks extends Component {
                             <br/><div className='ui eight centered cards'>
                                 {this.wishedBooks().slice(this.bookIndex(), this.bookIndex() + 8).map((book, i) => {
                                     if (this.libraryBooks().find(b => b[0].title === book[0].title && b[0].author === book[0].author)) {
-                                        return <DashboardWishedBookCard key={i} book={book[0]} user={book[1]} userBookId={book[2]} match={this.libraryBooks().find(b => b[0].id === book[0].id)}/>
+                                        return (
+                                            <DashboardWishedBookCard 
+                                                key={i} 
+                                                book={book[0]} 
+                                                user={book[1]} 
+                                                userBookId={book[2]} 
+                                                match={this.libraryBooks().find(b => b[0].id === book[0].id)}
+                                            />
+                                        )
                                     } else {
-                                        return <DashboardWishedBookCard key={i} book={book[0]} user={book[1]} userBookId={book[2]}/>
+                                        return (
+                                            <DashboardWishedBookCard 
+                                                key={i} 
+                                                book={book[0]} 
+                                                user={book[1]} 
+                                                userBookId={book[2]}
+                                            />
+                                        )
                                     }
                                 })}
                             </div>
@@ -55,7 +70,7 @@ export class DashboardWishedBooks extends Component {
                 </Grid>
                 <Grid textAlign='center'>
                     <Grid.Row>
-                        <Segment color='blue' compact='true'>
+                        <Segment color='blue' compact={true}>
                             <Pagination 
                                 activePage={this.state.activePage} 
                                 onPageChange={this.handlePaginationChange} 

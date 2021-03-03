@@ -113,7 +113,12 @@ export class LibraryBookCard extends Component {
                 </Card.Content>
                 {this.reservedBook() ?
                     <Card.Content extra textAlign="center">
-                        <Header as='h5' icon style={{color: 'red'}} textAlign="center">
+                        <Header 
+                            as='h5' 
+                            icon={true} 
+                            style={{color: 'red'}} 
+                            textAlign="center"
+                        >
                             <Icon name='registered' circular />
                             <Header.Content>
                                 Reserved by {this.reservedBookUser().username}
@@ -125,7 +130,12 @@ export class LibraryBookCard extends Component {
                 }
                 {this.props.match && !this.currentlyReadingBook() && !this.reservedBook() ? 
                     <Card.Content extra textAlign="center">
-                        <Header as='h5' icon color='green' textAlign="center">
+                        <Header 
+                            as='h5' 
+                            icon={true} 
+                            color='green' 
+                            textAlign="center"
+                        >
                             <Icon name='check' circular/>
                             <Header.Content>
                                 Match
@@ -137,7 +147,12 @@ export class LibraryBookCard extends Component {
                 }
                 {this.currentlyReadingBook() ?
                     <Card.Content extra textAlign="center">
-                        <Header as='h5' icon color='blue' textAlign="center">
+                        <Header 
+                            as='h5' 
+                            icon={true} 
+                            color='blue' 
+                            textAlign="center"
+                        >
                             <Icon name='book' circular/>
                             <Header.Content>
                                 Currently Reading
@@ -149,7 +164,15 @@ export class LibraryBookCard extends Component {
                 }
                 {this.reservedBook() ? 
                     <Card.Content extra>
-                        <Button as={ Link } exact='true' to={`/reserved_books/${this.reservedBook().id}`} fluid animated='fade' icon='eye' color='blue'>
+                        <Button 
+                            as={ Link } 
+                            exact='true' 
+                            to={`/reserved_books/${this.reservedBook().id}`} 
+                            fluid 
+                            animated='fade' 
+                            icon={true} 
+                            color='blue'
+                        >
                             <Button.Content visible>
                                 <Icon name='eye'/>
                             </Button.Content>
@@ -162,7 +185,14 @@ export class LibraryBookCard extends Component {
                     <Card.Content extra>
                         { this.currentlyReadingBook() ?
                             <Button.Group widths='2' fluid>
-                                <Button as={ Link } exact='true' to={`/books/${this.props.book.id}`} animated='fade' icon='eye' color='blue'>
+                                <Button 
+                                    as={ Link } 
+                                    exact='true' 
+                                    to={`/books/${this.props.book.id}`} 
+                                    animated='fade' 
+                                    icon={true} 
+                                    color='blue'
+                                >
                                     <Button.Content visible>
                                         <Icon name='eye'/>
                                     </Button.Content>
@@ -170,7 +200,12 @@ export class LibraryBookCard extends Component {
                                         View
                                     </Button.Content>
                                 </Button>
-                                <Button animated='fade' icon='trash alternate outline' color='green' onClick={this.handleCompleted}>
+                                <Button 
+                                    animated='fade' 
+                                    icon={true} 
+                                    color='green' 
+                                    onClick={this.handleCompleted}
+                                >
                                     <Button.Content visible>
                                         <Icon name='book'/>
                                     </Button.Content>
@@ -181,7 +216,14 @@ export class LibraryBookCard extends Component {
                             </Button.Group>
                             :
                             <Button.Group widths='2' fluid>
-                                <Button as={ Link } exact='true' to={`/books/${this.props.book.id}`} animated='fade' icon='eye' color='blue'>
+                                <Button 
+                                    as={ Link } 
+                                    exact='true' 
+                                    to={`/books/${this.props.book.id}`} 
+                                    animated='fade' 
+                                    icon={true} 
+                                    color='blue'
+                                >
                                     <Button.Content visible>
                                         <Icon name='eye'/>
                                     </Button.Content>
@@ -195,7 +237,11 @@ export class LibraryBookCard extends Component {
                                         onOpen={() => this.setOpen(true)}
                                         open={this.state.open}
                                         trigger={
-                                            <Button animated='fade' icon='trash alternate outline' color='red'>
+                                            <Button 
+                                                animated='fade' 
+                                                icon={true} 
+                                                color='red'
+                                            >
                                                 <Button.Content visible>
                                                     <Icon name='trash alternate outline'/>
                                                 </Button.Content>

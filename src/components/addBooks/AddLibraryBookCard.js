@@ -24,6 +24,7 @@ export class AddLibraryBookCard extends Component {
         fetch('http://localhost:3000/api/v1/user_lib_books', reqObj)
         .then(resp => resp.json())
         .then(data => {
+            console.log(data)
             this.props.addLibBook(
                 book, 
                 this.props.auth, 
@@ -54,10 +55,21 @@ export class AddLibraryBookCard extends Component {
             },
             body: JSON.stringify(newBook)
         };
+        if (this.props.allLibraryBooks.find(b => 
+            b[0].title === this.props.title
+            &&
+            b[0].author === this.props.author[0]
+        )) {
+            const matchedBook = this.props.allLibraryBooks.find(b => 
+                b[0].title === this.props.title
+                &&
+                b[0].author === this.props.author[0]
+            );
+            return this.handleAddLibraryBook(matchedBook[0])
+        };
         fetch('http://localhost:3000/api/v1/books', reqObj)
         .then(resp => resp.json())
         .then(newLibBook => {
-            console.log(newLibBook)
             this.handleAddLibraryBook(newLibBook);
         });
     };
@@ -93,7 +105,14 @@ export class AddLibraryBookCard extends Component {
                             Published in {this.props.published ? this.props.published.split("-")[0] : '???'}
                         </span>
                     </Card.Meta>
-                    <Card.Description as='a' onClick={this.props.author ? () => this.props.searchAuthor(this.props.author[0]) : null}>
+                    <Card.Description 
+                        as='a' 
+                        onClick={this.props.author ? 
+                            () => this.props.searchAuthor(this.props.author[0]) 
+                            : 
+                            null
+                        }
+                    >
                         By: {this.props.author ? this.props.author[0] : 'unknown'}
                     </Card.Description>
                 </Card.Content>

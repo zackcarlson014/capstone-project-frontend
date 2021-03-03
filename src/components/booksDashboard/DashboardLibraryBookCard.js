@@ -47,17 +47,33 @@ export class DashboardLibraryBookCard extends Component {
 
     reservedBookUser = () => {
         if (this.reservedBook()) {
-            const book = this.props.allLibraryBooks.find(b => b[1].id === this.reservedBook().user_id);
+            const book = this.props.allLibraryBooks.find(b => 
+                b[1].id === this.reservedBook().user_id
+            );
             return book[1];
         };
     };
 
     myReservedBook = () => {
-        return this.props.reservedBooks.find(b => b.user_lib_book_id === this.props.userBookId && b.user_id === this.props.auth.id);
+        return this.props.reservedBooks.find(b => 
+            b.user_lib_book_id === this.props.userBookId 
+            && 
+            b.user_id === this.props.auth.id
+        );
     };
 
     userReservedBook = () => {
-        return this.props.reservedBooks.find(b => b.user_lib_book_id === this.props.userBookId && b.user_id === this.props.user.id);
+        return this.props.reservedBooks.find(b => 
+            b.user_lib_book_id === this.props.userBookId 
+            && 
+            b.user_id === this.props.user.id
+        );
+    };
+
+    matchedBook = () => {
+        return this.props.allWishedBooks.find(b => 
+            b[0].id === this.props.book.id
+        );
     };
 
     render() {
@@ -67,7 +83,11 @@ export class DashboardLibraryBookCard extends Component {
                     as={ Link } 
                     exact='true' 
                     to={`/books/${this.props.book.id}`} 
-                    src={this.props.book.image ? this.props.book.image : 'https://www.pngfind.com/pngs/m/216-2160526_jpg-royalty-free-library-3-books-clipart-book.png'} 
+                    src={this.props.book.image ? 
+                        this.props.book.image 
+                        : 
+                        'https://www.pngfind.com/pngs/m/216-2160526_jpg-royalty-free-library-3-books-clipart-book.png'
+                    } 
                     alt=''
                     wrapped 
                     ui={false} 
@@ -76,7 +96,11 @@ export class DashboardLibraryBookCard extends Component {
                 />
                 {this.props.userDash ? 
                     <Card.Content>
-                        <Card.Description as={ Link } exact='true' to={`/books/${this.props.book.id}`}>
+                        <Card.Description 
+                            as={ Link } 
+                            exact='true' 
+                            to={`/books/${this.props.book.id}`}
+                        >
                             {this.props.book.title}
                         </Card.Description>
                     </Card.Content>
@@ -87,12 +111,20 @@ export class DashboardLibraryBookCard extends Component {
                         </Card.Header>
                         <Card.Meta>
                             <span className='date'>
-                                Avg Rating: {this.props.book.averageRating ? this.props.book.averageRating : 'N/A'}
+                                Avg Rating: {this.props.book.averageRating ? 
+                                    this.props.book.averageRating 
+                                    : 
+                                    'N/A'
+                                }
                             </span>
                         </Card.Meta>
                         <Card.Meta>
                             <span className='date'>
-                                # of Ratings: {this.props.book.ratingCount ? this.props.book.ratingCount : 'N/A'}
+                                # of Ratings: {this.props.book.ratingCount ? 
+                                    this.props.book.ratingCount 
+                                    : 
+                                    'N/A'
+                                }
                             </span>
                         </Card.Meta>
                         <Card.Description>
@@ -102,19 +134,35 @@ export class DashboardLibraryBookCard extends Component {
                 }
                 {this.reservedBook() ?
                     <Card.Content extra textAlign="center">
-                        <Header as='h5' icon color={this.myReservedBook() ? 'green' : 'red'} textAlign="center">
+                        <Header 
+                            as='h5' 
+                            icon={true}
+                            color={this.myReservedBook() ? 
+                                'green' : 'red'
+                            } 
+                            textAlign="center"
+                        >
                             <Icon name='registered' circular/>
                             <Header.Content>
-                                Reserved by {this.myReservedBook() ? 'Me' : this.reservedBookUser().username}
+                                Reserved by {this.myReservedBook() ? 
+                                    'Me' 
+                                    : 
+                                    this.reservedBookUser().username
+                                }
                             </Header.Content>
                         </Header>
                     </Card.Content> 
                     :
                     null
                 }
-                {this.props.match && !this.reservedBook() ? 
+                {this.matchedBook() && !this.reservedBook() ? 
                     <Card.Content extra textAlign="center">
-                        <Header as='h5' icon color='green' textAlign="center">
+                        <Header 
+                            as='h5' 
+                            icon={true}
+                            color='green' 
+                            textAlign="center"
+                        >
                             <Icon name='check' circular/>
                             <Header.Content>
                                 Match
@@ -124,100 +172,19 @@ export class DashboardLibraryBookCard extends Component {
                     : 
                     null
                 }
+                {/* dynamic buttons begin */}
                 {this.props.userDash ?
-                <Card.Content extra>
-                    <Button 
-                        as={ Link } 
-                        exact='true' 
-                        to={this.myReservedBook() ? `/reserved_books/${this.myReservedBook().id}` : `/books/${this.props.book.id}`} 
-                        animated='fade' 
-                        icon='eye' 
-                        color='blue'
-                    >
-                        <Button.Content visible>
-                            <Icon name='eye'/>
-                        </Button.Content>
-                        <Button.Content hidden>
-                            View
-                        </Button.Content>
-                    </Button>
-                </Card.Content>
-                :
-                <Card.Content extra>
-                    <Button.Group widths='2' >
-                        {this.props.pub && !this.reservedBook() ? 
-                            <Button 
-                                animated='fade' 
-                                icon='user' 
-                                color='green' 
-                                onClick={this.handleAddReservedBook}
-                            >
-                                <Button.Content visible>
-                                    <Icon name='tag'/>
-                                </Button.Content>
-                                <Button.Content hidden>
-                                    Reserve
-                                </Button.Content>
-                            </Button>
-                            :
-                            null
-                        }
-                        {this.reservedBook() && !this.myReservedBook() ?
-                            <Button 
-                                as={ Link } 
-                                exact='true' 
-                                to={this.props.pub ? `/users/${this.reservedBookUser().id}` : `/users/${this.props.user.id}`} 
-                                animated='fade' 
-                                icon='user' 
-                                color='green'
-                            >
-                                <Button.Content visible>
-                                    <Icon name='user'/>
-                                </Button.Content>
-                                <Button.Content hidden>
-                                    {this.props.pub ? this.reservedBookUser().username : this.props.user.username}
-                                </Button.Content>
-                            </Button>
-                            :
-                            null
-                        }
-                        {!this.props.pub && !this.reservedBook() ?
-                            <Button as={ Link } exact='true' to={`/users/${this.props.user.id}`} animated='fade' icon='user' color='green'>
-                                <Button.Content visible>
-                                    <Icon name='user'/>
-                                </Button.Content>
-                                <Button.Content hidden>
-                                    {this.props.user.username}
-                                </Button.Content>
-                            </Button>
-                            :
-                            null
-                        }
-                        {!this.props.pub && this.myReservedBook() ?
-                            <Button 
-                                as={ Link } 
-                                exact='true' 
-                                to={`/users/${this.props.user.id}`} 
-                                animated='fade' 
-                                icon='user' 
-                                color='green'
-                            >
-                                <Button.Content visible>
-                                    <Icon name='user'/>
-                                </Button.Content>
-                                <Button.Content hidden>
-                                    {this.props.user.username}
-                                </Button.Content>
-                            </Button>
-                            :
-                            null
-                        }
+                    <Card.Content extra>
                         <Button 
                             as={ Link } 
                             exact='true' 
-                            to={this.myReservedBook() ? `/reserved_books/${this.myReservedBook().id}` : `/books/${this.props.book.id}`} 
+                            to={this.myReservedBook() ? 
+                                `/reserved_books/${this.myReservedBook().id}` 
+                                : 
+                                `/books/${this.props.book.id}`
+                            } 
                             animated='fade' 
-                            icon='eye' 
+                            icon={true} 
                             color='blue'
                         >
                             <Button.Content visible>
@@ -227,8 +194,113 @@ export class DashboardLibraryBookCard extends Component {
                                 View
                             </Button.Content>
                         </Button>
-                    </Button.Group>
-                </Card.Content>
+                    </Card.Content>
+                    :
+                    <Card.Content extra>
+                        <Button.Group widths='2' >
+                            {this.props.pub && !this.reservedBook() ? 
+                                <Button 
+                                    animated='fade' 
+                                    icon={true}
+                                    color='green' 
+                                    onClick={this.handleAddReservedBook}
+                                >
+                                    <Button.Content visible>
+                                        <Icon name='tag'/>
+                                    </Button.Content>
+                                    <Button.Content hidden>
+                                        Reserve
+                                    </Button.Content>
+                                </Button>
+                                :
+                                null
+                            }
+                            {this.reservedBook() && !this.myReservedBook() ?
+                                <Button 
+                                    as={ Link } 
+                                    exact='true' 
+                                    to={this.props.pub ? 
+                                        `/users/${this.reservedBookUser().id}` 
+                                        : 
+                                        `/users/${this.props.user.id}`
+                                    } 
+                                    animated='fade' 
+                                    icon={true} 
+                                    color='green'
+                                >
+                                    <Button.Content visible>
+                                        <Icon name='user'/>
+                                    </Button.Content>
+                                    <Button.Content hidden>
+                                        {this.props.pub ? 
+                                            this.reservedBookUser().username 
+                                            : 
+                                            this.props.user.username
+                                        }
+                                    </Button.Content>
+                                </Button>
+                                :
+                                null
+                            }
+                            {!this.props.pub && !this.reservedBook() ?
+                                <Button 
+                                    as={ Link } 
+                                    exact='true' 
+                                    to={`/users/${this.props.user.id}`} 
+                                    animated='fade' 
+                                    icon={true} 
+                                    color='green'
+                                >
+                                    <Button.Content visible>
+                                        <Icon name='user'/>
+                                    </Button.Content>
+                                    <Button.Content hidden>
+                                        {this.props.user.username}
+                                    </Button.Content>
+                                </Button>
+                                :
+                                null
+                            }
+                            {!this.props.pub && this.myReservedBook() ?
+                                <Button 
+                                    as={ Link } 
+                                    exact='true' 
+                                    to={`/users/${this.props.user.id}`} 
+                                    animated='fade' 
+                                    icon={true} 
+                                    color='green'
+                                >
+                                    <Button.Content visible>
+                                        <Icon name='user'/>
+                                    </Button.Content>
+                                    <Button.Content hidden>
+                                        {this.props.user.username}
+                                    </Button.Content>
+                                </Button>
+                                :
+                                null
+                            }
+                            <Button 
+                                as={ Link } 
+                                exact='true' 
+                                to={this.myReservedBook() ? 
+                                    `/reserved_books/${this.myReservedBook().id}` 
+                                    : 
+                                    `/books/${this.props.book.id}`
+                                } 
+                                animated='fade' 
+                                icon={true} 
+                                color='blue'
+                            >
+                                <Button.Content visible>
+                                    <Icon name='eye'/>
+                                </Button.Content>
+                                <Button.Content hidden>
+                                    View
+                                </Button.Content>
+                            </Button>
+                        </Button.Group>
+                    </Card.Content>
                 }
             </Card>
         );
@@ -237,10 +309,10 @@ export class DashboardLibraryBookCard extends Component {
 
 const mapStateToProps = state => {
     return {
+        auth: state.auth,
         allLibraryBooks: state.allLibraryBooks,
         allWishedBooks: state.allWishedBooks,
         reservedBooks: state.reservedBooks,
-        auth: state.auth
     };
 };
 

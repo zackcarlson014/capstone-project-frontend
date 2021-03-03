@@ -90,7 +90,7 @@ export class Friends extends Component {
             return (
                 <div className='App'>
                     <NavBar/><br/>
-                    <Grid textAlign='center' style={this.pendingFriendRequestObjects().length !== 0 ? { minHeight: '99vh' } : null}>
+                    <Grid textAlign='center' style={this.pendingFriendRequestObjects().length !== 0 || this.currentUserFriends().length === 0 ? { minHeight: '99vh' } : null}>
                         <Grid.Row></Grid.Row>
                         <Grid.Row></Grid.Row>
                         {this.pendingFriendRequestObjects().length !== 0 ?

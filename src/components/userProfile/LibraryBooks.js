@@ -49,15 +49,19 @@ export class LibraryBooks extends Component {
 
     //all Library books that belong to current user
     myLibraryBooks = () => {
-        const myBooks = this.props.allLibraryBooks.filter(book => 
+        let myBooks = [];
+        myBooks = this.props.allLibraryBooks.filter(book => 
             book[1].id === this.props.auth.id
         );
         if (this.props.searchField)  {
-            return myBooks.filter(b => 
+            const searchBooks = myBooks.filter(b => 
                 b[0].title.toLowerCase().includes(this.props.searchField.toLowerCase()) 
                 || 
                 b[0].author.toLowerCase().includes(this.props.searchField.toLowerCase())
             );
+            if (searchBooks.length !== 0) {
+                myBooks = searchBooks
+            }
         } else {
             return myBooks;
         };  
