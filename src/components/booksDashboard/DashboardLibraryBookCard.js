@@ -82,7 +82,7 @@ export class DashboardLibraryBookCard extends Component {
                 <Image 
                     as={ Link } 
                     exact='true' 
-                    to={`/books/${this.props.book.id}`} 
+                    to={this.myReservedBook() ? `/reserved_books/${this.myReservedBook().id}` : `/books/${this.props.book.id}`} 
                     src={this.props.book.image ? 
                         this.props.book.image 
                         : 

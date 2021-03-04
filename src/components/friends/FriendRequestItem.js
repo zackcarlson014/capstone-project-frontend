@@ -48,7 +48,7 @@ export class FriendRequestItem extends Component {
                                     </Grid.Row>
                                 </Grid.Column>
                                 <Grid.Column width='1'></Grid.Column>
-                                <Grid.Column width='7'>
+                                <Grid.Column width='6' textAlign='left'>
                                     <Grid.Row>
                                         <Header
                                             as={ Link }
@@ -65,7 +65,7 @@ export class FriendRequestItem extends Component {
                                         </Header>
                                     </Grid.Row>
                                 </Grid.Column>
-                                <Grid.Column  width='3'>
+                                <Grid.Column width='3'>
                                     <Button 
                                         onClick={() => this.approveFriend()}
                                         fluid 
@@ -76,6 +76,7 @@ export class FriendRequestItem extends Component {
                                         Accept
                                     </Button>
                                 </Grid.Column>
+                                <Grid.Column width='1'></Grid.Column>
                             </Grid.Row>
                         </Grid>
                     </Message>
