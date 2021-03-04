@@ -9,23 +9,12 @@ import { Grid, Loader, Header, Icon } from 'semantic-ui-react';
 export class UsersDashboard extends Component {
 
     state = {
-        users: [],
         noMatch: false
-    };
-
-    componentWillMount() {
-        fetch('http://localhost:3000/api/v1/users')
-        .then(resp => resp.json())
-        .then(users => {
-            this.setState({
-                users
-            });
-        });
     };
     
     componentWillUnmount() {
-        this.props.clearSearch()
-    }
+        this.props.clearSearch();
+    };
 
     fellowMyBrarians = () => {
         let matchedUsers = [];
@@ -35,7 +24,7 @@ export class UsersDashboard extends Component {
         let allUserRequests = [];
         let allFriends = [];
         let allOtherUsers = [];
-        const users = this.state.users.filter(u => u.id !== this.props.auth.id)
+        const users = this.props.users.filter(u => u.id !== this.props.auth.id)
         userRequestIds = this.props.friends.filter(f => 
             f.inviter_id !== this.props.auth.id && f.pending === true
         ).map(f => 
@@ -85,7 +74,7 @@ export class UsersDashboard extends Component {
     };
 
     render() {
-        if (!this.props.auth && !this.state.users) {
+        if (!this.props.users || !this.props.auth) {
             return <Grid style={{ height: '99vh' }}><Loader active /></Grid>;
         } else {
             return (
@@ -114,7 +103,11 @@ export class UsersDashboard extends Component {
                         }
                     </Grid>
                     {this.fellowMyBrarians().map(u =>
-                        <UserDash user={u} myBrarianLibraryBooks={this.myBrarianLibraryBooks}/>   
+                        <UserDash
+                            key={u.id} 
+                            user={u} 
+                            myBrarianLibraryBooks={this.myBrarianLibraryBooks}
+                        />   
                     )}    
                     <Footer/>
                 </div>
@@ -126,8 +119,8 @@ export class UsersDashboard extends Component {
 const mapStateToProps = state => {
     return {
         auth: state.auth,
-        allLibraryBooks: state.allLibraryBooks,
-        friends: state.friends,
+        // allLibraryBooks: state.allLibraryBooks,
+        // friends: state.friends,
         searchField: state.searchField
     };
 };

@@ -73,7 +73,7 @@ export class Profile extends Component {
     };
 
     render() {
-        window.scrollTo(0, 0);
+        // window.scrollTo(0, 0);
         if (!this.props.auth || this.props.reservedBooks === []) {
             return <Grid style={{ height: '99vh' }}><Loader active /></Grid>;
          } else {

@@ -8,7 +8,7 @@ import Profile from './components/userProfile/Profile.js'
 import PublicProfile from './components/publicUsers/PublicProfile.js'
 import NewUserForm from './components/loginSignUp/NewUserForm.js'
 import EditUserForm from './components/userProfile/EditUserForm.js'
-import UsersDashboard from './components/publicUsers/UsersDashboard.js'
+import UsersDashboardContainer from './components/publicUsers/UsersDashboardContainer.js'
 import BooksDashboard from './components/booksDashboard/BooksDashboard.js'
 import BookShowPage from './components/bookShow/BookShowPage.js'
 import AddLibraryBookContainer from './components/addBooks/AddLibraryBookContainer.js'
@@ -50,7 +50,7 @@ export class App extends Component {
           <Route exact path='/users/new' component={NewUserForm} />
           <Route exact path='/users/:id/edit' component={EditUserForm} />
           <Route exact path='/users/:id' component={PublicProfile} />
-          <Route exact path='/users' component={UsersDashboard}/>
+          <Route exact path='/users' component={UsersDashboardContainer}/>
           <Route path='/books/:id' component={BookShowPage} />
           <Route exact path='/books' component={BooksDashboard} />
           <Route exact path='/user_lib_books/new' component={AddLibraryBookContainer}/>
