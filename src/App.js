@@ -27,15 +27,15 @@ export class App extends Component {
       this.props.history.push('/login')
     } else {
       const reqObj = {
-          method: 'GET',
-          headers: {
-              Authorization: `Bearer ${token}`
-          }
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
       }
       fetch('http://localhost:3000/api/v1/current_user', reqObj)
       .then(resp => resp.json())
       .then(data => {
-          this.props.currentUser(data)
+        this.props.currentUser(data)
       })
     }
   }
@@ -44,27 +44,90 @@ export class App extends Component {
     return (
       <div>
         <Switch>
-          <Route exact path="/" render={() => <Redirect to="/login" />} />
-          <Route path='/login' component={Login} />
-          <Route path='/profile' component={Profile} />
-          <Route exact path='/users/new' component={NewUserForm} />
-          <Route exact path='/users/:id/edit' component={EditUserForm} />
-          <Route exact path='/users/:id' component={PublicProfile} />
-          <Route exact path='/users' component={UsersDashboardContainer}/>
-          <Route path='/books/:id' component={BookShowPage} />
-          <Route exact path='/books' component={BooksDashboard} />
-          <Route exact path='/user_lib_books/new' component={AddLibraryBookContainer}/>
-          <Route exact path='/user_wish_books/new' component={AddWishedBookContainer}/>
-          <Route exact path='/reserved_books/:id' component={ReservedBookShowPage}/>
-          <Route exact path='/reserved_books' component={ReservedBooks}/>
-          <Route exact path='/messages' component={Messages}/>
-          <Route exact path='/friends' component={Friends}/>
+          <Route
+            exact
+            path="/"
+            render={() => <Redirect to="/login" />}
+          />
+          <Route
+            path='/login'
+            component={Login}
+          />
+          <Route
+            path='/profile'
+            component={Profile}
+          />
+          <Route
+            exact
+            path='/users/new'
+            component={NewUserForm}
+          />
+          <Route
+            exact
+            path='/users/:id/edit'
+            component={EditUserForm}
+          />
+          <Route
+            exact
+            path='/users/:id'
+            component={PublicProfile}
+          />
+          <Route 
+            exact
+            path='/users'
+            component={UsersDashboardContainer}
+          />
+          <Route
+            path='/books/:id'
+            component={BookShowPage}
+          />
+          <Route 
+            exact
+            path='/books'
+            component={BooksDashboard}
+          />
+          <Route
+            exact
+            path='/user_lib_books/new'
+            component={AddLibraryBookContainer}
+          />
+          <Route
+            exact
+            path='/user_wish_books/new'
+            component={AddWishedBookContainer}
+          />
+          <Route
+            exact
+            path='/reserved_books/:id'
+            component={ReservedBookShowPage}
+          />
+          <Route
+            exact
+            path='/reserved_books'
+            component={ReservedBooks}
+          />
+          <Route
+            exact
+            path='/messages'
+            component={Messages}
+          />
+          <Route
+            exact
+            path='/friends'
+            component={Friends}
+          />
         </Switch>
       </div>
-
     )
   }
 }
 
-export default connect(null, { currentUser, allLibraryBooks, allWishedBooks })(withRouter(App))
+export default connect(
+  null, 
+  { 
+    currentUser,
+    allLibraryBooks,
+    allWishedBooks
+  }
+)(withRouter(App))
 

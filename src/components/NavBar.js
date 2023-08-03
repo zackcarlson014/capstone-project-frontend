@@ -76,7 +76,7 @@ export class NavBar extends Component {
           // onClick={this.handleItemClick}
           header>
 
-          <Icon name='home' />MyBrary
+          <Icon name='home'/> MyBrary
         </Menu.Item>
 
         <Dropdown item icon='book' simple >
