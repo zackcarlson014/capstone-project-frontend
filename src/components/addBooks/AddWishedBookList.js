@@ -8,16 +8,15 @@ export class AddWishedBookList extends Component {
     if (this.props.books.length !== 0) {
       return (
         <div>
-          {this.props.books.length !== 0 
-            ? <div>
+          {this.props.books.length === 0 
+            ? null
+            : <div>
                 <br/>
                 <Header as='h3' style={{color: 'white'}} textAlign="center">
                   <Icon name='book'/>
                   Add WishList Books Below...
                 </Header>
-              </div> 
-
-            : null
+              </div>
           }
         
           <br/>

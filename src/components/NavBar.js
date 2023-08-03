@@ -86,7 +86,7 @@ export class NavBar extends Component {
             <Dropdown.Item as={ Link } to='/reserved_books'>
               My Reserved Books
             </Dropdown.Item>
-
+            
             <Dropdown.Item>
               <Icon name='book' />
 

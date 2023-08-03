@@ -93,13 +93,20 @@ export class AddLibraryBookCard extends Component {
           wrapped ui={false} 
           width='300px' 
           height='300px'
-          onClick={()=> window.open(this.props.link, "_blank")} 
+          onClick={()=>
+            window.open(this.props.link, "_blank")
+          } 
         />
 
         <Card.Content>
-            <Card.Header as='a' onClick={()=> window.open(this.props.link, "_blank")}>
+            <Card.Header
+              as='a'
+              onClick={()=> 
+                window.open(this.props.link, "_blank")
+              }>
               {this.props.title}
             </Card.Header>
+            
             <Card.Meta>
               <span className='date'>
                 Published in {this.props.published

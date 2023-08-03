@@ -271,7 +271,6 @@ export class DashboardLibraryBookCard extends Component {
                     
                   : null
                 }
-
                 {!this.props.pub && this.myReservedBook()
                   ? <Button 
                       as={ Link } 
@@ -307,7 +306,7 @@ export class DashboardLibraryBookCard extends Component {
                   <Button.Content visible>
                       <Icon name='eye'/>
                   </Button.Content>
-
+                  
                   <Button.Content hidden>
                       View
                   </Button.Content>

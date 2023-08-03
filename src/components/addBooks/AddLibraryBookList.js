@@ -7,8 +7,9 @@ export class AddLibraryBookList extends Component {
   render() {
     return (
       <div>
-        {this.props.books.length !== 0
-          ? <div>
+        {this.props.books.length === 0
+          ? null
+          : <div>
               <br/>
               <Header as='h3' style={{color: 'white'}} textAlign="center">
                 <Icon name='book'/>
@@ -16,7 +17,6 @@ export class AddLibraryBookList extends Component {
               </Header>
               <br/>
             </div> 
-          : null
         }
 
         <br/>
