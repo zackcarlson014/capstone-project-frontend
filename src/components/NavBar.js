@@ -8,7 +8,7 @@ import { Dropdown, Icon, Menu, Label, Input } from 'semantic-ui-react';
 export class NavBar extends Component {
 
   state = { 
-    activeItem: ''
+    activeItem: '',
   };
 
   userDropdownTrigger = () => {
@@ -39,16 +39,14 @@ export class NavBar extends Component {
   newMessages = () => {
     return this.props.messages.filter(m =>
       m.recipient_id === this.props.auth.id 
-      && 
-      m.seen === false
+      && m.seen === false
     ).length;
   }; 
 
   pendingFriendRequests = () => {
     return this.props.friends.filter(f => 
       f.pending === true 
-      && 
-      f.invitee_id === this.props.auth.id
+      && f.invitee_id === this.props.auth.id
     ).length;
   };
 
@@ -81,8 +79,14 @@ export class NavBar extends Component {
 
         <Dropdown item icon='book' simple >
           <Dropdown.Menu>
-            <Dropdown.Item as={ Link } to='/books'>Public Bookshelf</Dropdown.Item>
-            <Dropdown.Item as={ Link } to='/reserved_books'>My Reserved Books</Dropdown.Item>
+            <Dropdown.Item as={ Link } to='/books'>
+              Public Bookshelf
+            </Dropdown.Item>
+
+            <Dropdown.Item as={ Link } to='/reserved_books'>
+              My Reserved Books
+            </Dropdown.Item>
+
             <Dropdown.Item>
               <Icon name='book' />
 
@@ -213,7 +217,7 @@ const mapStateToProps = state => {
   return {
     auth: state.auth,
     messages: state.allMessages,
-    friends: state.friends
+    friends: state.friends,
   };
 };
 
