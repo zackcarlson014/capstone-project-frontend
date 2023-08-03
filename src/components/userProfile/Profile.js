@@ -202,4 +202,9 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, { clearSearch })(Profile);
+export default connect(
+  mapStateToProps, 
+  { 
+    clearSearch,
+  },
+)(Profile);

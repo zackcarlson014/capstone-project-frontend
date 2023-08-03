@@ -127,7 +127,7 @@ export default connect(
   { 
     currentUser,
     allLibraryBooks,
-    allWishedBooks
-  }
+    allWishedBooks,
+  },
 )(withRouter(App))
 

@@ -62,8 +62,8 @@ export class NavBar extends Component {
     const { activeItem } = this.state;
     const style = {
       position: "fixed",
-        // width: "100%",
-        zIndex: "999"
+      // width: "100%",
+      zIndex: "999",
     };
 
     return (
@@ -217,4 +217,10 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, { searchField, logoutUser })(NavBar);
+export default connect(
+  mapStateToProps,
+  { 
+    searchField,
+    logoutUser,
+  },
+)(NavBar);
