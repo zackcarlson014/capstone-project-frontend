@@ -22,9 +22,9 @@ export class AddLibraryBookContainer extends Component {
     this.state = {
       books: [],
       searchField: '',
-    }
+    };
 
-    this.bookSearch2 = React.createRef()
+    this.bookSearch2 = React.createRef();
   };
 
     //request books from Google Books API based on searchField parameters
