@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Comment, Icon } from 'semantic-ui-react';
+import {
+  Comment,
+  // Icon,
+} from 'semantic-ui-react';
 
 export class MessageGroupItem extends Component {
 
