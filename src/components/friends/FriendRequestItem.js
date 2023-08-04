@@ -2,10 +2,17 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { approveFriendRequest } from '../../actions/index';
-import { Grid, Header, Message, Image, Button, Icon, Loader } from 'semantic-ui-react';
+import {
+  Grid,
+  Header,
+  Message,
+  Image,
+  Button,
+  Icon,
+  Loader,
+} from 'semantic-ui-react';
 
 export class FriendRequestItem extends Component {
-
     approveFriend = () => {
         const requestId = this.props.request.id
         const approvedRequest = {

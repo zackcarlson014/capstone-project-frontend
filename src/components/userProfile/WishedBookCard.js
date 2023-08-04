@@ -32,7 +32,6 @@ export class WishedBookCard extends Component {
   
     this.setOpen(false);
   };
-
   
   reservedBook = () => {
     return this.props.reservedBooks.find(b => 

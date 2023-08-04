@@ -7,52 +7,61 @@ import Footer from '../Footer';
 import { Grid, Loader } from 'semantic-ui-react';
 
 export class UsersDashboardContainer extends Component {
+  state = {
+    users: [],
+  };
 
-    state = {
-        users: []
-    };
+  componentWillMount() {
+    fetch('http://localhost:3000/api/v1/users')
+    .then(resp => resp.json())
+    .then(users => {
+      this.setState({
+        users,
+      });
+    });
+  };
 
-    componentWillMount() {
-        fetch('http://localhost:3000/api/v1/users')
-        .then(resp => resp.json())
-        .then(users => {
-            this.setState({
-                users
-            });
-        });
-    };
+  componentWillUnmount() {
+    window.scrollTo(0, 0);
+  };
 
-    componentWillUnmount() {
-        window.scrollTo(0, 0)
-    };
+  render() {
+    if (this.state.users.length === 0 || !this.props.auth) {
+      return (
+        <Grid style={{ height: '99vh' }}>
+          <Loader active />
+        </Grid>
+      );
+    } else {
+      return (
+        <div>
+          <NavBar/>
 
-    render() {
-        if (this.state.users.length === 0 || !this.props.auth) {
-            return <Grid style={{ height: '99vh' }}><Loader active /></Grid>;
-        } else {
-            
-            return (
-                <div>
-                    <NavBar/>
-                    <UsersDashboard 
-                        key={1}
-                        users={this.state.users}
-                        allLibraryBooks={this.props.allLibraryBooks}
-                        friends={this.props.friends}
-                    />
-                    <Footer/>
-                </div>
-            );
-        };
+          <UsersDashboard 
+            key={1}
+            users={this.state.users}
+            allLibraryBooks={this.props.allLibraryBooks}
+            friends={this.props.friends}
+          />
+
+          <Footer/>
+        </div>
+      );
     };
+  };
 };
 
 const mapStateToProps = state => {
-    return {
-        auth: state.auth,
-        allLibraryBooks: state.allLibraryBooks,
-        friends: state.friends,
-    };
+  return {
+    auth: state.auth,
+    allLibraryBooks: state.allLibraryBooks,
+    friends: state.friends,
+  };
 };
 
-export default connect(mapStateToProps, { clearSearch })(UsersDashboardContainer);
+export default connect(
+  mapStateToProps,
+  {
+    clearSearch,
+  },
+)(UsersDashboardContainer);

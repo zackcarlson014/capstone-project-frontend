@@ -3,10 +3,15 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { logoutUser } from '../actions/auth';
 import { searchField } from '../actions/index';
-import { Dropdown, Icon, Menu, Label, Input } from 'semantic-ui-react';
+import {
+  Dropdown,
+  Icon,
+  Menu,
+  Label,
+  Input,
+} from 'semantic-ui-react';
 
 export class NavBar extends Component {
-
   state = { 
     activeItem: '',
   };
@@ -58,6 +63,7 @@ export class NavBar extends Component {
 
   render() {
     const { activeItem } = this.state;
+
     const style = {
       position: "fixed",
       // width: "100%",

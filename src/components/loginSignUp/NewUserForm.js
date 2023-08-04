@@ -10,44 +10,47 @@ import {
   Segment,
   Message,
   Icon,
-  Image
+  Image,
 } from 'semantic-ui-react'
-
 
 export class NewUserForm extends Component {
   state = {
-      username: '',
-      password:'',
-      image: '',
-      bio: ''
+    username: '',
+    password:'',
+    image: '',
+    bio: ''
   };
 
   handleInputChange = (e) => {
-      this.setState({
-          [e.target.name]: e.target.value
-      });
+    this.setState({
+      [e.target.name]: e.target.value,
+    });
   };
 
   handleSubmit = () => {
-      const newUser = {
-          username: this.state.username,
-          password: this.state.password,
-          prof_pic_url: this.state.image,
-          bio: this.state.bio
-      };
-      const reqObj = {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json'
-          },
-          body: JSON.stringify(newUser)
-      };
-      fetch('http://localhost:3000/api/v1/users', reqObj)
-      .then(resp => resp.json())
-      .then(user => {
-          this.props.history.push('/login');
-      }); 
+    const newUser = {
+      username: this.state.username,
+      password: this.state.password,
+      prof_pic_url: this.state.image,
+      bio: this.state.bio
+    };
+
+    const reqURL = 'http://localhost:3000/api/v1/users';
+
+    const reqObj = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      body: JSON.stringify(newUser),
+    };
+
+    fetch(reqURL, reqObj)
+    .then(resp => resp.json())
+    .then(user => {
+      this.props.history.push('/login');
+    }); 
   };
 
   render() {

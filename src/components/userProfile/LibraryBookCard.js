@@ -8,7 +8,7 @@ import {
   Button,
   Icon,
   Header,
-  Modal
+  Modal,
 } from 'semantic-ui-react';
 
 export class LibraryBookCard extends Component {

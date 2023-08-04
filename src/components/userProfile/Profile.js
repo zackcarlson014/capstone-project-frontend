@@ -13,7 +13,7 @@ import {
   Button,
   Header,
   Icon,
-  Loader
+  Loader,
 } from 'semantic-ui-react';
 
 export class Profile extends Component {

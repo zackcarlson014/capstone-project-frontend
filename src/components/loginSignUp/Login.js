@@ -3,7 +3,15 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { loginSuccess } from '../../actions/auth';
 import Footer from '../Footer';
-import { Button, Form, Grid, Header, Segment, Message, Icon } from 'semantic-ui-react';
+import {
+  Button,
+  Form,
+  Grid,
+  Header,
+  Segment,
+  Message,
+  Icon,
+} from 'semantic-ui-react';
 
 export class Login extends Component {
   state = {

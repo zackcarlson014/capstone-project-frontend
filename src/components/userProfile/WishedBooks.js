@@ -5,7 +5,7 @@ import {
   Grid,
   Header,
   Pagination,
-  Segment
+  Segment,
 } from 'semantic-ui-react';
 
 export class WishedBooks extends Component {

@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { addMessage, markMessagesRead } from '../../actions/index.js';
 import MessageGroupItem from './MessageGroupItem.js';
-import { Button, Comment, Form } from 'semantic-ui-react';
+import {
+  Button,
+  Comment,
+  Form,
+} from 'semantic-ui-react';
 
 export class MessageGroup extends Component {
   state = {

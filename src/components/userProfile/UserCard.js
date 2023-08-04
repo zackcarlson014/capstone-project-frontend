@@ -5,7 +5,7 @@ import {
   Image,
   Icon,
   Button,
-  Placeholder
+  Placeholder,
 } from 'semantic-ui-react';
 
 export class UserCard extends Component {

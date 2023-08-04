@@ -6,7 +6,7 @@ import {
   Header,
   Icon,
   Segment,
-  Pagination
+  Pagination,
 } from 'semantic-ui-react';
 
 export class LibraryBooks extends Component {

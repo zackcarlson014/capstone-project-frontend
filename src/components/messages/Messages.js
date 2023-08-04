@@ -5,7 +5,15 @@ import NavBar from '../NavBar';
 import MessageItem from './MessageItem';
 import MessageGroup from './MessageGroup';
 import Footer from '../Footer';
-import { Grid, Header, Segment, Icon, Image, Button, Loader } from 'semantic-ui-react';
+import {
+  Grid,
+  Header,
+  Segment,
+  Icon,
+  Image,
+  Button,
+  Loader,
+} from 'semantic-ui-react';
 
 export class Messages extends Component {
   state = {

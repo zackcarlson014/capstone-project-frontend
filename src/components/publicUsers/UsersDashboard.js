@@ -8,7 +8,7 @@ import {
   Grid,
   Loader,
   Header,
-  Icon
+  Icon,
 } from 'semantic-ui-react';
 
 export class UsersDashboard extends Component {
