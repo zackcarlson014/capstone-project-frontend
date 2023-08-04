@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import AddWishedBookCard from './AddWishedBookCard';
-import { Grid, Header, Icon } from 'semantic-ui-react';
+import {
+  Grid,
+  Header,
+  Icon,
+} from 'semantic-ui-react';
 
 export class AddWishedBookList extends Component {
   render() {
