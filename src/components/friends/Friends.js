@@ -5,7 +5,12 @@ import NavBar from '../NavBar';
 import FriendRequests from './FriendRequests';
 import UserDash from '../publicUsers/UserDash';
 import Footer from '../Footer';
-import { Grid, Header, Loader, Icon } from 'semantic-ui-react';
+import {
+  Grid,
+  Header,
+  Loader,
+  Icon,
+} from 'semantic-ui-react';
 
 export class Friends extends Component {
   state = {
@@ -25,37 +30,34 @@ export class Friends extends Component {
   };
 
   searchableUsers = () => {
-    let matchedUsers = this.state.users.filter(u =>
+    const matchedUsers = this.state.users.filter(u =>
       u.id !== this.props.auth.id
     );
 
     if (this.props.searchField) {
-      const users = this.state.users.filter(u => 
+      const lowerCaseInput = this.props.searchField.toLowerCase();
+      const users = matchedUsers.filter(u => 
         u.username.toLowerCase()
-        .includes(this.props.searchField.toLowerCase())
+        .includes(lowerCaseInput)
       );
 
       if (users.length !== 0)
-        matchedUsers = users;
-
+        return users;
     }
 
     return matchedUsers;
   };
 
   currentUserFriends = () => {
-    let friends = [];
-    let friendIds = [];
-
-    friendIds = this.props.friends
-    .filter(f => f.pending === false)
-    .map(f => {
-      return f.inviter_id === this.props.auth.id
-        ? f.invitee_id
-        : f.inviter_id;
+    const friendIds = this.props.friends
+      .filter(f => f.pending === false)
+      .map(f => {
+        return f.inviter_id === this.props.auth.id
+          ? f.invitee_id
+          : f.inviter_id;
     });
 
-    friends = this.searchableUsers().filter(u => 
+    const friends = this.searchableUsers().filter(u => 
       friendIds.includes(u.id)
     );
     
