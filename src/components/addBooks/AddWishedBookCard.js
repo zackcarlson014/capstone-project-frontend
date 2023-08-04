@@ -2,54 +2,71 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { addWishBook } from '../../actions/index';
-import { Card, Image, Button } from 'semantic-ui-react';
+import {
+  Card,
+  Image,
+  Button,
+} from 'semantic-ui-react';
 
 export class AddWishedBookCard extends Component {
   handleAddWishedBook = (book) => {
-      const newWishedBook = {
-          user_id: this.props.auth.id,
-          book_id: book.id
-      };
-      const reqObj = {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json'
-          },
-          body: JSON.stringify(newWishedBook)
-      };
-      fetch('http://localhost:3000/api/v1/user_wish_books', reqObj)
-      .then(resp => resp.json())
-      .then(wishBook => {
-          this.props.addWishBook(book, this.props.auth, wishBook.id);
-      });
+    const newWishedBook = {
+      user_id: this.props.auth.id,
+      book_id: book.id,
+    };
+
+    const reqURL = 'http://localhost:3000/api/v1/user_wish_books';
+
+    const reqObj = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      body: JSON.stringify(newWishedBook),
+    };
+
+    fetch('http://localhost:3000/api/v1/user_wish_books', reqObj)
+    .then(resp => resp.json())
+    .then(wishBook => {
+      this.props.addWishBook(
+        book,
+        this.props.auth,
+        wishBook.id
+      );
+    });
   };
 
   handleAddBook = (e) => {
       e.preventDefault();
+
       const newBook = {
-          title: this.props.title,
-          author: this.props.author[0],
-          image: this.props.image,
-          published_date: this.props.published,
-          description: this.props.description,
-          average_rating: this.props.averageRating,
-          ratings_count: this.props.ratingsCount,
-          preview_link: this.props.previewLink,
-          google_id: this.props.googleID
+        title: this.props.title,
+        author: this.props.author[0],
+        image: this.props.image,
+        published_date: this.props.published,
+        description: this.props.description,
+        average_rating: this.props.averageRating,
+        ratings_count: this.props.ratingsCount,
+        preview_link: this.props.previewLink,
+        google_id: this.props.googleID,
       };
+
+      const reqURL = 'http://localhost:3000/api/v1/books';
+
       const reqObj = {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json'
-          },
-          body: JSON.stringify(newBook)
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify(newBook),
       };
-      fetch('http://localhost:3000/api/v1/books', reqObj)
+
+      fetch(reqURL, reqObj)
       .then(resp => resp.json())
       .then(newWishBook => {
-          this.handleAddWishedBook(newWishBook);
+        this.handleAddWishedBook(newWishBook);
       });
   };
 
