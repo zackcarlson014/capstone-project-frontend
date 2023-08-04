@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import DashboardLibraryBookCard from './DashboardLibraryBookCard';
-import { Grid, Segment, Pagination } from 'semantic-ui-react';
+import {
+  Grid,
+  Segment,
+  Pagination,
+} from 'semantic-ui-react';
 
 export class DashboardLibraryBooks extends Component {
   state = { 

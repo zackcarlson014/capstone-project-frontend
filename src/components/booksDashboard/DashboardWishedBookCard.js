@@ -1,7 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { Card, Image, Button, Icon, Header } from 'semantic-ui-react'
+import {
+  Card,
+  Image,
+  Button,
+  Icon,
+  Header,
+} from 'semantic-ui-react'
 
 export class DashboardWishedBookCard extends Component {
   reservedBook = () => {

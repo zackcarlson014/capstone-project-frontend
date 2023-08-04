@@ -7,7 +7,6 @@ import DashboardWishedBooks from './DashboardWishedBooks';
 import Footer from '../Footer';
 import { Header, Icon } from 'semantic-ui-react';
 
-
 export class BooksDashboard extends Component {
   componentWillUnmount() {
     this.props.clearSearch();
@@ -21,7 +20,7 @@ export class BooksDashboard extends Component {
       );
 
       if (books.length !== 0)
-         return books;
+        return books;
     }
   
     return this.props.allLibraryBooks;

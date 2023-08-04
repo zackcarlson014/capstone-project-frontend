@@ -1,78 +1,101 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { showReservedBook, addReservedBook, deleteWishBook, showUser } from '../../actions/index'
-import { Card, Image, Button, Icon, Header } from 'semantic-ui-react'
+import {
+  showReservedBook,
+  addReservedBook,
+  deleteWishBook,
+  showUser,
+} from '../../actions/index'
+import {
+  Card,
+  Image,
+  Button,
+  Icon,
+  Header,
+} from 'semantic-ui-react'
 
 export class DashboardLibraryBookCard extends Component {
   handleAddReservedBook = async () => {
-      const newReservedBook = {
-          user_id: this.props.auth.id,
-          user_lib_book_id: this.props.userBookId,
-          delivered: false,
-          completed: false
-      };
-      const reqObj = {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json'
-          },
-          body: JSON.stringify(newReservedBook)
-      };
-      fetch('http://localhost:3000/api/v1/reserved_books', reqObj)
-      .then(resp => resp.json())
-      .then(newReservedBook => {
-          this.props.addReservedBook(newReservedBook);
-      });
-      
-      if (this.props.allWishedBooks.find(b => b[0].id === this.props.book.id && b[1].id === this.props.auth.id)) {
-          const wishBook = this.props.allWishedBooks.find(b => b[0].id === this.props.book.id && b[1].id === this.props.auth.id);
-          await fetch(`http://localhost:3000/api/v1/user_wish_books/${wishBook[2]}`, { method: 'DELETE' });
-          this.props.deleteWishBook(wishBook[2]);
-      };
+    const newReservedBook = {
+      user_id: this.props.auth.id,
+      user_lib_book_id: this.props.userBookId,
+      delivered: false,
+      completed: false,
+    };
+
+    const addReservedBookReqURL =
+    'http://localhost:3000/api/v1/reserved_books'
+
+    const reqObj = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      body: JSON.stringify(newReservedBook),
+    };
+
+    fetch(addReservedBookReqURL, reqObj)
+    .then(resp => resp.json())
+    .then(newReservedBook => {
+      this.props.addReservedBook(newReservedBook);
+    });
+    
+    if (this.props.allWishedBooks.find(b =>
+      b[0].id === this.props.book.id
+      && b[1].id === this.props.auth.id
+    )) {
+      const wishBook = this.props.allWishedBooks.find(b =>
+        b[0].id === this.props.book.id
+        && b[1].id === this.props.auth.id
+      );
+
+      const deleteWishBookReqURL =
+        `http://localhost:3000/api/v1/user_wish_books/${wishBook[2]}`;
+
+      await fetch(deleteWishBookReqURL, { method: 'DELETE' });
+  
+      this.props.deleteWishBook(wishBook[2]);
+    };
   };
 
   reservedBook = () => {
-      return this.props.reservedBooks.find(b => 
-          b.user_lib_book_id === this.props.userBookId 
-          && 
-          b.user_id !== this.props.user.id
-          &&
-          !b.completed 
-
-      );
+    return this.props.reservedBooks.find(b => 
+      b.user_lib_book_id === this.props.userBookId 
+      && b.user_id !== this.props.user.id
+      && !b.completed 
+    );
   };
 
   reservedBookUser = () => {
-      if (this.reservedBook()) {
-          const book = this.props.allLibraryBooks.find(b => 
-              b[1].id === this.reservedBook().user_id
-          );
-          return book[1];
-      };
+    if (this.reservedBook()) {
+      const book = this.props.allLibraryBooks.find(b => 
+        b[1].id === this.reservedBook().user_id
+      );
+
+      return book[1];
+    };
   };
 
   myReservedBook = () => {
-      return this.props.reservedBooks.find(b => 
-          b.user_lib_book_id === this.props.userBookId 
-          && 
-          b.user_id === this.props.auth.id
-      );
+    return this.props.reservedBooks.find(b => 
+      b.user_lib_book_id === this.props.userBookId 
+      && b.user_id === this.props.auth.id
+    );
   };
 
   userReservedBook = () => {
-      return this.props.reservedBooks.find(b => 
-          b.user_lib_book_id === this.props.userBookId 
-          && 
-          b.user_id === this.props.user.id
-      );
+    return this.props.reservedBooks.find(b => 
+      b.user_lib_book_id === this.props.userBookId 
+      && b.user_id === this.props.user.id
+    );
   };
 
   matchedBook = () => {
-      return this.props.allWishedBooks.find(b => 
-          b[0].id === this.props.book.id
-      );
+    return this.props.allWishedBooks.find(b => 
+      b[0].id === this.props.book.id
+    );
   };
 
   render() {
