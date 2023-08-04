@@ -6,8 +6,15 @@ import NavBar from '../NavBar';
 import UserCarousel from '../carousels/UserCarousel';
 import Comments from './Comments';
 import Footer from '../Footer';
-import { Grid, Segment, Header, Image, Button, Icon, Loader } from 'semantic-ui-react';
-
+import {
+  Grid,
+  Segment,
+  Header,
+  Image,
+  Button,
+  Icon,
+  Loader,
+} from 'semantic-ui-react';
 
 export class BookShowPage extends Component {
   state = {
@@ -15,53 +22,73 @@ export class BookShowPage extends Component {
   };
 
   componentWillMount() {
-      const id = this.props.location.pathname.slice(7);
-      fetch(`http://localhost:3000/api/v1/books/${id}`)
-      .then(resp => resp.json())
-      .then(book => {
-          const comments = book.comments.filter(c => c[0].book_id === parseInt(id));
-          this.props.showBook(book.book, comments);
-      }) ;
+    const id = this.props.location.pathname.slice(7);
+    const reqURL = `http://localhost:3000/api/v1/books/${id}`;
+  
+    fetch(reqURL)
+    .then(resp => resp.json())
+    .then(book => {
+      const comments = book.comments.filter(c =>
+        c[0].book_id === parseInt(id)
+      );
+
+      this.props.showBook(book.book, comments);
+    });
   };
 
   componentDidMount() {
-      window.scrollTo(0, 0);
+    window.scrollTo(0, 0);
   };
 
   componentWillUnmount() {
-      this.props.removeShowBook();
+    this.props.removeShowBook();
   };
 
   handleAddReservedBook = (book, libBookId) => {
-      const newReservedBook = {
-          user_id: this.props.auth.id,
-          user_lib_book_id: libBookId,
-          delivered: false,
-          completed: false
-      };
-      const reqObj = {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json'
-          },
-          body: JSON.stringify(newReservedBook)
-      };
-      fetch('http://localhost:3000/api/v1/reserved_books', reqObj)
-      .then(resp => resp.json())
-      .then(newReservedBook => {
-          this.props.addReservedBook(newReservedBook)
-      });
+    const newReservedBook = {
+      user_id: this.props.auth.id,
+      user_lib_book_id: libBookId,
+      delivered: false,
+      completed: false,
+    };
 
-      if (this.props.allWishedBooks.find(b => b[0].id === book.id && b[1].id === this.props.auth.id)) {
-          const wishBook = this.props.allWishedBooks.find(b => b[0].id === book.id && b[1].id === this.props.auth.id);
-          return fetch(`http://localhost:3000/api/v1/user_wish_books/${wishBook[2]}`, {method: 'DELETE'})
-          .then(resp => resp.json)
-          .then(book => {
-              this.props.deleteWishBook(wishBook[2]);
-          });
-      };
-      this.props.history.push('/reserved_books');
+    const addReservedBookReqURL =
+      'http://localhost:3000/api/v1/reserved_books';
+
+    const reqObj = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      body: JSON.stringify(newReservedBook),
+    };
+
+    fetch(addReservedBookReqURL, reqObj)
+    .then(resp => resp.json())
+    .then(newReservedBook => {
+      this.props.addReservedBook(newReservedBook);
+    });
+
+    if (this.props.allWishedBooks.find(b =>
+      b[0].id === book.id
+      && b[1].id === this.props.auth.id
+    )) {
+      const wishBook = this.props.allWishedBooks.find(b =>
+        b[0].id === book.id
+        && b[1].id === this.props.auth.id
+      );
+
+      const deleteWishBookReqURL = `http://localhost:3000/api/v1/user_wish_books/${wishBook[2]}`;
+
+      return fetch(deleteWishBookReqURL, {method: 'DELETE'})
+      .then(resp => resp.json)
+      .then(book => {
+        this.props.deleteWishBook(wishBook[2]);
+      });
+    };
+
+    this.props.history.push('/reserved_books');
   };
 
   libraryUsers = () => {
