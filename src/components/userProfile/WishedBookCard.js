@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 export class WishedBookCard extends Component {
-
   state = {
     open: false,
   };
@@ -20,11 +19,11 @@ export class WishedBookCard extends Component {
   //delete Wish List book from back-end and front-end
   handleDeleteWishedBook = (e) => {
     e.preventDefault();
-    const deleteWishedBookURL =
+    const reqURL =
       `http://localhost:3000/api/v1/user_wish_books/${this.props.userBookId}`;
 
     //make delete reqest to back end with Wish List book ID passed from WishedBooks props
-    fetch(deleteWishedBookURL, {method: 'DELETE'})
+    fetch(reqURL, {method: 'DELETE'})
       .then(resp => resp.json())
       .then(wishBook => {
         this.props.deleteWishBook(wishBook.id);
@@ -54,22 +53,23 @@ export class WishedBookCard extends Component {
           to={`/books/${this.props.book.id}`} 
           src={this.props.book.image
             ? this.props.book.image 
-            : 'https://www.pngfind.com/pngs/m/216-2160526_jpg-royalty-free-library-3-books-clipart-book.png'
+            : this.reservedBookPlaceholderSrc()
           } 
           wrapped={true} 
           ui={false} 
           width='300px' 
           height='300px'
         />
+
         <Card.Content>
           <Card.Header 
             as={ Link } 
             exact='true' 
-            to={`/books/${this.props.book.id}`}>
-              {
-                this.props.book.title
-              }
+            to={`/books/${this.props.book.id}`}
+          >
+            {this.props.book.title}
           </Card.Header>
+
           <Card.Meta>
             <span className='date'>
               Published in {this.props.book.published_date
@@ -78,10 +78,12 @@ export class WishedBookCard extends Component {
               }
             </span>
           </Card.Meta>
+
           <Card.Description>
             {this.props.book.author}
           </Card.Description>
         </Card.Content>
+
         {this.props.match && !this.reservedBook() 
           ? <Card.Content extra textAlign="center">
               <Header 
@@ -99,6 +101,7 @@ export class WishedBookCard extends Component {
     
           : null
         }
+
         <Card.Content extra>
           <Button.Group widths='2'>
             <Button 
@@ -111,10 +114,12 @@ export class WishedBookCard extends Component {
               <Button.Content visible>
                 <Icon name='eye'/>
               </Button.Content>
+
               <Button.Content hidden>
                 View
               </Button.Content>
             </Button>
+
             <Modal
               onClose={() => this.setOpen(false)}
               onOpen={() => this.setOpen(true)}
@@ -128,6 +133,7 @@ export class WishedBookCard extends Component {
                   <Button.Content visible>
                     <Icon name='trash alternate outline'/>
                   </Button.Content>
+
                   <Button.Content hidden>
                     Delete
                   </Button.Content>
@@ -142,14 +148,17 @@ export class WishedBookCard extends Component {
                 <Image
                   src={this.props.book.image}
                   size='medium'
-                  wrapped />
+                  wrapped
+                />
 
                 <Modal.Description>
-                  <br />
-                  <br />
+                  <br/><br/>
                   <p>
-                    Are you sure you want to remove {this.props.book.title} from your WishList?
+                    Are you sure you want to remove
+                    {this.props.book.title}
+                    from your WishList?
                   </p>
+
                   <p>
                     This book will no longer appear on your profile!
                   </p>
