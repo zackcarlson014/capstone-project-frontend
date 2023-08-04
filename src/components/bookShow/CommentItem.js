@@ -1,16 +1,26 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { deleteComment, addLike, addCommentLike, deleteLike } from '../../actions/index';
-import { Comment, Icon, Loader } from 'semantic-ui-react';
+import {
+  deleteComment,
+  addLike,
+  addCommentLike,
+  deleteLike,
+} from '../../actions/index';
+import {
+  Comment,
+  Icon,
+  Loader,
+} from 'semantic-ui-react';
 
 export class CommentItem extends Component {
   handleRemoveComment = (e) => {
     e.preventDefault();
-    const requestURL = 
+
+    const reqURL = 
       `http://localhost:3000/api/v1/comments/${this.props.comment.id}`;
 
-    fetch(requestURL, {method: 'DELETE'})
+    fetch(reqURL, {method: 'DELETE'})
     .then(resp => resp.json())
     .then(data => {
       this.props.deleteComment(data.id);
@@ -25,6 +35,8 @@ export class CommentItem extends Component {
       comment_id: this.props.comment.id,
     };
 
+    const reqURL = 'http://localhost:3000/api/v1/comment_likes';
+
     const reqObj = {
       method: 'POST',
       headers: {
@@ -33,14 +45,17 @@ export class CommentItem extends Component {
       body: JSON.stringify(newCommentLike)
     };
 
-    fetch('http://localhost:3000/api/v1/comment_likes', reqObj)
+    fetch(reqURL, reqObj)
     .then(resp => resp.json())
     .then(data => {
-      this.props.addLike(data.id, data.comment_id);
+      this.props.addLike(
+        data.id,
+        data.comment_id
+      );
       this.props.addCommentLike(
         this.props.comment,
         this.props.user,
-        this.props.likes + 1
+        this.props.likes + 1,
       );
     });
   };
@@ -55,7 +70,10 @@ export class CommentItem extends Component {
     fetch(requestURL, {method: 'DELETE'})
     .then(resp => resp.json())
     .then(data => {
-        this.props.deleteLike(this.props.comment.id, updatedLikes);
+      this.props.deleteLike(
+        this.props.comment.id,
+        updatedLikes
+      );
     });
   };
 

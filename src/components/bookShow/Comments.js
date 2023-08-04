@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
 import CommentItem from './CommentItem';
-import { Button, Comment, Form, Header } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { addComment } from '../../actions/index';
+import {
+  Button,
+  Comment,
+  Form,
+  Header,
+} from 'semantic-ui-react';
 
 export class Comments extends Component {
   state = {
@@ -24,6 +29,8 @@ export class Comments extends Component {
       content: this.state.content,
     };
 
+    const reqURL = 'http://localhost:3000/api/v1/comments';
+
     const reqObj = {
       method: 'POST',
       headers: {
@@ -33,7 +40,7 @@ export class Comments extends Component {
       body: JSON.stringify(newComment),
     };
 
-    fetch('http://localhost:3000/api/v1/comments', reqObj)
+    fetch(reqURL, reqObj)
     .then(resp => resp.json())
     .then(data => {
       this.props.addComment(
