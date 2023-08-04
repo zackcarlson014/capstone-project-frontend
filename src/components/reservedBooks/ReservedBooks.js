@@ -6,129 +6,217 @@ import NavBar from '../NavBar';
 import LibraryBookCard from '../userProfile/LibraryBookCard';
 import DashboardLibraryBookCard from '../booksDashboard/DashboardLibraryBookCard';
 import Footer from '../Footer';
-import { Grid, Header, Icon, Button } from 'semantic-ui-react';
+import {
+  Grid,
+  Header,
+  Icon,
+  Button
+} from 'semantic-ui-react';
 
 export class ReservedBooks extends Component {
+  deliveredBooks = () => {
+    return this.props.reservedBooks.filter(b => 
+      b.user_id === this.props.auth.id 
+      && b.delivered === true
+    );
+  };
 
-    deliveredBooks = () => {
-        return this.props.reservedBooks.filter(b => 
-            b.user_id === this.props.auth.id 
-            && 
-            b.delivered === true
-        );
-    };
+  reservedBooks = () => {
+    return this.props.reservedBooks.filter(b => 
+      b.user_id === this.props.auth.id 
+      && b.delivered === false
+    );
+  };
 
-    reservedBooks = () => {
-        return this.props.reservedBooks.filter(b => 
-            b.user_id === this.props.auth.id 
-            && 
-            b.delivered === false
-        );
-    };
+  reservedFromMyLibrary = () => {
+    return this.props.allLibraryBooks.filter(book => 
+      this.props.reservedBooks.find(b => 
+        b.user_lib_book_id === book[2] 
+        && b.delivered === false
+      )
+      && book[1].id === this.props.auth.id 
+    );
+  };
 
-    reservedFromMyLibrary = () => {
-        return this.props.allLibraryBooks.filter(book => 
-            book[1].id === this.props.auth.id 
-            && 
-            this.props.reservedBooks.find(b => 
-                b.user_lib_book_id === book[2] 
-                && 
-                b.delivered === false
-            )
-        );
-    };
+  libraryBooks = () => {
+    return this.props.allLibraryBooks.filter(book => 
+      this.reservedBooks().find(b => 
+        b.user_lib_book_id === book[2]
+      )
+    );
+  };
 
-    libraryBooks = () => {
-        return this.props.allLibraryBooks.filter(book => 
-            this.reservedBooks().find(b => 
-                b.user_lib_book_id === book[2]
-            )
-        );
-    };
+  render() {
+    window.scrollTo(0, 0);
 
-    render() {
-        window.scrollTo(0, 0);
-        return (
-            <div className='App'>
-                <NavBar />
-                <br/><br/><Header as='h2' icon style={{color: 'white'}} textAlign="center">
-                    <Icon name='book' circular />
-                    <Header.Content>Your Reserved Books</Header.Content>
-                </Header>
-                {this.reservedBooks().length !== 0 ?
-                <Grid>
-                    <Grid.Column width='1'></Grid.Column>
-                    <Grid.Column width='14'>
-                        <div>
-                            <br/><br/><div className='ui seven centered cards'>
-                                {this.libraryBooks().map((book, i) => {
-                                    // if (this.reservedBooks().find(b => b.user_lib_book_id === book[2])){
-                                        return <DashboardLibraryBookCard key={i} book={book[0]} user={book[1]} userBookId={book[2]} reserved={true}/>
-                                    // }
-                                })}
-                            </div><br/><br/><br/><br/>
-                        </div>
-                    </Grid.Column>
-                </Grid>
-                :
-                <div>
-                    <br/><br/><Header as='h3' style={{color: 'white'}} textAlign="center">
-                        You do not have any Reserved Books at the moment
-                    </Header><br/><br/>
-                    <Header as='h3' style={{color: 'white'}} textAlign="center">
-                        Search for Books to Reserve
-                    </Header><br/>
-                    <Grid>
-                        <Grid.Column textAlign="center">
-                            <Button as={ Link } exact='true' to={`/books`} color='blue'>All Books</Button>
-                        </Grid.Column>
-                    </Grid><br/><br/>
-                </div>
-                }
-                <br/><br/><Header as='h2' icon style={{color: 'white'}} textAlign="center">
-                    <Icon name='book' circular />
-                    <Header.Content>Books Reserved from Your Library</Header.Content>
-                </Header>
-                {this.reservedFromMyLibrary().length !== 0 ?
-                    <Grid>
-                        <Grid.Column width='1'></Grid.Column>
-                        <Grid.Column width='14'>
-                            <div>
-                                <br/><br/><div className='ui seven centered cards'>
-                                    {this.reservedFromMyLibrary().map((book, i) => {
-                                        return <LibraryBookCard key={i} book={book[0]} user={book[1]} userBookId={book[2]}/>
-                                    })}
-                                </div><br/><br/><br/><br/>
-                            </div>
-                        </Grid.Column>
-                    </Grid>
-                    :
-                    <div>
-                    <br/><br/><Header as='h3' style={{color: 'white'}} textAlign="center">
-                        You do not have any Reserved Books at the moment
-                    </Header><br/><br/>
-                    <Header as='h3' style={{color: 'white'}} textAlign="center">
-                        Search for Books to Reserve
-                    </Header><br/>
-                    <Grid>
-                        <Grid.Column textAlign="center">
-                            <Button color='blue'>All Books</Button>
-                        </Grid.Column>
-                    </Grid><br/><br/>
-                </div>
-                }
-                <Footer/>
+    return (
+      <div className='App'>
+        <NavBar />
+
+        <br/><br/>
+        
+        <Header as='h2' icon style={{color: 'white'}} textAlign="center">
+          <Icon name='book' circular />
+          <Header.Content>
+            Your Reserved Books
+          </Header.Content>
+        </Header>
+
+        {this.reservedBooks().length !== 0
+          ? <Grid>
+              <Grid.Column width='1'/>
+
+              <Grid.Column width='14'>
+                  <div>
+                    <br/><br/>
+                    
+                    <div className='ui seven centered cards'>
+                      {this.libraryBooks().map((book, i) => {
+                        // if (this.reservedBooks().find(b => b.user_lib_book_id === book[2])){
+                        return <DashboardLibraryBookCard
+                          key={i}
+                          book={book[0]}
+                          user={book[1]}
+                          userBookId={book[2]}
+                          reserved={true}/>
+                        // }
+                      })}
+                    </div>
+                    
+                    <br/><br/><br/><br/>
+                  </div>
+              </Grid.Column>
+            </Grid>
+
+          : <div>
+              <br/><br/>
+              
+              <Header
+                as='h3'
+                style={{color: 'white'}}
+                textAlign="center"
+              >
+                  You do not have any Reserved Books at the moment
+              </Header>
+              
+              <br/><br/>
+
+              <Header
+                as='h3'
+                style={{color: 'white'}}
+                textAlign="center"
+              >
+                  Search for Books to Reserve
+              </Header>
+              
+              <br/>
+
+              <Grid>
+                <Grid.Column textAlign="center">
+                  <Button
+                    as={ Link }
+                    exact='true'
+                    to={`/books`}
+                    color='blue'
+                  >
+                    All Books
+                  </Button>
+                </Grid.Column>
+              </Grid>
+              
+              <br/><br/>
             </div>
-        );
-    };
+        }
+
+        <br/><br/>
+        
+        <Header
+          as='h2'
+          icon
+          style={{color: 'white'}}
+          textAlign="center"
+        >
+          <Icon name='book' circular />
+          <Header.Content>
+            Books Reserved from Your Library
+          </Header.Content>
+        </Header>
+
+        {this.reservedFromMyLibrary().length !== 0
+          ? <Grid>
+              <Grid.Column width='1'/>
+
+              <Grid.Column width='14'>
+                <div>
+                  <br/><br/>
+                  
+                  <div className='ui seven centered cards'>
+                    {this.reservedFromMyLibrary().map((book, i) => {
+                      return <LibraryBookCard
+                        key={i}
+                        book={book[0]}
+                        user={book[1]}
+                        userBookId={book[2]}
+                      />
+                    })}
+                  </div>
+                  
+                  <br/><br/><br/><br/>
+                </div>
+              </Grid.Column>
+            </Grid>
+          
+          : <div>
+              <br/><br/>
+              
+              <Header
+                as='h3'
+                style={{color: 'white'}}
+                textAlign="center"
+              >
+                You do not have any Reserved Books at the moment
+              </Header>
+              
+              <br/><br/>
+
+              <Header
+                as='h3'
+                style={{color: 'white'}}
+                textAlign="center"
+              >
+                Search for Books to Reserve
+              </Header>
+              
+              <br/>
+
+              <Grid>
+                <Grid.Column textAlign="center">
+                  <Button color='blue'>
+                    All Books
+                  </Button>
+                </Grid.Column>
+              </Grid>
+              
+              <br/><br/>
+            </div>
+        }
+        <Footer/>
+      </div>
+    );
+  };
 };
 
 const mapStateToProps = state => {
-    return {
-        allLibraryBooks: state.allLibraryBooks,
-        reservedBooks: state.reservedBooks,
-        auth: state.auth
-    };
+  return {
+    allLibraryBooks: state.allLibraryBooks,
+    reservedBooks: state.reservedBooks,
+    auth: state.auth,
+  };
 };
 
-export default connect(mapStateToProps, { showBook })(ReservedBooks);
+export default connect(
+  mapStateToProps,
+  { 
+    showBook,
+  },
+)(ReservedBooks);
