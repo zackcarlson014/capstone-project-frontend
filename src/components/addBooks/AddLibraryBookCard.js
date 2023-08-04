@@ -2,38 +2,46 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { addLibBook } from '../../actions/index';
-import { Card, Image, Button } from 'semantic-ui-react';
+import {
+  Card,
+  Image,
+  Button,
+} from 'semantic-ui-react';
 
 export class AddLibraryBookCard extends Component {
   handleAddLibraryBook = (book) => {
-      const newLibraryBook = {
-          user_id: this.props.auth.id,
-          book_id: book.id,
-          original_user_id: this.props.auth.id
-      };
-      const reqObj = {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json'
-          },
-          body: JSON.stringify(newLibraryBook)
-      };
-      fetch('http://localhost:3000/api/v1/user_lib_books', reqObj)
-      .then(resp => resp.json())
-      .then(data => {
-          console.log(data)
-          this.props.addLibBook(
-              book, 
-              this.props.auth, 
-              data.id, 
-              this.props.auth.id
-          );
-      });
+    const newLibraryBook = {
+      user_id: this.props.auth.id,
+      book_id: book.id,
+      original_user_id: this.props.auth.id,
+    };
+
+    const reqURL = 'http://localhost:3000/api/v1/user_lib_books';
+
+    const reqObj = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      body: JSON.stringify(newLibraryBook),
+    };
+
+    fetch(reqURL, reqObj)
+    .then(resp => resp.json())
+    .then(data => {
+      this.props.addLibBook(
+        book, 
+        this.props.auth, 
+        data.id, 
+        this.props.auth.id,
+      );
+    });
   };
 
   handleAddBook = (e) => {
     e.preventDefault();
+
     const newBook = {
       title: this.props.title,
       author: this.props.author[0],
@@ -43,16 +51,18 @@ export class AddLibraryBookCard extends Component {
       average_rating: this.props.averageRating,
       ratings_count: this.props.ratingsCount,
       preview_link: this.props.previewLink,
-      google_id: this.props.googleID
+      google_id: this.props.googleID,
     };
+
+    const reqURL = 'http://localhost:3000/api/v1/books';
 
     const reqObj = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Accept': 'application/json'
+        'Accept': 'application/json',
       },
-      body: JSON.stringify(newBook)
+      body: JSON.stringify(newBook),
     };
 
     if (this.props.allLibraryBooks.find(b => 
@@ -67,7 +77,7 @@ export class AddLibraryBookCard extends Component {
       return this.handleAddLibraryBook(matchedBook[0])
     };
 
-    fetch('http://localhost:3000/api/v1/books', reqObj)
+    fetch(reqURL, reqObj)
     .then(resp => resp.json())
     .then(newLibBook => {
       this.handleAddLibraryBook(newLibBook);
@@ -138,6 +148,7 @@ export class AddLibraryBookCard extends Component {
                     View Book
                 </Button>
             </Card.Content>
+            
           : <Card.Content extra>
                 <Button 
                     onClick={this.handleAddBook} 
